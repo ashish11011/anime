@@ -12,8 +12,8 @@ const slides = [
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [direction, setDirection] = useState(0); // Track slide direction for animation
-  const intervalRef = useRef(null); // Ref to hold the interval for auto-slide
+  const [direction, setDirection] = useState<any>(0); // Track slide direction for animation
+  const intervalRef = useRef<any>(null); // Ref to hold the interval for auto-slide
 
   // Function to go to the next slide
   const nextSlide = () => {
@@ -47,7 +47,7 @@ const Carousel = () => {
 
   // Framer Motion animation variants
   const variants = {
-    enter: (direction) => ({
+    enter: (direction: any) => ({
       x: direction === 1 ? "100%" : "-100%",
       opacity: 0,
     }),
@@ -55,7 +55,7 @@ const Carousel = () => {
       x: 0,
       opacity: 1,
     },
-    exit: (direction) => ({
+    exit: (direction: any) => ({
       x: direction === 1 ? "-100%" : "100%",
       opacity: 0,
     }),
