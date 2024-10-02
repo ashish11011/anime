@@ -25,6 +25,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {" "}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Bangers&family=Orbitron:wght@400;700&family=Press+Start+2P&family=Russo+One&display=swap"
+          rel="stylesheet"
+        ></link>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

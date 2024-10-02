@@ -8,9 +8,36 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // Custom Fonts
+      fontFamily: {
+        bangers: ["Bangers", "cursive"],
+        "press-start": ['"Press Start 2P"', "cursive"],
+        orbitron: ["Orbitron", "sans-serif"],
+        audiowide: ["Audiowide", "cursive"],
+        russo: ["Russo One", "sans-serif"],
+        exo: ["Exo 2", "sans-serif"],
+      },
+      // Custom Colors
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        // Vibrant Neon Colors (Great for Gaming)
+        "neon-green": "#39FF14",
+        "neon-pink": "#FF00FF",
+        "neon-blue": "#1E90FF",
+        "neon-orange": "#FF4500",
+        "neon-yellow": "#FFFF00",
+
+        // primary colors
+        primary: "#0a0a0a",
+        "p-blue": "#312e81",
+        "p-green": "#22c55e",
+
+        // Dark and Vibrant Combinations
+        "dark-bg": "#121212", // Background color
+        "dark-purple": "#2F2B47",
+        "dark-gray": "#1C1C1C",
+        "bright-red": "#FF004D",
+        "bright-cyan": "#00FFFF",
+        "bright-magenta": "#FF00FF",
       },
     },
   },
