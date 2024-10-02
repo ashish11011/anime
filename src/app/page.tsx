@@ -146,7 +146,7 @@ const Carousel = () => {
   );
 };
 
-export const animeData = [
+const animeData = [
   {
     name: "Naruto Uzumaki",
     image: "./anime.png",
