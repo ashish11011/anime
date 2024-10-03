@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import NavBar from "@/components/navBar";
 
 const slides = [
   { id: 1, content: "https://via.placeholder.com/1920x1080?text=Slide+1" },
@@ -62,7 +63,7 @@ const Carousel = () => {
   };
 
   return (
-    <div className=" bg-neutral-950 relative h-screen w-full overflow-hidden">
+    <div className=" bg-neutral-950 relative h-[90vh] w-full overflow-hidden">
       {/* Slides */}
       <AnimatePresence custom={direction} initial={false}>
         <motion.div
@@ -79,24 +80,24 @@ const Carousel = () => {
             mass: 0.5, // Reduces the flickering by controlling inertia
             duration: 0.5,
           }}
-          className="absolute inset-0"
+          className="absolute px-4 md:px-6 inset-0"
         >
-          <div className=" w-full h-full flex-col md:flex-row flex gap-16">
-            <div className="w-full flex flex-col gap-6 justify-center items-center text-white p-8 space-y-6">
-              <h1 className=" text-gray-100 font-semibold text-center md:text-left text-5xl">
+          <div className=" w-full h-full flex-col-reverse md:flex-row flex gap-2 md:gap-16">
+            <div className="w-full h-full flex flex-col gap-3 md:gap-6 justify-start md:justify-center items-center text-white px-4 py-2 md:py-8 md:px-8  space-y-6">
+              <h1 className=" text-gray-100 font-semibold text-center md:text-5xl text-3xl">
                 Your Favorite Anime Character
               </h1>
 
-              <p className="text-gray-300 text-center font-exo text-lg">
+              <p className="text-gray-300 text-center font-exo md:text-lg">
                 Exclusive, Limited-Edition Anime Characters for Every Fan! Shop
                 now and get your hands on the best selection.
               </p>
 
-              <div className="space-x-4">
-                <button className="bg-p-green text-white px-6 py-3 rounded-lg hover:bg-p-green/70 transition duration-300">
+              <div className=" w-full justify-center flex gap-4">
+                <button className=" w-full md:w-fit h-fit  bg-p-green text-white px-2 md:px-6 py-3 text-sm md:text-base rounded-lg hover:bg-p-green/70 transition duration-300">
                   Shop Now
                 </button>
-                <button className="hover:bg-p-blue/70  border border-p-blue text-white px-6 py-3 rounded-lg transition duration-300">
+                <button className=" w-full md:w-fit h-fit  hover:bg-p-blue/70  border border-p-blue text-white px-2 text-sm md:text-base md:px-6 py-3 rounded-lg transition duration-300">
                   Explore Characters
                 </button>
               </div>
@@ -110,8 +111,12 @@ const Carousel = () => {
                 </p>
               </div>
             </div>
-            <div className=" flex justify-center items-center w-full">
-              <img src="./anime.png" alt="" />
+            <div className=" flex h-full justify-center items-center w-full">
+              <img
+                className="w-full h-full object-cover"
+                src="./anime.png"
+                alt=""
+              />
             </div>
           </div>
         </motion.div>
@@ -130,18 +135,6 @@ const Carousel = () => {
       >
         &#10095;
       </button>
-
-      {/* Indicators */}
-      {/* <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-        {slides.map((_, index) => (
-          <div
-            key={index}
-            className={`w-3 h-3 rounded-full ${
-              currentSlide === index ? "bg-white" : "bg-gray-400"
-            }`}
-          ></div>
-        ))}
-      </div> */}
     </div>
   );
 };
@@ -209,7 +202,7 @@ const animeData = [
 // AnimeCard Component
 const AnimeCard = ({ image, name, rating, price, discountPrice }: any) => {
   return (
-    <div className="bg-dark-purple rounded-lg shadow-lg p-4 transform group transition-transform duration-300">
+    <div className="bg-gray-700 rounded-lg shadow-lg p-4 transform group transition-transform duration-300">
       <img
         src={image}
         alt={name}
@@ -304,7 +297,8 @@ const NarutoCollection = () => {
 
 export default function App() {
   return (
-    <div className=" w-full min-h-screen flex flex-col ">
+    <div className=" bg-neutral-950 w-full min-h-screen flex flex-col ">
+      <NavBar />
       <Carousel />
       {/* <img src="./anime.png" alt="" /> */}
       <NarutoCollection />
