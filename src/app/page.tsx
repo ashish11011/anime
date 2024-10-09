@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import NavBar from "@/components/navBar";
-
+import { productsData } from "@/const/products";
 const slides = [
   { id: 1, content: "https://via.placeholder.com/1920x1080?text=Slide+1" },
   { id: 2, content: "https://via.placeholder.com/1920x1080?text=Slide+2" },
@@ -200,13 +200,18 @@ const animeData = [
 ];
 
 // AnimeCard Component
-const AnimeCard = ({ image, name, rating, price, discountPrice }: any) => {
+const AnimeCard = ({ id, name, images, rating, price, discountPrice }: any) => {
   return (
-    <div className="bg-gray-700 rounded-lg shadow-lg p-4 transform group transition-transform duration-300">
+    <div className="bg-gray-700 rounded-lg group shadow-lg p-4 transform group transition-transform duration-300">
       <img
-        src={image}
+        src={images[0]}
         alt={name}
-        className=" group-hover:scale-105 duration-300 h-48 w-full object-cover rounded-t-lg"
+        className="  duration-300 block group-hover:hidden h-52 w-full object-cover rounded-t-lg"
+      />
+      <img
+        src={images[1]}
+        alt={name}
+        className=" duration-300 hidden group-hover:block h-52 w-full object-cover rounded-t-lg"
       />
 
       <div className="py-4 flex flex-col gap-0 ">
@@ -215,7 +220,7 @@ const AnimeCard = ({ image, name, rating, price, discountPrice }: any) => {
 
         {/* Rating */}
         <div className="flex items-center space-x-1">
-          {[...Array(5)].map((_, index) => (
+          {[...Array(rating)].map((_, index) => (
             <span
               key={index}
               className={`text-neon-yellow ${
@@ -237,7 +242,7 @@ const AnimeCard = ({ image, name, rating, price, discountPrice }: any) => {
 
         {/* Shop Button */}
         <Link
-          href={"/product"}
+          href={`/product/${id}`}
           className="mt-4 font-medium w-full text-center hover:bg-white text-white py-2 rounded-lg border hover:text-gray-800 transition duration-300"
         >
           Shop Now
@@ -251,11 +256,12 @@ const AnimeCard = ({ image, name, rating, price, discountPrice }: any) => {
 const AnimeCardList = () => {
   return (
     <div className="grid max-w-7xl w-full mx-auto grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-8">
-      {animeData.map((character, index) => (
+      {productsData.map((character, index) => (
         <AnimeCard
-          key={index}
-          image={character.image}
+          key={character.id}
+          id={character.id}
           name={character.name}
+          images={character.images}
           rating={character.rating}
           price={character.price}
           discountPrice={character.discountPrice}
