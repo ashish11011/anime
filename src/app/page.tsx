@@ -206,12 +206,12 @@ const AnimeCard = ({ id, name, images, rating, price, discountPrice }: any) => {
       <img
         src={images[0]}
         alt={name}
-        className="  duration-300 block group-hover:hidden h-52 w-full object-cover rounded-t-lg"
+        className="  duration-300 block group-hover:hidden h-52 w-full object-contain bg-white rounded-t-lg"
       />
       <img
         src={images[1]}
         alt={name}
-        className=" duration-300 hidden group-hover:block h-52 w-full object-cover rounded-t-lg"
+        className=" duration-300 hidden group-hover:block h-52 w-full object-contain bg-white rounded-t-lg"
       />
 
       <div className="py-4 flex flex-col gap-0 ">
@@ -302,6 +302,16 @@ const NarutoCollection = () => {
 };
 
 export default function App() {
+  const [allCategories, setAllCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    const uniqueCategories = new Set<string>();
+
+    productsData.forEach((product: any) => {
+      uniqueCategories.add(product.family);
+    });
+    setAllCategories(Array.from(uniqueCategories));
+  }, [productsData]);
   return (
     <div className=" bg-neutral-950 w-full min-h-screen flex flex-col ">
       <NavBar />
@@ -316,30 +326,30 @@ export default function App() {
           <AnimeCardList />
         </div>
       </div>
-      <CategorySection />
+      <CategorySection allCategories={allCategories} />
     </div>
   );
 }
 
-function CategorySection() {
+function CategorySection({ allCategories }: any) {
   return (
     <div className="bg-primary/90 items-center py-12 flex flex-col gap-10">
       <p className=" text-5xl text-white font-medium ">All Categories</p>
       <div className="grid max-w-7xl w-full mx-auto grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-6 p-8">
-        <CategoryCard />
-        <CategoryCard />
-        <CategoryCard />
-        <CategoryCard />
-        <CategoryCard />
-        <CategoryCard />
+        {allCategories.map((category: any, index: any) => (
+          <CategoryCard key={index} category={category} />
+        ))}
       </div>
     </div>
   );
 }
 
-function CategoryCard() {
+function CategoryCard({ category }: any) {
   return (
-    <div className=" cursor-pointer rounded overflow-hidden relative w-full h-72">
+    <Link
+      href={`/category/${category}`}
+      className=" cursor-pointer rounded overflow-hidden relative w-full h-72"
+    >
       <video
         autoPlay
         loop
@@ -350,8 +360,8 @@ function CategoryCard() {
         Your browser does not support the video tag.
       </video>
       <div className=" bg-gradient-to-b from-transparent to-black w-full text-gray-300 text-center text-lg py-2 font-semibold absolute bottom-0 left-0">
-        Shop KeyChain
+        {category}
       </div>
-    </div>
+    </Link>
   );
 }
