@@ -1,3 +1,5 @@
+import category from "@/app/category/page";
+
 export const productsData = [
   {
     name: "Itachi Uchiha",
@@ -18,6 +20,9 @@ export const productsData = [
       "Perfect for any anime display or collection",
     ],
     id: "b107fe68-15cd-4139-aae4-027465f895df",
+    keyWords: ["anime", "action figure", "medium"],
+    productType: "action figure",
+    family: "naruto",
   },
   {
     name: "Itachi Uchiha",
@@ -40,6 +45,9 @@ export const productsData = [
       "Unique pose and design, a must-have for Naruto lovers",
     ],
     id: "8b0237e8-1c52-426e-96a5-865693aa89d7",
+    keyWords: ["anime", "action figure", "large"],
+    productType: "action figure",
+    family: "naruto",
   },
   {
     name: "Captain America",
@@ -60,6 +68,9 @@ export const productsData = [
       "Great for display or gifting",
     ],
     id: "4005ac31-a8b4-4f63-a3c7-8f51487cc66c",
+    keyWords: ["bobble head", "anime", "action figure", "small"],
+    productType: "action figure",
+    family: "marvel",
   },
   {
     name: "Monkey D. Luffy",
@@ -80,6 +91,9 @@ export const productsData = [
       "Highly collectible with a special discount",
     ],
     id: "1b9a352b-a39a-4d28-aaf1-cc9206ed7260",
+    keyWords: ["anime", "action figure", "medium"],
+    productType: "action figure",
+    family: "one piece",
   },
   {
     name: "Mubco Star Wars Bobble Head",
@@ -100,5 +114,8 @@ export const productsData = [
       "Ideal for home, office, or display",
     ],
     id: "5147ac05-6d5d-45d1-b484-ee465cff4cd7",
+    keyWords: ["anime", "action figure", "bobble head", "small"],
+    productType: "action figure",
+    family: "star wars",
   },
 ];
