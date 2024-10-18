@@ -1,39 +1,39 @@
-"use client";
-import Link from "next/link";
+'use client';
+import Link from 'next/link';
 // import Navbar from "@/components/navBar";
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 // SingleCardPage Component
 const SingleCardPage = () => {
   // State to track the currently selected image
   const [selectedImage, setSelectedImage] = useState(
-    "https://via.placeholder.com/400x300?text=Naruto+Main"
+    'https://via.placeholder.com/400x300?text=Naruto+Main'
   );
 
   // List of thumbnails
   const images = [
-    "https://via.placeholder.com/400x300?text=Naruto+Main", // Main Image
-    "https://via.placeholder.com/100x100?text=Naruto+1",
-    "https://via.placeholder.com/100x100?text=Naruto+2",
-    "https://via.placeholder.com/100x100?text=Naruto+3",
+    'https://via.placeholder.com/400x300?text=Naruto+Main', // Main Image
+    'https://via.placeholder.com/100x100?text=Naruto+1',
+    'https://via.placeholder.com/100x100?text=Naruto+2',
+    'https://via.placeholder.com/100x100?text=Naruto+3',
   ];
 
   return (
     <div className="bg-neutral-900 py-16">
       {/* <Navbar /> */}
-      <section className="max-w-7xl mx-auto">
-        <div className="container mx-auto flex flex-col gap-8 md:flex-row items-start">
+      <section className="mx-auto max-w-7xl">
+        <div className="container mx-auto flex flex-col items-start gap-8 md:flex-row">
           {/* Sticky Image Section */}
-          <div className="md:sticky top-16 items-center w-full md:w-auto flex flex-col-reverse p-4 md:flex-row gap-4">
-            <div className="flex md:flex-col flex-row items-center gap-2">
+          <div className="top-16 flex w-full flex-col-reverse items-center gap-4 p-4 md:sticky md:w-auto md:flex-row">
+            <div className="flex flex-row items-center gap-2 md:flex-col">
               {/* Thumbnails Section */}
               {images.map((image, index) => (
                 <img
                   key={index}
                   src={image}
                   alt={`Thumbnail ${index + 1}`}
-                  className={`w-16 h-16 object-cover rounded-lg cursor-pointer ${
-                    selectedImage === image ? "border-4  border-p-green" : ""
+                  className={`h-16 w-16 cursor-pointer rounded-lg object-cover ${
+                    selectedImage === image ? 'border-4 border-p-green' : ''
                   }`}
                   onClick={() => setSelectedImage(image)}
                 />
@@ -41,54 +41,54 @@ const SingleCardPage = () => {
             </div>
 
             {/* Main Image Display */}
-            <div className="w-80 h-80 md:w-96 md:h-96 ">
+            <div className="h-80 w-80 md:h-96 md:w-96">
               <img
                 src={selectedImage}
                 alt="Selected Naruto Character"
-                className="w-full h-full object-cover rounded-lg shadow-lg"
+                className="h-full w-full rounded-lg object-cover shadow-lg"
               />
             </div>
           </div>
 
           {/* Scrollable Right Section */}
-          <div className="md:w-1/2 px-4 md:px-0 md:ml-8 space-y-12">
+          <div className="space-y-12 px-4 md:ml-8 md:w-1/2 md:px-0">
             {/* Character Details */}
             <div>
-              <h1 className="text-gray-200 font-bold text-5xl mb-2">
+              <h1 className="mb-2 text-5xl font-bold text-gray-200">
                 Naruto Uzumaki
               </h1>
 
-              <div className="flex items-center mb-4">
+              <div className="mb-4 flex items-center">
                 {[...Array(5)].map((_, index) => (
-                  <span key={index} className="text-neon-yellow text-xl">
+                  <span key={index} className="text-xl text-neon-yellow">
                     ★
                   </span>
                 ))}
-                <span className="text-white ml-2">(5.0)</span>
+                <span className="ml-2 text-white">(5.0)</span>
               </div>
 
-              <p className="text-gray-300 text-lg mb-6">
+              <p className="mb-6 text-lg text-gray-300">
                 Naruto Uzumaki is a ninja from the Hidden Leaf Village. This
                 exclusive character card brings the powerful ninja into your
                 collection!
               </p>
 
-              <div className="flex items-center space-x-4 mb-4">
-                <span className="line-through text-neon-blue text-xl">
+              <div className="mb-4 flex items-center space-x-4">
+                <span className="text-xl text-neon-blue line-through">
                   $49.99
                 </span>
-                <span className="text-neon-green text-2xl font-bold">
+                <span className="text-2xl font-bold text-neon-green">
                   $29.99
                 </span>
               </div>
 
-              <div className=" flex gap-4">
-                <button className="bg-p-green text-white font-semibold py-2 px-8 rounded hover:bg-p-green/90 transition duration-300">
+              <div className="flex gap-4">
+                <button className="rounded bg-p-green px-8 py-2 font-semibold text-white transition duration-300 hover:bg-p-green/90">
                   Buy now
                 </button>
                 <Link
                   href="/cart"
-                  className=" border border-p-blue text-white py-2 px-8 rounded hover:bg-p-blue/90 transition duration-300"
+                  className="rounded border border-p-blue px-8 py-2 text-white transition duration-300 hover:bg-p-blue/90"
                 >
                   Add to Cart
                 </Link>
@@ -96,26 +96,26 @@ const SingleCardPage = () => {
             </div>
 
             {/* Add Coupon Section */}
-            <div className=" py-6 rounded-lg">
-              <h2 className="text-gray-100 font-medium text-2xl mb-4">
+            <div className="rounded-lg py-6">
+              <h2 className="mb-4 text-2xl font-medium text-gray-100">
                 Add Coupon
               </h2>
               <input
                 type="text"
-                className=" bg-transparent border focus:outline-none text-white py-2 px-4 rounded-lg w-full"
+                className="w-full rounded-lg border bg-transparent px-4 py-2 text-white focus:outline-none"
                 placeholder="Enter your coupon code"
               />
-              <button className=" bg-p-green text-white font-medium py-2 px-4 mt-4 rounded-lg hover:bg-p-green/90 transition duration-300">
+              <button className="mt-4 rounded-lg bg-p-green px-4 py-2 font-medium text-white transition duration-300 hover:bg-p-green/90">
                 Apply Coupon
               </button>
             </div>
 
             {/* Product Highlights */}
-            <div className=" py-4 rounded-lg">
-              <h2 className=" text-gray-100 font-semibold text-2xl mb-4">
+            <div className="rounded-lg py-4">
+              <h2 className="mb-4 text-2xl font-semibold text-gray-100">
                 Product Highlights
               </h2>
-              <ul className="list-disc pl-5 text-white space-y-2">
+              <ul className="list-disc space-y-2 pl-5 text-white">
                 <li>Exclusive Naruto Uzumaki Card</li>
                 <li>High-quality collectible material</li>
                 <li>Limited edition with special powers</li>
@@ -124,21 +124,21 @@ const SingleCardPage = () => {
             </div>
 
             {/* Similar Products Section */}
-            <div className=" py-4 rounded-lg">
-              <h2 className=" text-gray-100 font-medium text-3xl mb-4">
+            <div className="rounded-lg py-4">
+              <h2 className="mb-4 text-3xl font-medium text-gray-100">
                 View More Products
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                 {Array.from({ length: 3 }).map((_, index) => {
                   return (
-                    <div className="md:border rounded-lg p-2 bg-dark-gray">
+                    <div className="rounded-lg bg-dark-gray p-2 md:border">
                       <img
                         src="https://via.placeholder.com/150?text=Naruto+Character+1"
                         alt="Similar Product 1"
-                        className="w-full h-60 md:h-40 object-cover rounded-lg"
+                        className="h-60 w-full rounded-lg object-cover md:h-40"
                       />
-                      <h3 className="text-white text-lg mt-2">Sasuke Uchiha</h3>
-                      <button className="bg-p-green w-fit text-white py-2 px-6 md:w-full  my-2 rounded">
+                      <h3 className="mt-2 text-lg text-white">Sasuke Uchiha</h3>
+                      <button className="my-2 w-fit rounded bg-p-green px-6 py-2 text-white md:w-full">
                         Add to Cart
                       </button>
                     </div>
