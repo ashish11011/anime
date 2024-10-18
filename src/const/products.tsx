@@ -181,3 +181,21 @@ export const seriesCategoryData = [
     slug: '/series/others',
   },
 ];
+
+export const instagramGallaryData = [
+  {
+    image:
+      'https://s3.ap-south-1.amazonaws.com/cozzy.corner/instagram/WhatsApp+Image+2024-10-18+at+14.57.28_98b5e38b.jpg',
+    link: 'https://www.instagram.com/p/CmXzVJ6Kv2i/',
+  },
+  {
+    image:
+      'https://s3.ap-south-1.amazonaws.com/cozzy.corner/instagram/WhatsApp+Image+2024-10-18+at+14.57.28_5aad02fa.jpg',
+    link: 'https://www.instagram.com/p/CmXzVJ6Kv2i/',
+  },
+  {
+    image:
+      'https://s3.ap-south-1.amazonaws.com/cozzy.corner/instagram/WhatsApp+Image+2024-10-18+at+14.57.28_e04d7f56.jpg',
+    link: 'https://www.instagram.com/p/CmXzVJ6Kv2i/',
+  },
+];

@@ -6,6 +6,7 @@ import { productsData } from '@/const/products';
 import ShowProductDetail from './showProductDetails';
 import { useRouter } from 'next/router';
 import NavBar from '@/components/navBar';
+import Footer from '@/components/footer';
 
 // SingleCardPage Component
 const SingleCardPage = (context: any) => {
@@ -26,9 +27,10 @@ const SingleCardPage = (context: any) => {
   //   ];
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-neutral-950">
       <NavBar />
       <ShowProductDetail {...product} />
+      <Footer />
     </div>
   );
 };

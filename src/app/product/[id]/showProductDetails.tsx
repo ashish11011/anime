@@ -19,7 +19,7 @@ const ShowProductDetail = ({
   const [selectedImage, setSelectedImage] = useState(images[0]);
 
   return (
-    <div className="bg-neutral-900 py-16">
+    <div className="bg-neutral-950 py-16">
       {/* <Navbar /> */}
       <section className="mx-auto max-w-7xl">
         <div className="container mx-auto flex flex-col items-start gap-8 md:flex-row">
