@@ -97,7 +97,7 @@ const CartPage = () => {
               {cartItems.map((item) => (
                 <div
                   key={item.id}
-                  className="subgrid col-span-4 grid grid-cols-4 border-b border-neon-pink py-4"
+                  className="subgrid col-span-4 grid grid-cols-4 border-b border-gray-400 py-4"
                 >
                   {/* Product Image and Name */}
                   <div className="col-span-1 flex w-fit flex-col items-center gap-1 md:flex-row md:space-x-4">
@@ -131,7 +131,7 @@ const CartPage = () => {
                   </div>
 
                   {/* Price for the quantity */}
-                  <div className="col-span-1 text-right text-lg text-neon-green">
+                  <div className="col-span-1 text-right text-lg text-p-green">
                     ${(item.price * item.quantity).toFixed(2)}
                   </div>
 

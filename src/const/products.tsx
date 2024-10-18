@@ -126,20 +126,58 @@ export const categoryData = [
     description: 'High-quality figures',
     image:
       'https://s3.ap-south-1.amazonaws.com/cozzy.corner/category/Black+Modern+Bag+Product+Amazon+Product+Image+(4).png',
+    slug: '/category/action-figure',
   },
   {
     name: 'Miniature',
     description: 'High-quality figures',
     image: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/category/10.png',
+    slug: '/category/miniature',
   },
   {
     name: 'Bobble head',
     description: 'High-quality figures',
     image: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/category/8.png',
+    slug: '/category/bobble-head',
   },
   {
     name: 'Sets',
     description: 'High-quality figures',
     image: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/category/13.png',
+    slug: '/category/sets',
+  },
+];
+
+export const seriesCategoryData = [
+  {
+    name: 'Naruto',
+    description: 'High-quality figures',
+    image:
+      'https://s3.ap-south-1.amazonaws.com/cozzy.corner/category/Black+Modern+Bag+Product+Amazon+Product+Image+(4).png',
+    slug: '/series/naruto',
+  },
+  {
+    name: 'One piece',
+    description: 'High-quality figures',
+    image: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/category/10.png',
+    slug: '/series/one-piece',
+  },
+  {
+    name: 'Demon slayer',
+    description: 'High-quality figures',
+    image: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/category/8.png',
+    slug: '/series/demon-slayer',
+  },
+  {
+    name: 'Dragon Ball',
+    description: 'High-quality figures',
+    image: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/category/13.png',
+    slug: '/series/dragon-ball',
+  },
+  {
+    name: 'Others',
+    description: 'High-quality figures',
+    image: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/category/13.png',
+    slug: '/series/others',
   },
 ];

@@ -3,7 +3,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import NavBar from '@/components/navBar';
-import { productsData } from '@/const/products';
+import {
+  categoryData,
+  productsData,
+  seriesCategoryData,
+} from '@/const/products';
+import { ArrowRight } from 'lucide-react';
 const slides = [
   { id: 1, content: 'https://via.placeholder.com/1920x1080?text=Slide+1' },
   { id: 2, content: 'https://via.placeholder.com/1920x1080?text=Slide+2' },
@@ -113,7 +118,7 @@ const Carousel = () => {
             </div>
             <div className="flex h-full w-full items-center justify-center">
               <img
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
                 src="./anime.png"
                 alt=""
               />
@@ -202,35 +207,24 @@ const animeData = [
 // AnimeCard Component
 const AnimeCard = ({ id, name, images, rating, price, discountPrice }: any) => {
   return (
-    <div className="group transform rounded-lg bg-gray-700 p-4 shadow-lg transition-transform duration-300">
+    <Link
+      href={`/product/${id}`}
+      className="group transform rounded-lg border border-gray-600 bg-neutral-950 p-3 shadow-lg transition-transform duration-300"
+    >
       <img
         src={images[0]}
         alt={name}
-        className="block h-52 w-full rounded-t-lg bg-white object-contain duration-300 group-hover:hidden"
+        className="block h-52 w-full rounded-lg bg-white object-contain duration-300 group-hover:hidden"
       />
       <img
         src={images[1]}
         alt={name}
-        className="hidden h-52 w-full rounded-t-lg bg-white object-contain duration-300 group-hover:block"
+        className="hidden h-52 w-full rounded-lg bg-white object-contain duration-300 group-hover:block"
       />
 
       <div className="flex flex-col gap-0 py-4">
         {/* Name */}
         <h3 className="text-xl font-bold text-gray-100">{name}</h3>
-
-        {/* Rating */}
-        <div className="flex items-center space-x-1">
-          {[...Array(rating)].map((_, index) => (
-            <span
-              key={index}
-              className={`text-neon-yellow ${
-                index < rating ? 'text-opacity-100' : 'text-opacity-30'
-              }`}
-            >
-              ★
-            </span>
-          ))}
-        </div>
 
         {/* Price and Discount */}
         <div className="">
@@ -241,14 +235,11 @@ const AnimeCard = ({ id, name, images, rating, price, discountPrice }: any) => {
         </div>
 
         {/* Shop Button */}
-        <Link
-          href={`/product/${id}`}
-          className="mt-4 w-full rounded-lg border py-2 text-center font-medium text-white transition duration-300 hover:bg-white hover:text-gray-800"
-        >
-          Shop Now
-        </Link>
+        <div className="mt-4 w-full rounded-lg border py-2 text-center font-medium text-white transition duration-300 hover:bg-white hover:text-gray-800">
+          Add to cart
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -301,6 +292,52 @@ const NarutoCollection = () => {
   );
 };
 
+function CategorySection() {
+  return (
+    <div className="flex flex-col items-center gap-10 bg-primary/90 py-12">
+      <p className="text-5xl font-medium text-white">All Categories</p>
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 p-8 sm:grid-cols-2 md:grid-cols-4">
+        {categoryData.map((category: any, index: any) => (
+          <CategoryCard key={index} category={category} />
+        ))}
+      </div>
+    </div>
+  );
+}
+function SeriesCategorySection() {
+  return (
+    <div className="flex flex-col items-center gap-10 bg-primary/90 py-12">
+      <p className="text-5xl font-medium text-white">All Series</p>
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 p-8 sm:grid-cols-2 md:grid-cols-4">
+        {seriesCategoryData.map((category: any, index: any) => (
+          <CategoryCard key={index} category={category} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CategoryCard({ category }: any) {
+  return (
+    <Link
+      href={category.slug}
+      className="group flex w-full cursor-pointer flex-col gap-3 overflow-hidden rounded-lg border border-gray-500 p-3"
+    >
+      <div className="w-full overflow-hidden rounded-lg">
+        <img
+          src={category.image}
+          className="w-full duration-200 group-hover:scale-105"
+          alt=""
+        />
+      </div>
+      <div className="flex items-center gap-2 px-2 text-xl font-semibold text-white duration-200 group-hover:gap-4">
+        {category.name} <ArrowRight className="mt-1" size={20} />
+      </div>
+      <div className="h-4"></div>
+    </Link>
+  );
+}
+
 export default function App() {
   const [allCategories, setAllCategories] = useState<string[]>([]);
 
@@ -316,52 +353,27 @@ export default function App() {
     <div className="flex min-h-screen w-full flex-col bg-neutral-950">
       <NavBar />
       <Carousel />
-      {/* <img src="./anime.png" alt="" /> */}
+      <CategorySection />
+
       <NarutoCollection />
+      <SeriesCategorySection />
       <div className="min-h-screen bg-dark-bg text-white">
-        <div className="container mx-auto py-12 md:py-16">
-          <h1 className="mb-6 text-center text-4xl font-semibold text-gray-200 md:mb-12 md:text-5xl">
-            Anime Character Shop
+        <div className="container mx-auto flex flex-col gap-6 py-12 md:py-16">
+          <h1 className="text-center text-4xl font-semibold text-gray-200 md:text-5xl">
+            Hot Deals of the Month
           </h1>
+          <p className="text-center">
+            Grab the best deals while they last! These products are available at
+            <br />
+            unbeatable prices—hurry before they're gone!
+          </p>
           <AnimeCardList />
         </div>
       </div>
-      <CategorySection allCategories={allCategories} />
-    </div>
-  );
-}
 
-function CategorySection({ allCategories }: any) {
-  return (
-    <div className="flex flex-col items-center gap-10 bg-primary/90 py-12">
-      <p className="text-5xl font-medium text-white">All Categories</p>
-      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 p-8 sm:grid-cols-2 md:grid-cols-3">
-        {allCategories.map((category: any, index: any) => (
-          <CategoryCard key={index} category={category} />
-        ))}
-      </div>
+      {/* Instagram gallary */}
+      {/* Subscribe */}
+      {/* Footer */}
     </div>
-  );
-}
-
-function CategoryCard({ category }: any) {
-  return (
-    <Link
-      href={`/category/${category}`}
-      className="relative h-72 w-full cursor-pointer overflow-hidden rounded"
-    >
-      <video
-        autoPlay
-        loop
-        muted
-        className="left-0 top-0 h-full w-full object-cover opacity-85"
-      >
-        <source src="./videos/keyChain.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <div className="absolute bottom-0 left-0 w-full bg-gradient-to-b from-transparent to-black py-2 text-center text-lg font-semibold text-gray-300">
-        {category}
-      </div>
-    </Link>
   );
 }
