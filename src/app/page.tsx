@@ -1,13 +1,13 @@
-"use client";
-import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
-import NavBar from "@/components/navBar";
-import { productsData } from "@/const/products";
+'use client';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
+import NavBar from '@/components/navBar';
+import { productsData } from '@/const/products';
 const slides = [
-  { id: 1, content: "https://via.placeholder.com/1920x1080?text=Slide+1" },
-  { id: 2, content: "https://via.placeholder.com/1920x1080?text=Slide+2" },
-  { id: 3, content: "https://via.placeholder.com/1920x1080?text=Slide+3" },
+  { id: 1, content: 'https://via.placeholder.com/1920x1080?text=Slide+1' },
+  { id: 2, content: 'https://via.placeholder.com/1920x1080?text=Slide+2' },
+  { id: 3, content: 'https://via.placeholder.com/1920x1080?text=Slide+3' },
   // Add more slides as needed
 ];
 
@@ -49,7 +49,7 @@ const Carousel = () => {
   // Framer Motion animation variants
   const variants = {
     enter: (direction: any) => ({
-      x: direction === 1 ? "100%" : "-100%",
+      x: direction === 1 ? '100%' : '-100%',
       opacity: 0,
     }),
     center: {
@@ -57,13 +57,13 @@ const Carousel = () => {
       opacity: 1,
     },
     exit: (direction: any) => ({
-      x: direction === 1 ? "-100%" : "100%",
+      x: direction === 1 ? '-100%' : '100%',
       opacity: 0,
     }),
   };
 
   return (
-    <div className=" bg-neutral-950 relative h-[90vh] w-full overflow-hidden">
+    <div className="relative h-[90vh] w-full overflow-hidden bg-neutral-950">
       {/* Slides */}
       <AnimatePresence custom={direction} initial={false}>
         <motion.div
@@ -74,36 +74,36 @@ const Carousel = () => {
           animate="center"
           exit="exit"
           transition={{
-            type: "spring",
+            type: 'spring',
             stiffness: 300,
             damping: 30, // Adjust this to control the spring bounce
             mass: 0.5, // Reduces the flickering by controlling inertia
             duration: 0.5,
           }}
-          className="absolute px-4 md:px-6 inset-0"
+          className="absolute inset-0 px-4 md:px-6"
         >
-          <div className=" w-full h-full flex-col-reverse md:flex-row flex gap-2 md:gap-16">
-            <div className="w-full h-full flex flex-col gap-3 md:gap-6 justify-start md:justify-center items-center text-white px-4 py-2 md:py-8 md:px-8  space-y-6">
-              <h1 className=" text-gray-100 font-semibold text-center md:text-5xl text-3xl">
+          <div className="flex h-full w-full flex-col-reverse gap-2 md:flex-row md:gap-16">
+            <div className="flex h-full w-full flex-col items-center justify-start gap-3 space-y-6 px-4 py-2 text-white md:justify-center md:gap-6 md:px-8 md:py-8">
+              <h1 className="text-center text-3xl font-semibold text-gray-100 md:text-5xl">
                 Your Favorite Anime Character
               </h1>
 
-              <p className="text-gray-300 text-center font-exo md:text-lg">
+              <p className="text-center font-exo text-gray-300 md:text-lg">
                 Exclusive, Limited-Edition Anime Characters for Every Fan! Shop
                 now and get your hands on the best selection.
               </p>
 
-              <div className=" w-full justify-center flex gap-4">
-                <button className=" w-full md:w-fit h-fit  bg-p-green text-white px-2 md:px-6 py-3 text-sm md:text-base rounded-lg hover:bg-p-green/70 transition duration-300">
+              <div className="flex w-full justify-center gap-4">
+                <button className="h-fit w-full rounded-lg bg-p-green px-2 py-3 text-sm text-white transition duration-300 hover:bg-p-green/70 md:w-fit md:px-6 md:text-base">
                   Shop Now
                 </button>
-                <button className=" w-full md:w-fit h-fit  hover:bg-p-blue/70  border border-p-blue text-white px-2 text-sm md:text-base md:px-6 py-3 rounded-lg transition duration-300">
+                <button className="h-fit w-full rounded-lg border border-p-blue px-2 py-3 text-sm text-white transition duration-300 hover:bg-p-blue/70 md:w-fit md:px-6 md:text-base">
                   Explore Characters
                 </button>
               </div>
 
-              <div className=" hidden md:block pt-8 space-y-4">
-                <h3 className="text-p-green font-audiowide text-xl">
+              <div className="hidden space-y-4 pt-8 md:block">
+                <h3 className="font-audiowide text-xl text-p-green">
                   Limited Edition Naruto Figure - Only 100 Left!
                 </h3>
                 <p className="font-exo text-lg">
@@ -111,9 +111,9 @@ const Carousel = () => {
                 </p>
               </div>
             </div>
-            <div className=" flex h-full justify-center items-center w-full">
+            <div className="flex h-full w-full items-center justify-center">
               <img
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover"
                 src="./anime.png"
                 alt=""
               />
@@ -125,13 +125,13 @@ const Carousel = () => {
       {/* Left and right buttons */}
       <button
         onClick={prevSlide}
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-r-lg focus:outline-none"
+        className="absolute left-0 top-1/2 -translate-y-1/2 transform rounded-r-lg bg-black bg-opacity-50 px-4 py-2 text-white focus:outline-none"
       >
         &#10094;
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-l-lg focus:outline-none"
+        className="absolute right-0 top-1/2 -translate-y-1/2 transform rounded-l-lg bg-black bg-opacity-50 px-4 py-2 text-white focus:outline-none"
       >
         &#10095;
       </button>
@@ -141,57 +141,57 @@ const Carousel = () => {
 
 const animeData = [
   {
-    name: "Naruto Uzumaki",
-    image: "./anime.png",
+    name: 'Naruto Uzumaki',
+    image: './anime.png',
     rating: 5,
     price: 800,
     discountPrice: 280,
   },
   {
-    name: "Sasuke Uchiha",
-    image: "./anime.png",
+    name: 'Sasuke Uchiha',
+    image: './anime.png',
     rating: 4,
     price: 860,
     discountPrice: 320,
   },
   {
-    name: "Goku",
-    image: "./anime.png",
+    name: 'Goku',
+    image: './anime.png',
     rating: 5,
     price: 650,
     discountPrice: 230,
   },
   {
-    name: "Luffy",
-    image: "./anime.png",
+    name: 'Luffy',
+    image: './anime.png',
     rating: 4,
     price: 1600,
     discountPrice: 740,
   },
   {
-    name: "Naruto Uzumaki",
-    image: "./anime.png",
+    name: 'Naruto Uzumaki',
+    image: './anime.png',
     rating: 5,
     price: 800,
     discountPrice: 280,
   },
   {
-    name: "Sasuke Uchiha",
-    image: "./anime.png",
+    name: 'Sasuke Uchiha',
+    image: './anime.png',
     rating: 4,
     price: 860,
     discountPrice: 320,
   },
   {
-    name: "Goku",
-    image: "./anime.png",
+    name: 'Goku',
+    image: './anime.png',
     rating: 5,
     price: 650,
     discountPrice: 230,
   },
   {
-    name: "Luffy",
-    image: "./anime.png",
+    name: 'Luffy',
+    image: './anime.png',
     rating: 4,
     price: 1600,
     discountPrice: 740,
@@ -202,21 +202,21 @@ const animeData = [
 // AnimeCard Component
 const AnimeCard = ({ id, name, images, rating, price, discountPrice }: any) => {
   return (
-    <div className="bg-gray-700 rounded-lg group shadow-lg p-4 transform group transition-transform duration-300">
+    <div className="group transform rounded-lg bg-gray-700 p-4 shadow-lg transition-transform duration-300">
       <img
         src={images[0]}
         alt={name}
-        className="  duration-300 block group-hover:hidden h-52 w-full object-contain bg-white rounded-t-lg"
+        className="block h-52 w-full rounded-t-lg bg-white object-contain duration-300 group-hover:hidden"
       />
       <img
         src={images[1]}
         alt={name}
-        className=" duration-300 hidden group-hover:block h-52 w-full object-contain bg-white rounded-t-lg"
+        className="hidden h-52 w-full rounded-t-lg bg-white object-contain duration-300 group-hover:block"
       />
 
-      <div className="py-4 flex flex-col gap-0 ">
+      <div className="flex flex-col gap-0 py-4">
         {/* Name */}
-        <h3 className="text-gray-100 text-xl font-bold">{name}</h3>
+        <h3 className="text-xl font-bold text-gray-100">{name}</h3>
 
         {/* Rating */}
         <div className="flex items-center space-x-1">
@@ -224,7 +224,7 @@ const AnimeCard = ({ id, name, images, rating, price, discountPrice }: any) => {
             <span
               key={index}
               className={`text-neon-yellow ${
-                index < rating ? "text-opacity-100" : "text-opacity-30"
+                index < rating ? 'text-opacity-100' : 'text-opacity-30'
               }`}
             >
               ★
@@ -234,8 +234,8 @@ const AnimeCard = ({ id, name, images, rating, price, discountPrice }: any) => {
 
         {/* Price and Discount */}
         <div className="">
-          <span className="line-through text-neon-blue text-lg">₹{price}</span>
-          <span className="text-p-green text-lg font-bold ml-2">
+          <span className="text-lg text-neon-blue line-through">₹{price}</span>
+          <span className="ml-2 text-lg font-bold text-p-green">
             ₹{discountPrice}
           </span>
         </div>
@@ -243,7 +243,7 @@ const AnimeCard = ({ id, name, images, rating, price, discountPrice }: any) => {
         {/* Shop Button */}
         <Link
           href={`/product/${id}`}
-          className="mt-4 font-medium w-full text-center hover:bg-white text-white py-2 rounded-lg border hover:text-gray-800 transition duration-300"
+          className="mt-4 w-full rounded-lg border py-2 text-center font-medium text-white transition duration-300 hover:bg-white hover:text-gray-800"
         >
           Shop Now
         </Link>
@@ -255,7 +255,7 @@ const AnimeCard = ({ id, name, images, rating, price, discountPrice }: any) => {
 // AnimeCardList Component
 const AnimeCardList = () => {
   return (
-    <div className="grid max-w-7xl w-full mx-auto grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-8">
+    <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 p-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {productsData.map((character, index) => (
         <AnimeCard
           key={character.id}
@@ -273,26 +273,26 @@ const AnimeCardList = () => {
 
 const NarutoCollection = () => {
   return (
-    <section className=" bg-primary/90 py-16 px-8 flex items-center justify-center">
-      <div className="container mx-auto flex flex-col  md:flex-row gap-8 items-center">
+    <section className="flex items-center justify-center bg-primary/90 px-8 py-16">
+      <div className="container mx-auto flex flex-col items-center gap-8 md:flex-row">
         {/* Image Section */}
-        <div className="md:w-1/2 h-fit md:mt-0">
+        <div className="h-fit md:mt-0 md:w-1/2">
           <img
             src="./lanAllNaruto.png" // Replace with your collection image URL
             alt="Naruto Character Collection"
-            className="w-full h-full rounded-lg object-contain"
+            className="h-full w-full rounded-lg object-contain"
           />
         </div>
-        <div className="md:w-1/2 text-center justify-center items-center flex flex-col gap-4 md:px-4 md:text-left">
-          <h2 className="text-gray-200 text-center  text-4xl mb-4">
+        <div className="flex flex-col items-center justify-center gap-4 text-center md:w-1/2 md:px-4 md:text-left">
+          <h2 className="mb-4 text-center text-4xl text-gray-200">
             Explore Our Exclusive Naruto Collection
           </h2>
-          <p className="text-white text-center text-lg mb-6">
+          <p className="mb-6 text-center text-lg text-white">
             Dive into the world of Naruto with our exclusive collection of
             characters. Celebrate your favorite ninjas and add them to your
             collection today!
           </p>
-          <button className="bg-p-green text-white w-fit  py-3 px-6 rounded-lg text-lg hover:bg-neon-pink transition duration-300">
+          <button className="w-fit rounded-lg bg-p-green px-6 py-3 text-lg text-white transition duration-300 hover:bg-neon-pink">
             View More Naruto Characters
           </button>
         </div>
@@ -313,14 +313,14 @@ export default function App() {
     setAllCategories(Array.from(uniqueCategories));
   }, [productsData]);
   return (
-    <div className=" bg-neutral-950 w-full min-h-screen flex flex-col ">
+    <div className="flex min-h-screen w-full flex-col bg-neutral-950">
       <NavBar />
       <Carousel />
       {/* <img src="./anime.png" alt="" /> */}
       <NarutoCollection />
-      <div className="bg-dark-bg min-h-screen text-white">
+      <div className="min-h-screen bg-dark-bg text-white">
         <div className="container mx-auto py-12 md:py-16">
-          <h1 className="text-gray-200 text-4xl md:text-5xl font-semibold text-center mb-6  md:mb-12">
+          <h1 className="mb-6 text-center text-4xl font-semibold text-gray-200 md:mb-12 md:text-5xl">
             Anime Character Shop
           </h1>
           <AnimeCardList />
@@ -333,9 +333,9 @@ export default function App() {
 
 function CategorySection({ allCategories }: any) {
   return (
-    <div className="bg-primary/90 items-center py-12 flex flex-col gap-10">
-      <p className=" text-5xl text-white font-medium ">All Categories</p>
-      <div className="grid max-w-7xl w-full mx-auto grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-6 p-8">
+    <div className="flex flex-col items-center gap-10 bg-primary/90 py-12">
+      <p className="text-5xl font-medium text-white">All Categories</p>
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 p-8 sm:grid-cols-2 md:grid-cols-3">
         {allCategories.map((category: any, index: any) => (
           <CategoryCard key={index} category={category} />
         ))}
@@ -348,18 +348,18 @@ function CategoryCard({ category }: any) {
   return (
     <Link
       href={`/category/${category}`}
-      className=" cursor-pointer rounded overflow-hidden relative w-full h-72"
+      className="relative h-72 w-full cursor-pointer overflow-hidden rounded"
     >
       <video
         autoPlay
         loop
         muted
-        className="  top-0 left-0 w-full h-full opacity-85 object-cover"
+        className="left-0 top-0 h-full w-full object-cover opacity-85"
       >
         <source src="./videos/keyChain.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <div className=" bg-gradient-to-b from-transparent to-black w-full text-gray-300 text-center text-lg py-2 font-semibold absolute bottom-0 left-0">
+      <div className="absolute bottom-0 left-0 w-full bg-gradient-to-b from-transparent to-black py-2 text-center text-lg font-semibold text-gray-300">
         {category}
       </div>
     </Link>
