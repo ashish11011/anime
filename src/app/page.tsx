@@ -5,10 +5,12 @@ import Link from 'next/link';
 import NavBar from '@/components/navBar';
 import {
   categoryData,
+  instagramGallaryData,
   productsData,
   seriesCategoryData,
 } from '@/const/products';
 import { ArrowRight } from 'lucide-react';
+import Footer from '@/components/footer';
 const slides = [
   { id: 1, content: 'https://via.placeholder.com/1920x1080?text=Slide+1' },
   { id: 2, content: 'https://via.placeholder.com/1920x1080?text=Slide+2' },
@@ -99,10 +101,10 @@ const Carousel = () => {
               </p>
 
               <div className="flex w-full justify-center gap-4">
-                <button className="h-fit w-full rounded-lg bg-p-green px-2 py-3 text-sm text-white transition duration-300 hover:bg-p-green/70 md:w-fit md:px-6 md:text-base">
+                <button className="h-fit w-full rounded bg-p-green px-2 py-3 text-sm text-white transition duration-300 hover:bg-p-green/70 md:w-fit md:px-6 md:text-base">
                   Shop Now
                 </button>
-                <button className="h-fit w-full rounded-lg border border-p-blue px-2 py-3 text-sm text-white transition duration-300 hover:bg-p-blue/70 md:w-fit md:px-6 md:text-base">
+                <button className="h-fit w-full rounded border border-p-blue px-2 py-3 text-sm text-white transition duration-300 hover:bg-p-blue/70 md:w-fit md:px-6 md:text-base">
                   Explore Characters
                 </button>
               </div>
@@ -357,12 +359,12 @@ export default function App() {
 
       <NarutoCollection />
       <SeriesCategorySection />
-      <div className="min-h-screen bg-dark-bg text-white">
+      <div className="min-h-screen bg-neutral-950 text-white">
         <div className="container mx-auto flex flex-col gap-6 py-12 md:py-16">
           <h1 className="text-center text-4xl font-semibold text-gray-200 md:text-5xl">
             Hot Deals of the Month
           </h1>
-          <p className="text-center">
+          <p className="mx-auto max-w-[80%] text-center">
             Grab the best deals while they last! These products are available at
             <br />
             unbeatable prices—hurry before they're gone!
@@ -372,8 +374,37 @@ export default function App() {
       </div>
 
       {/* Instagram gallary */}
+      <InstagramGallary />
       {/* Subscribe */}
       {/* Footer */}
+      <Footer />
     </div>
   );
 }
+
+const InstagramGallary = () => {
+  return (
+    <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 px-6">
+      <p className="text-center text-5xl font-semibold text-white">
+        Instagram Store
+      </p>
+      <div className="grid grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-5">
+        {instagramGallaryData.map((item) => {
+          return (
+            <Link
+              href={item.link}
+              target="_blank"
+              className="group cursor-pointer overflow-hidden border border-gray-500"
+            >
+              <img
+                src={item.image}
+                className="duration-200 group-hover:scale-105"
+                alt=""
+              />
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
+};

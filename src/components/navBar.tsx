@@ -1,3 +1,4 @@
+import { categoryData } from '@/const/products';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -17,25 +18,17 @@ const NavBar = () => {
         </Link>
 
         <div className="hidden md:block">
-          <ul className="flex overflow-hidden rounded-full border border-neutral-700 text-white">
-            <Link
-              href={'/category/naruto'}
-              className="cursor-pointer px-4 py-1.5 text-sm font-semibold duration-300 hover:bg-neutral-800 md:px-5 md:text-base"
-            >
-              Naruto
-            </Link>
-            <Link
-              href={'/category/anime'}
-              className="cursor-pointer px-4 py-1.5 text-sm font-semibold duration-300 hover:bg-neutral-800 md:px-5 md:text-base"
-            >
-              Anime
-            </Link>
-            <Link
-              href={'/category/posters'}
-              className="cursor-pointer px-4 py-1.5 text-sm font-semibold duration-300 hover:bg-neutral-800 md:px-5 md:text-base"
-            >
-              Posters
-            </Link>
+          <ul className="flex overflow-hidden border-neutral-700 font-medium text-gray-200">
+            {categoryData.map((item) => {
+              return (
+                <Link
+                  href={item.slug}
+                  className="cursor-pointer px-4 py-1.5 text-sm duration-300 hover:bg-neutral-800 md:px-5 md:text-base"
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
           </ul>
         </div>
 
@@ -50,27 +43,17 @@ const NavBar = () => {
         {mobNavOpen && (
           <div className="absolute left-0 top-20 flex h-screen w-full items-center justify-center bg-black text-white">
             <div className="z-40 flex -translate-y-24 flex-col items-center justify-center">
-              <Link
-                href={'/category/naruto'}
-                className="w-full py-3 text-center text-xl hover:bg-neutral-800"
-                onClick={() => setMobNavOpen(false)}
-              >
-                Naruto
-              </Link>
-              <Link
-                href={'/category/anime'}
-                className="w-full py-3 text-center text-xl hover:bg-neutral-800"
-                onClick={() => setMobNavOpen(false)}
-              >
-                Anime
-              </Link>
-              <Link
-                href={'/category/posters'}
-                className="w-full py-3 text-center text-xl hover:bg-neutral-800"
-                onClick={() => setMobNavOpen(false)}
-              >
-                Posters
-              </Link>
+              {categoryData.map((item) => {
+                return (
+                  <Link
+                    href={item.slug}
+                    className="w-full py-3 text-center text-xl hover:bg-neutral-800"
+                    onClick={() => setMobNavOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         )}
