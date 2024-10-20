@@ -1,5 +1,5 @@
 import { categoryData } from '@/const/products';
-import { Menu, X } from 'lucide-react';
+import { Menu, ShoppingBag, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -29,6 +29,14 @@ const NavBar = () => {
                 </Link>
               );
             })}
+
+            {/* Cart Icon */}
+            <Link
+              href={'/cart'}
+              className="cursor-pointer px-4 py-1.5 text-sm duration-300 hover:bg-neutral-800 md:px-5 md:text-base"
+            >
+              <ShoppingBag />
+            </Link>
           </ul>
         </div>
 
