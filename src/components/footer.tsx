@@ -22,7 +22,7 @@ export default function Footer() {
           </p>
           <p className="text-base text-gray-400">
             Join our WhatsApp group to get early stock updates.{' '}
-            <a href="#" className="text-neon-blue underline">
+            <a href="#" className="text-blue-600 underline">
               Click Here
             </a>{' '}
             to join

@@ -1,5 +1,12 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  createContext,
+  use,
+} from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import NavBar from '@/components/navBar';
@@ -9,14 +16,17 @@ import {
   productsData,
   seriesCategoryData,
 } from '@/const/products';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Minus, Plus } from 'lucide-react';
 import Footer from '@/components/footer';
+// import { CartDataProvider, useCartData } from '@/const/cartContext';
 const slides = [
   { id: 1, content: 'https://via.placeholder.com/1920x1080?text=Slide+1' },
   { id: 2, content: 'https://via.placeholder.com/1920x1080?text=Slide+2' },
   { id: 3, content: 'https://via.placeholder.com/1920x1080?text=Slide+3' },
   // Add more slides as needed
 ];
+
+const CartDataContext = createContext<any>(null);
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -146,71 +156,13 @@ const Carousel = () => {
   );
 };
 
-const animeData = [
-  {
-    name: 'Naruto Uzumaki',
-    image: './anime.png',
-    rating: 5,
-    price: 800,
-    discountPrice: 280,
-  },
-  {
-    name: 'Sasuke Uchiha',
-    image: './anime.png',
-    rating: 4,
-    price: 860,
-    discountPrice: 320,
-  },
-  {
-    name: 'Goku',
-    image: './anime.png',
-    rating: 5,
-    price: 650,
-    discountPrice: 230,
-  },
-  {
-    name: 'Luffy',
-    image: './anime.png',
-    rating: 4,
-    price: 1600,
-    discountPrice: 740,
-  },
-  {
-    name: 'Naruto Uzumaki',
-    image: './anime.png',
-    rating: 5,
-    price: 800,
-    discountPrice: 280,
-  },
-  {
-    name: 'Sasuke Uchiha',
-    image: './anime.png',
-    rating: 4,
-    price: 860,
-    discountPrice: 320,
-  },
-  {
-    name: 'Goku',
-    image: './anime.png',
-    rating: 5,
-    price: 650,
-    discountPrice: 230,
-  },
-  {
-    name: 'Luffy',
-    image: './anime.png',
-    rating: 4,
-    price: 1600,
-    discountPrice: 740,
-  },
-  // Add more characters as needed
-];
-
 // AnimeCard Component
 const AnimeCard = ({ id, name, images, rating, price, discountPrice }: any) => {
+  const [isAdded, setIsAdded] = useState(false);
+
   return (
-    <Link
-      href={`/product/${id}`}
+    <div
+      // href={`/product/${id}`}
       className="group transform rounded-lg border border-gray-600 bg-neutral-950 p-3 shadow-lg transition-transform duration-300"
     >
       <img
@@ -226,7 +178,7 @@ const AnimeCard = ({ id, name, images, rating, price, discountPrice }: any) => {
 
       <div className="flex flex-col gap-0 py-4">
         {/* Name */}
-        <h3 className="text-xl font-bold text-gray-100">{name}</h3>
+        <h3 className="line-clamp-1 text-xl font-bold text-gray-100">{name}</h3>
 
         {/* Price and Discount */}
         <div className="">
@@ -236,14 +188,79 @@ const AnimeCard = ({ id, name, images, rating, price, discountPrice }: any) => {
           </span>
         </div>
 
+        <Link
+          href={`/product/${id}`}
+          className="mt-4 w-full rounded-lg border py-2 text-center font-medium text-white transition duration-300 hover:bg-white hover:text-gray-800"
+        >
+          View product
+        </Link>
+
         {/* Shop Button */}
-        <div className="mt-4 w-full rounded-lg border py-2 text-center font-medium text-white transition duration-300 hover:bg-white hover:text-gray-800">
-          Add to cart
-        </div>
+        {!isAdded ? (
+          <div
+            // onClick={() =>
+            //   addToCart({
+            //     id,
+            //     name,
+            //     price: discountPrice,
+            //     image: images[0],
+            //     quantity: 1,
+            //   })
+            // }
+            className="mt-4 w-full cursor-pointer rounded-lg border py-2 text-center font-medium text-white transition duration-300 hover:bg-white hover:text-gray-800"
+          >
+            Add to cart
+          </div>
+        ) : (
+          <div className=""></div>
+        )}
       </div>
-    </Link>
+    </div>
   );
 };
+// const AnimeCard = ({ id, name, images, rating, price, discountPrice }: any) => {
+//   return (
+//     <Link
+//       href={`/product/${id}`}
+//       className="group transform rounded-lg border border-gray-600 bg-neutral-950 p-3 shadow-lg transition-transform duration-300"
+//     >
+//       <img
+//         src={images[0]}
+//         alt={name}
+//         className="block h-52 w-full rounded-lg bg-white object-contain duration-300 group-hover:hidden"
+//       />
+//       <img
+//         src={images[1]}
+//         alt={name}
+//         className="hidden h-52 w-full rounded-lg bg-white object-contain duration-300 group-hover:block"
+//       />
+
+//       <div className="flex flex-col gap-0 py-4">
+//         {/* Name */}
+//         <h3 className="text-xl font-bold text-gray-100">{name}</h3>
+
+//         {/* Price and Discount */}
+//         <div className="">
+//           <span className="text-lg text-neon-blue line-through">₹{price}</span>
+//           <span className="ml-2 text-lg font-bold text-p-green">
+//             ₹{discountPrice}
+//           </span>
+//         </div>
+
+//         {/* Shop Button */}
+//         <div className="mt-4 flex w-fit justify-between gap-2 overflow-hidden rounded-lg border border-gray-400">
+//           <div className="bg-neutral-800 px-2 py-2">
+//             <Minus size={20} />
+//           </div>
+//           <div className="px-3 py-2">1</div>
+//           <div className="bg-neutral-800 px-2 py-2">
+//             <Plus size={20} />
+//           </div>
+//         </div>
+//       </div>
+//     </Link>
+//   );
+// };
 
 // AnimeCardList Component
 const AnimeCardList = () => {
@@ -255,7 +272,7 @@ const AnimeCardList = () => {
           id={character.id}
           name={character.name}
           images={character.images}
-          rating={character.rating}
+          // rating={character.rating}
           price={character.price}
           discountPrice={character.discountPrice}
         />
@@ -341,16 +358,6 @@ function CategoryCard({ category }: any) {
 }
 
 export default function App() {
-  const [allCategories, setAllCategories] = useState<string[]>([]);
-
-  useEffect(() => {
-    const uniqueCategories = new Set<string>();
-
-    productsData.forEach((product: any) => {
-      uniqueCategories.add(product.family);
-    });
-    setAllCategories(Array.from(uniqueCategories));
-  }, [productsData]);
   return (
     <div className="flex min-h-screen w-full flex-col bg-neutral-950">
       <NavBar />
@@ -364,12 +371,14 @@ export default function App() {
           <h1 className="text-center text-4xl font-semibold text-gray-200 md:text-5xl">
             Hot Deals of the Month
           </h1>
-          <p className="mx-auto max-w-[80%] text-center">
+          <p className="mx-auto max-w-[80%] text-center text-gray-400">
             Grab the best deals while they last! These products are available at
             <br />
             unbeatable prices—hurry before they're gone!
           </p>
+          {/* <CartDataProvider> */}
           <AnimeCardList />
+          {/* </CartDataProvider> */}
         </div>
       </div>
 
