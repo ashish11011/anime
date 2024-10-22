@@ -3,17 +3,18 @@
 import Footer from '@/components/footer';
 import NavBar from '@/components/navBar';
 import { productsData } from '@/const/products';
+import connect from '@/dbConfig/dbConfig';
+import Product from '@/Models/productModel';
 import Link from 'next/link';
 
-export default function Page(context: any) {
+export default async function Page(context: any) {
   const params = context.params;
 
   // Decode the URL-encoded parameter to get the original value
   const decodedCategory = decodeURIComponent(params.id);
 
-  const categoryItems = productsData.filter(
-    (product) => product.category === decodedCategory
-  );
+  await connect();
+  const categoryItems = await Product.find({ series: decodedCategory });
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-neutral-950">
