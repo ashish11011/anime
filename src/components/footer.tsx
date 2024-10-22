@@ -73,10 +73,15 @@ export default function Footer() {
         </div>
       </div>
       <div className="mx-auto flex w-fit gap-4">
-        <Link href={'https://www.facebook.com/'}>
+        <Link href={'https://www.instagram.com/cozzy___corner/'}>
           <Instagram className="h-6 w-6 cursor-pointer text-gray-200 duration-200 hover:scale-105" />
         </Link>
-        <Link href={'https://web.whatsapp.com/'}>
+        <Link
+          target={'_blank'}
+          href={
+            'https://wa.me/+919664203951?text=Hi Cozzy Corner, I am interested in your product'
+          }
+        >
           {' '}
           <img
             src="./whatsapp-icon.svg"

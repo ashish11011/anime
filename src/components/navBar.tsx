@@ -1,3 +1,4 @@
+'use client';
 import { categoryData } from '@/const/products';
 import { Menu, ShoppingBag, X } from 'lucide-react';
 import Link from 'next/link';

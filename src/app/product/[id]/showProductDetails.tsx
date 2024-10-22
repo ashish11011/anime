@@ -1,23 +1,22 @@
 'use client';
 import Link from 'next/link';
 // import Navbar from "@/components/navBar";
-import React, { useState } from 'react';
-import { productsData } from '@/const/products';
+import React, { useEffect, useState } from 'react';
 
 // SingleCardPage Component
-const ShowProductDetail = ({
-  name,
-  images,
-  rating,
-  price,
-  discountPrice,
-  description,
-  productHeadlines,
-  id,
-}: any) => {
+const ShowProductDetail = ({ productData }: any) => {
+  const {
+    name,
+    images,
+    rating,
+    price,
+    discountPrice,
+    description,
+    productHeadlines,
+    id,
+  } = JSON.parse(productData);
   // State to track the currently selected image
-  const [selectedImage, setSelectedImage] = useState(images[0]);
-
+  const [selectedImage, setSelectedImage] = useState<any>(images[0]);
   return (
     <div className="bg-neutral-950 py-16">
       {/* <Navbar /> */}
@@ -27,7 +26,7 @@ const ShowProductDetail = ({
           <div className="top-16 flex w-full flex-col-reverse items-center gap-4 p-4 md:sticky md:w-auto md:flex-row">
             <div className="flex flex-row items-center gap-2 md:flex-col">
               {/* Thumbnails Section */}
-              {images.map((image: string, index: number) => (
+              {images?.map((image: string, index: number) => (
                 <img
                   key={index}
                   src={image}
@@ -110,7 +109,7 @@ const ShowProductDetail = ({
                 Product Highlights
               </h2>
               <ul className="list-disc space-y-2 pl-5 text-white">
-                {productHeadlines.map((headline: string, index: number) => (
+                {productHeadlines?.map((headline: string, index: number) => (
                   <li key={index}>{headline}</li>
                 ))}
               </ul>
