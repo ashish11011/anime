@@ -12,6 +12,8 @@ import ProductCategory from '@/Models/categoryModel';
 import SeriesCategory from '@/Models/seriesCategory';
 import Product from '@/Models/productModel';
 
+export const revalidate = 0;
+
 export default async function App() {
   connect();
 
