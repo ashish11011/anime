@@ -19,7 +19,7 @@ export default function NarutoCollection() {
             characters. Celebrate your favorite ninjas and add them to your
             collection today!
           </p>
-          <button className="w-fit rounded-lg bg-p-green px-6 py-3 text-lg text-white transition duration-300 hover:bg-neon-pink">
+          <button className="w-fit rounded-lg bg-p-green px-6 py-3 text-lg text-white transition duration-300">
             View More Naruto Characters
           </button>
         </div>

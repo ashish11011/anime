@@ -7,10 +7,10 @@ export default function CategoryCard({ category }: any) {
       href={category.slug}
       className="group flex w-full cursor-pointer flex-col gap-3 overflow-hidden rounded-lg border border-gray-500 p-3"
     >
-      <div className="w-full overflow-hidden rounded-lg">
+      <div className="h-full w-full overflow-hidden rounded-lg">
         <img
           src={category.image}
-          className="w-full duration-200 group-hover:scale-105"
+          className="h-full w-full duration-200 group-hover:scale-105"
           alt=""
         />
       </div>

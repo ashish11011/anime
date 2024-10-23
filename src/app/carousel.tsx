@@ -3,9 +3,22 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 
 const slides = [
-  { id: 1, content: 'https://via.placeholder.com/1920x1080?text=Slide+1' },
-  { id: 2, content: 'https://via.placeholder.com/1920x1080?text=Slide+2' },
-  { id: 3, content: 'https://via.placeholder.com/1920x1080?text=Slide+3' },
+  {
+    id: 1,
+    content: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/hero-goku.png',
+  },
+  {
+    id: 2,
+    content: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/hero-itachi.png',
+  },
+  {
+    id: 3,
+    content: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/hero-zoro.png',
+  },
+  {
+    id: 4,
+    content: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/hero-boa.png',
+  },
   // Add more slides as needed
 ];
 
@@ -111,9 +124,9 @@ export default function Carousel() {
             </div>
             <div className="flex h-full w-full items-center justify-center">
               <img
-                className="h-full w-full object-contain"
-                src="./anime.png"
-                alt=""
+                className="h-full max-h-[90vh] w-full object-contain"
+                src={slides[currentSlide].content}
+                alt={`Slide ${currentSlide + 1}`}
               />
             </div>
           </div>
