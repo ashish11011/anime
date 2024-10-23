@@ -1,10 +1,15 @@
 'use client';
+import { CircleX } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 const ProductForm = () => {
+  const router = useRouter();
   const [productHeadlines, setProductHeadlines] = useState<any>([]);
   const [newHeadline, setNewHeadline] = useState('');
   const [images, setImages] = useState<any>([]);
+  const [imageAdded, setImageAdded] = useState(false);
+  const [headlineAdded, setHeadlineAdded] = useState(false);
   const [formData, setFormData] = useState<any>({
     name: '',
     images: [],
@@ -16,7 +21,19 @@ const ProductForm = () => {
     category: '',
   });
 
+  const SERIES = [
+    'naruto',
+    'one-piece',
+    'demon-slayer',
+    'dragon-ball',
+    'marvel',
+    'others',
+  ];
+
+  const CATEGORIES = ['action-figure', 'miniature', 'bobble-head', 'sets'];
+
   const handleAddHeadline = () => {
+    setHeadlineAdded(false);
     if (newHeadline.trim()) {
       setProductHeadlines((prevHeadlines: any) => [
         ...prevHeadlines,
@@ -35,6 +52,9 @@ const ProductForm = () => {
   };
 
   async function handleImageUploadToS3() {
+    if (imageAdded) {
+      return;
+    }
     let imageLinks: any = [];
     function getImageName(url: string) {
       // Split the URL by slashes and take the last part
@@ -81,6 +101,7 @@ const ProductForm = () => {
       console.error('Error submitting form:', response.statusText);
     }
     setFormData({ ...formData, images: imageLinks });
+    setImageAdded(true);
   }
 
   async function handleFormSubmit(e: any) {
@@ -98,12 +119,19 @@ const ProductForm = () => {
       if (response.ok) {
         const data = await response.json();
         console.log('Product added:', data);
+        router.push('/admin');
       } else {
         console.error('Error submitting form:', response.statusText);
       }
     } catch (error) {
       console.error('Network error:', error);
     }
+  }
+
+  function handleRemoveHeadline(index: number) {
+    const newHeadlines = [...productHeadlines];
+    newHeadlines.splice(index, 1);
+    setProductHeadlines(newHeadlines);
   }
 
   return (
@@ -146,7 +174,7 @@ const ProductForm = () => {
         </div>
         <div
           onClick={() => handleImageUploadToS3()}
-          className="cursor-pointer rounded bg-blue-300 px-2 py-1.5 text-center font-medium text-blue-800"
+          className={`cursor-pointer rounded px-2 py-1.5 text-center font-medium ${imageAdded ? 'bg-red-300 text-red-800' : 'bg-blue-300 text-blue-800'}`}
         >
           Add Images
         </div>
@@ -195,16 +223,23 @@ const ProductForm = () => {
           </div>
           <div className="mt-2 flex flex-col rounded-md border py-1">
             {productHeadlines.map((headline: string, index: number) => (
-              <div key={index} className="px-2 py-1">
-                {headline}
+              <div key={index} className="flex justify-between gap-2 px-2 py-1">
+                {headline}{' '}
+                <p
+                  onClick={() => handleRemoveHeadline(index)}
+                  className="cursor-pointer text-gray-600"
+                >
+                  <CircleX />
+                </p>
               </div>
             ))}
           </div>
           <div
-            onClick={() =>
-              setFormData({ ...formData, productHeadlines: productHeadlines })
-            }
-            className="mt-2 cursor-pointer rounded bg-blue-300 px-2 py-1.5 text-center font-medium text-blue-800"
+            onClick={() => {
+              setFormData({ ...formData, productHeadlines: productHeadlines });
+              setHeadlineAdded(true);
+            }}
+            className={`mt-2 cursor-pointer rounded px-2 py-1.5 text-center font-medium ${headlineAdded ? 'bg-red-300 text-red-800' : 'bg-blue-300 text-blue-800'}`}
           >
             Add headline to product
           </div>
@@ -213,6 +248,7 @@ const ProductForm = () => {
         <label className="flex flex-col">
           <span className="mb-1 text-gray-700">Description</span>
           <textarea
+            rows={6}
             onChange={(e) => handelChange(e)}
             className="rounded-md border border-gray-300 px-2 py-1.5 outline-none"
             name="description"
@@ -220,29 +256,37 @@ const ProductForm = () => {
             placeholder="Enter product description"
           />
         </label>
-
         <label className="flex flex-col">
           <span className="mb-1 text-gray-700">Series</span>
-          <input
+          <select
             onChange={(e) => handelChange(e)}
             className="rounded-md border border-gray-300 px-2 py-1.5 outline-none"
-            type="text"
             name="series"
             value={formData.series}
-            placeholder="Enter series"
-          />
+          >
+            <option value="">Select a series</option>
+            {SERIES.map((series) => (
+              <option key={series} value={series}>
+                {series.charAt(0).toUpperCase() + series.slice(1)}
+              </option>
+            ))}
+          </select>
         </label>
-
         <label className="flex flex-col">
           <span className="mb-1 text-gray-700">Category</span>
-          <input
+          <select
             onChange={(e) => handelChange(e)}
             className="rounded-md border border-gray-300 px-2 py-1.5 outline-none"
-            type="text"
             name="category"
             value={formData.category}
-            placeholder="Enter category"
-          />
+          >
+            <option value="">Select a category</option>
+            {CATEGORIES.map((category) => (
+              <option key={category} value={category}>
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </option>
+            ))}
+          </select>
         </label>
 
         <div
