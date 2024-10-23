@@ -30,7 +30,13 @@ const ProductForm = () => {
     'others',
   ];
 
-  const CATEGORIES = ['action-figure', 'miniature', 'bobble-head', 'sets'];
+  const CATEGORIES = [
+    'action-figure',
+    'miniature',
+    'bobble-head',
+    'q-posket',
+    'sets',
+  ];
 
   const handleAddHeadline = () => {
     setHeadlineAdded(false);
