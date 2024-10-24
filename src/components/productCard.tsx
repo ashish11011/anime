@@ -8,6 +8,7 @@ export default function ProductCard({
   name,
   images,
   rating,
+  outOfStock,
   price,
   discountPrice,
 }: any) {
@@ -20,6 +21,7 @@ export default function ProductCard({
   }, [cart, id]);
 
   function handleCartToggle(id: string) {
+    if (outOfStock) return;
     if (isAdded) {
       removeFromCart(id);
       setIsAdded(false);
@@ -30,7 +32,9 @@ export default function ProductCard({
   }
 
   return (
-    <div className="group transform rounded-lg border border-gray-600 bg-neutral-950 p-3 shadow-lg transition-transform duration-300">
+    <div
+      className={`group transform rounded-lg border border-gray-600 bg-neutral-950 p-3 shadow-lg transition-transform duration-300`}
+    >
       <img
         src={images[0]}
         alt={name}
@@ -68,9 +72,13 @@ export default function ProductCard({
             isAdded
               ? 'bg-white text-gray-800'
               : 'text-white hover:bg-white hover:text-gray-800'
-          }`}
+          } ${outOfStock ? 'cursor-not-allowed opacity-70' : ''} `}
         >
-          {isAdded ? 'Remove from cart' : 'Add to cart'}
+          {outOfStock
+            ? 'Out of Stock'
+            : isAdded
+              ? 'Remove from cart'
+              : 'Add to cart'}
         </div>
       </div>
     </div>

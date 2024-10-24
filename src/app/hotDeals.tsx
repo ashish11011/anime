@@ -40,6 +40,7 @@ const AnimeCardList = ({ productsData }: { productsData: any }) => {
             images={character.images}
             price={character.price}
             discountPrice={character.discountPrice}
+            outOfStock={character.outOfStock}
           />
         ))}
       </div>

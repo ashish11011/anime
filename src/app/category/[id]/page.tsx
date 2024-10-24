@@ -43,6 +43,7 @@ const AnimeCardList = ({ productsData }: any) => {
             name={character.name}
             images={character.images}
             rating={character.rating}
+            outOfStock={character.outOfStock}
             price={character.price}
             discountPrice={character.discountPrice}
           />

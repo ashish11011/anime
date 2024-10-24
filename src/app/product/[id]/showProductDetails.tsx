@@ -11,6 +11,7 @@ const ShowProductDetail = ({ productData }: any) => {
     rating,
     price,
     discountPrice,
+    outOfStock,
     description,
     productHeadlines,
     id,
@@ -32,6 +33,7 @@ const ShowProductDetail = ({ productData }: any) => {
 
   // Function to toggle the product in the cart
   const toggleCart = () => {
+    if (outOfStock) return;
     const existingCart = localStorage.getItem('cart');
     const parsedCart = existingCart ? JSON.parse(existingCart) : [];
 
@@ -63,6 +65,7 @@ const ShowProductDetail = ({ productData }: any) => {
 
   // Function to handle "Buy Now" button click
   const handleBuyNow = () => {
+    if (outOfStock) return;
     // Clear existing cart
     localStorage.setItem(
       'cart',
@@ -135,15 +138,19 @@ const ShowProductDetail = ({ productData }: any) => {
               <div className="flex gap-4">
                 <button
                   onClick={handleBuyNow} // Handle Buy Now click
-                  className="rounded bg-p-green px-8 py-2 font-semibold text-white transition duration-300 hover:bg-p-green/90"
+                  className={`rounded bg-p-green px-8 py-2 font-semibold text-white transition duration-300 hover:bg-p-green/90 ${outOfStock ? 'cursor-not-allowed opacity-50' : ''}`}
                 >
                   Buy now
                 </button>
                 <button
                   onClick={toggleCart}
-                  className={`rounded border border-p-blue px-8 py-2 text-white transition duration-300 hover:bg-p-blue/90 ${isAnimating ? 'animate-pulse' : ''}`}
+                  className={`rounded border border-p-blue px-8 py-2 text-white transition duration-300 hover:bg-p-blue/90 ${isAnimating ? 'animate-pulse' : ''} ${outOfStock ? 'cursor-not-allowed opacity-50' : ''}`}
                 >
-                  {inCart ? 'Remove from Cart' : 'Add to Cart'}
+                  {outOfStock
+                    ? 'Out of stock'
+                    : inCart
+                      ? 'Remove from cart'
+                      : 'Add to cart'}
                 </button>
               </div>
             </div>
