@@ -94,7 +94,7 @@ const ShowCartData = () => {
 
   // Calculate subtotal
   const subtotal = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc, item) => acc + item.discountPrice * item.quantity,
     0
   );
 
@@ -196,7 +196,7 @@ const ShowCartData = () => {
 
                   {/* Price for the quantity */}
                   <div className="col-span-1 text-right text-lg text-p-green">
-                    ₹{(item.price * item.quantity).toFixed(2)}
+                    ₹{(item.discountPrice * item.quantity).toFixed(2)}
                   </div>
 
                   {/* Remove Button */}

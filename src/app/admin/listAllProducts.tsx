@@ -26,6 +26,20 @@ const ListAllProducts = ({ productData }: any) => {
     }
   }
 
+  async function handleDelete(id: any) {
+    const data = await fetch('/api/deleteProduct', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    });
+
+    if (data.ok) {
+      router.refresh();
+    }
+  }
+
   return (
     <div className="mx-auto flex w-[72rem] flex-col gap-6">
       <div className="flex gap-4 py-4">
@@ -48,7 +62,7 @@ const ListAllProducts = ({ productData }: any) => {
           {products.map((product: any, index: number) => {
             return (
               <div
-                className={`grid grid-cols-10 gap-2 border px-2 py-1 hover:bg-gray-50 ${product?.outOfStock && 'bg-red-300'} `}
+                className={`grid grid-cols-10 gap-2 border px-2 py-1 ${product?.outOfStock && 'bg-red-300'} `}
               >
                 <div className="col-span-1 flex items-center justify-between gap-1">
                   <p>{index + 1}</p>
@@ -71,10 +85,11 @@ const ListAllProducts = ({ productData }: any) => {
                     className="cursor-pointer text-gray-600 duration-200 hover:scale-110 hover:text-gray-800"
                     size={20}
                   />
-                  {/* <Trash2
+                  <Trash2
+                    onClick={() => handleDelete(product.id)}
                     className="cursor-pointer text-gray-600 duration-200 hover:scale-110 hover:text-gray-800"
                     size={20}
-                  /> */}
+                  />
                   <Blocks
                     onClick={() => handleOutOfStock(product.id)}
                     className="cursor-pointer text-gray-600 duration-200 hover:scale-110 hover:text-gray-800"

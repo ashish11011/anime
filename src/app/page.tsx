@@ -28,12 +28,16 @@ export default async function App() {
       <BottomInstagram />
       <NavBar />
       <Carousel />
-      <CategorySection categoryData={categoryData} />
+      <CategorySection categoryData={JSON.stringify(categoryData)} />
       <NarutoCollection />
-      <SeriesCategorySection seriesCategoryData={seriesCategoryData} />
+      <SeriesCategorySection
+        seriesCategoryData={JSON.stringify(seriesCategoryData)}
+      />
       <HotDeals productsData={JSON.stringify(productsData)} />
       {/* Instagram gallary */}
-      <InstagramGallary instagramGallaryData={instagramGallaryData} />
+      <InstagramGallary
+        instagramGallaryData={JSON.stringify(instagramGallaryData)}
+      />
       {/* Subscribe */}
       {/* Footer */}
       <Footer />
