@@ -3,6 +3,8 @@ import NavBar from '@/components/navBar';
 import Footer from '@/components/footer';
 import connect from '@/dbConfig/dbConfig';
 import Product from '@/Models/productModel';
+import { CartProvider } from '@/const/cartContext';
+import BottomInstagram from '@/components/bottomInstagram';
 
 // SingleCardPage Component
 const SingleCardPage = async (context: any) => {
@@ -13,9 +15,12 @@ const SingleCardPage = async (context: any) => {
 
   return (
     <div className="flex flex-col bg-neutral-950">
+      <BottomInstagram />
       <NavBar />
       {productData && (
-        <ShowProductDetail productData={JSON.stringify(productData)} />
+        <CartProvider>
+          <ShowProductDetail productData={JSON.stringify(productData)} />
+        </CartProvider>
       )}
       <Footer />
     </div>

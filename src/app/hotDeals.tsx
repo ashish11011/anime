@@ -1,4 +1,5 @@
 import ProductCard from '@/components/productCard';
+import { CartProvider } from '@/const/cartContext';
 import React from 'react';
 
 const HotDeals = ({ productsData }: any) => {
@@ -28,17 +29,20 @@ export default HotDeals;
 const AnimeCardList = ({ productsData }: { productsData: any }) => {
   const showProductData = JSON.parse(productsData);
   return (
-    <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 p-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {showProductData.map((character: any, index: number) => (
-        <ProductCard
-          key={character.id}
-          id={character.id}
-          name={character.name}
-          images={character.images}
-          price={character.price}
-          discountPrice={character.discountPrice}
-        />
-      ))}
-    </div>
+    <CartProvider>
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 p-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {showProductData.map((character: any, index: number) => (
+          <ProductCard
+            key={character.id}
+            _id={character._id}
+            id={character.id}
+            name={character.name}
+            images={character.images}
+            price={character.price}
+            discountPrice={character.discountPrice}
+          />
+        ))}
+      </div>
+    </CartProvider>
   );
 };

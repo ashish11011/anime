@@ -41,7 +41,14 @@ const NavBar = () => {
           </ul>
         </div>
 
-        <div className="block md:hidden">
+        <div className="flex items-center gap-2 md:hidden">
+          {/* Cart Icon */}
+          <Link
+            href={'/cart'}
+            className="cursor-pointer px-4 py-1.5 text-sm duration-300 md:px-5 md:text-base"
+          >
+            <ShoppingBag color="#ccc" />
+          </Link>
           {mobNavOpen ? (
             <X onClick={() => setMobNavOpen(false)} color="#ccc" />
           ) : (

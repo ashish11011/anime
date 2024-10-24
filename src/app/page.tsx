@@ -11,6 +11,7 @@ import IsntagramProduct from '@/Models/instagramModel';
 import ProductCategory from '@/Models/categoryModel';
 import SeriesCategory from '@/Models/seriesCategory';
 import Product from '@/Models/productModel';
+import BottomInstagram from '@/components/bottomInstagram';
 
 export const revalidate = 0;
 
@@ -23,16 +24,14 @@ export default async function App() {
   const productsData = await Product.find({});
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-neutral-950">
+    <div className="relative flex min-h-screen w-full flex-col bg-neutral-950">
+      <BottomInstagram />
       <NavBar />
       <Carousel />
       <CategorySection categoryData={categoryData} />
-
       <NarutoCollection />
       <SeriesCategorySection seriesCategoryData={seriesCategoryData} />
-
       <HotDeals productsData={JSON.stringify(productsData)} />
-
       {/* Instagram gallary */}
       <InstagramGallary instagramGallaryData={instagramGallaryData} />
       {/* Subscribe */}
