@@ -82,6 +82,9 @@ const ListAllProducts = ({ productData }: any) => {
                 <p className="self-center">{product.series}</p>
                 <p className="flex items-center gap-3">
                   <Pencil
+                    onClick={() =>
+                      router.push(`/admin/editExistingProduct/${product.id}`)
+                    }
                     className="cursor-pointer text-gray-600 duration-200 hover:scale-110 hover:text-gray-800"
                     size={20}
                   />
