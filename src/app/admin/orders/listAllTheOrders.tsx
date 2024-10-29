@@ -7,6 +7,15 @@ const ListAllTheOrders = ({ orderDataString }: any) => {
   const orderData = JSON.parse(orderDataString);
   return (
     <div className="mx-auto flex w-[72rem] flex-col">
+      <div className="mb-4 grid cursor-pointer grid-cols-12 gap-2 border bg-gray-100 px-2 py-2">
+        <div className="col-span-1 break-all">Index</div>
+        <div className="col-span-3 break-all">Name</div>
+        <div className="col-span-3 break-all">Email</div>
+        <div className="col-span-3 break-all">Address</div>
+        <div className="col-span-1 break-all">Phone</div>
+        <div className="col-span-1 break-all">Amount</div>
+      </div>
+
       {orderData.map((item: any, index: number) => {
         return <ListSingleProduct index={index} key={item._id} order={item} />;
       })}
