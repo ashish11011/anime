@@ -39,6 +39,10 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  isHotDeal: {
+    type: Boolean,
+    default: false,
+  },
   outOfStock: {
     type: Boolean,
     default: false,

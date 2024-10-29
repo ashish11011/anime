@@ -1,23 +1,52 @@
 'use client';
+import { CartProvider } from '@/const/cartContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
 const slides = [
   {
     id: 1,
     content: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/hero-goku.png',
+    heading: 'Dragon Ball Z Shirtless  Goku',
+    description:
+      'Son Goku action figure: Immerse yourself in the Dragon Ball universe. showcasing intricate details and dynamic poses. High-Quality Materials Crafted from premium materials',
+    buyNowText: 'Buy Goku Figure',
+    exploreText: '/product/ed03cefa-a53e-4845-b818-26b5cd81ab5e',
+    limitedEdition: 'Limited Edition Goku Figure - Only 50 Left!',
+    limitedDescription: "Don't miss your chance to own this exclusive figure!",
   },
   {
     id: 2,
     content: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/hero-itachi.png',
+    heading: 'Itachi uchiha with crow',
+    description:
+      'This collection includes some of the most popular characters! Great quality and craftsmanship, a must have collector’s item | Fans and collectors will love.',
+    buyNowText: 'Buy Itachi Figure',
+    exploreText: '/product/429f157a-4096-4b3f-b92f-3c93b46d4651',
+    limitedEdition: 'Limited Edition Itachi Figure - Only 30 Left!',
+    limitedDescription: 'A must-have for any Naruto fan!',
   },
   {
     id: 3,
     content: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/hero-zoro.png',
+    heading: 'One Piece Roronoa Zoro Tree',
+    description:
+      "BEST FOR GIFTING toy on Birthday and Christmas | Can use as Cake Toppers/Cake Decoration as well |It can be used for car furnishing articles, children's toys, desktop decor, cake decor, birthday gift.",
+    buyNowText: 'Buy Zoro Figure',
+    exploreText: '/product/b392ba8b-9617-4089-8622-2b1e2419f097',
+    limitedEdition: 'Limited Edition Zoro Figure - Only 40 Left!',
+    limitedDescription: 'Grab yours before it sells out!',
   },
   {
     id: 4,
     content: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/hero-boa.png',
+    heading: 'Boa Hancock One Piece Sitting Pirate',
+    description: `This collection includes some of the most popular characters! Great quality and craftsmanship, a must have collector's item | Fans and collectors will love.`,
+    buyNowText: 'Buy Boa Figure',
+    exploreText: '/product/7a85d4b6-3dae-4379-968a-47d7f50b1fab',
+    limitedEdition: 'Limited Edition Boa Figure - Only 20 Left!',
+    limitedDescription: 'Secure this stunning figure today!',
   },
   // Add more slides as needed
 ];
@@ -27,21 +56,18 @@ export default function Carousel() {
   const [direction, setDirection] = useState<any>(0); // Track slide direction for animation
   const intervalRef = useRef<any>(null); // Ref to hold the interval for auto-slide
 
-  // Function to go to the next slide
   const nextSlide = () => {
     setDirection(1);
     setCurrentSlide((prev) => (prev + 1) % slides.length);
     resetTimer(); // Reset the auto-slide timer on manual navigation
   };
 
-  // Function to go to the previous slide
   const prevSlide = () => {
     setDirection(-1);
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
     resetTimer(); // Reset the auto-slide timer on manual navigation
   };
 
-  // Reset the auto-slide timer
   const resetTimer = () => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -49,15 +75,11 @@ export default function Carousel() {
     intervalRef.current = setInterval(nextSlide, 5000); // Restart the timer
   };
 
-  // Auto-slide every 5 seconds (initial setup)
   useEffect(() => {
     resetTimer(); // Start the initial timer
-
-    // Cleanup on component unmount
     return () => clearInterval(intervalRef.current);
   }, []);
 
-  // Framer Motion animation variants
   const variants = {
     enter: (direction: any) => ({
       x: direction === 1 ? '100%' : '-100%',
@@ -75,7 +97,6 @@ export default function Carousel() {
 
   return (
     <div className="relative h-[90vh] w-full overflow-hidden bg-neutral-950">
-      {/* Slides */}
       <AnimatePresence custom={direction} initial={false}>
         <motion.div
           key={slides[currentSlide].id}
@@ -87,8 +108,8 @@ export default function Carousel() {
           transition={{
             type: 'spring',
             stiffness: 300,
-            damping: 30, // Adjust this to control the spring bounce
-            mass: 0.5, // Reduces the flickering by controlling inertia
+            damping: 30,
+            mass: 0.5,
             duration: 0.5,
           }}
           className="absolute inset-0 px-4 md:px-6"
@@ -96,29 +117,31 @@ export default function Carousel() {
           <div className="flex h-full w-full flex-col-reverse gap-2 md:flex-row md:gap-16">
             <div className="flex h-full w-full flex-col items-center justify-start gap-3 space-y-6 px-4 py-2 text-white md:justify-center md:gap-6 md:px-8 md:py-8">
               <h1 className="text-center text-3xl font-semibold text-gray-100 md:text-5xl">
-                Your Favorite Anime Character
+                {slides[currentSlide].heading}
               </h1>
 
               <p className="text-center font-exo text-gray-300 md:text-lg">
-                Exclusive, Limited-Edition Anime Characters for Every Fan! Shop
-                now and get your hands on the best selection.
+                {slides[currentSlide].description}
               </p>
 
               <div className="flex w-full justify-center gap-4">
                 <button className="h-fit w-full rounded bg-p-green px-2 py-3 text-sm text-white transition duration-300 hover:bg-p-green/70 md:w-fit md:px-6 md:text-base">
-                  Shop Now
+                  {slides[currentSlide].buyNowText}
                 </button>
-                <button className="h-fit w-full rounded border border-p-blue px-2 py-3 text-sm text-white transition duration-300 hover:bg-p-blue/70 md:w-fit md:px-6 md:text-base">
+                <Link
+                  href={slides[currentSlide].exploreText}
+                  className="h-fit w-full rounded border border-p-blue px-2 py-3 text-center text-sm text-white transition duration-300 hover:bg-p-blue/70 md:w-fit md:px-6 md:text-base"
+                >
                   Explore Characters
-                </button>
+                </Link>
               </div>
 
               <div className="hidden space-y-4 pt-8 md:block">
                 <h3 className="font-audiowide text-xl text-p-green">
-                  Limited Edition Naruto Figure - Only 100 Left!
+                  {slides[currentSlide].limitedEdition}
                 </h3>
                 <p className="font-exo text-lg">
-                  Get your hands on this rare collectible before it’s gone!
+                  {slides[currentSlide].limitedDescription}
                 </p>
               </div>
             </div>

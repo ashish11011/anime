@@ -1,13 +1,24 @@
 import mongoose from 'mongoose';
 
 const orderDetailsSchema = new mongoose.Schema({
-  product: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product',
+  productId: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: String,
     required: true,
   },
   quantity: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
@@ -25,19 +36,42 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  pincode: {
+    type: String,
+    required: true,
+  },
   phone: {
     type: String,
     required: true,
   },
   orderDetails: [orderDetailsSchema],
-  total: {
-    type: Number,
+  extraCharge: {
+    type: String,
     required: true,
+    default: 0,
+  },
+  discountedPrice: {
+    type: String,
+    required: true,
+  },
+  totalAmount: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: String,
+    required: true,
+    default: 'pending',
+  },
+  phishingActivity: {
+    type: String,
+    required: true,
+    default: 'no',
   },
 });
 
 const OrderModel =
-  mongoose.models.OrderModel || mongoose.model('order', orderSchema);
+  mongoose.models.Order || mongoose.model('Order', orderSchema);
 export default OrderModel;
 
 // const order = await OrderModel.findById(orderId).populate('orderDetails.product');

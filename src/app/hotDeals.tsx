@@ -33,7 +33,7 @@ const AnimeCardList = ({ productsData }: { productsData: any }) => {
       <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 p-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {showProductData.map((character: any, index: number) => (
           <ProductCard
-            key={character.id}
+            key={index}
             _id={character._id}
             id={character.id}
             name={character.name}

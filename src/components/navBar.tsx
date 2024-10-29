@@ -10,7 +10,10 @@ const NavBar = () => {
   return (
     <div className="sticky top-0 z-50 w-full bg-neutral-950">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-8 px-4 py-6 md:px-8 md:py-6">
-        <Link href={'/'} className="h-10 max-h-8 w-auto min-w-14 md:max-h-none">
+        <Link
+          href={'/'}
+          className="h-10 max-h-8 w-auto min-w-14 flex-shrink-0 md:max-h-none"
+        >
           <img
             className="h-full w-full object-contain"
             src="https://s3.ap-south-1.amazonaws.com/cozzy.corner/logo.png"

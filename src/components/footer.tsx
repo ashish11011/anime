@@ -84,7 +84,7 @@ export default function Footer() {
         >
           {' '}
           <img
-            src="./whatsapp-icon.svg"
+            src="https://s3.ap-south-1.amazonaws.com/cozzy.corner/whatsapp-icon.png"
             className="h-6 w-6 cursor-pointer hover:scale-105"
             alt=""
           />

@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Trash2 } from 'lucide-react';
 import axios from 'axios';
 
-// Cart Page Component
 const ShowCartData = () => {
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [couponCode, setCouponCode] = useState('');
@@ -14,10 +13,10 @@ const ShowCartData = () => {
     name: '',
     email: '',
     mobile: '',
+    pincode: '',
     address: '',
   });
 
-  // Fetch products from the API based on stored product IDs
   useEffect(() => {
     const fetchCartProducts = async () => {
       const storedCart = localStorage.getItem('cart');
@@ -26,20 +25,16 @@ const ShowCartData = () => {
 
       if (productIds.length > 0) {
         try {
-          // Fetch products from the API
           const response = await axios.post('/api/products', {
             ids: productIds,
           });
           const products = response.data;
-
-          // Merge product details with quantities from localStorage
           const updatedCartItems = parsedCart.map((cartItem: any) => {
             const product = products.find(
               (prod: any) => prod.id === cartItem.id
             );
             return { ...product, quantity: cartItem.quantity };
           });
-
           setCartItems(updatedCartItems);
         } catch (error) {
           console.error('Error fetching products:', error);
@@ -51,12 +46,10 @@ const ShowCartData = () => {
     fetchCartProducts();
   }, []);
 
-  // Update localStorage when cartItems change
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // Function to increase quantity
   const increaseQuantity = (id: string) => {
     setCartItems(
       cartItems.map((item) =>
@@ -65,7 +58,6 @@ const ShowCartData = () => {
     );
   };
 
-  // Function to decrease quantity
   const decreaseQuantity = (id: string) => {
     setCartItems(
       cartItems.map((item) =>
@@ -76,12 +68,10 @@ const ShowCartData = () => {
     );
   };
 
-  // Function to remove item from cart
   const removeItem = (id: string) => {
     setCartItems(cartItems.filter((item) => item.id !== id));
   };
 
-  // Function to apply coupon code
   const applyCoupon = () => {
     if (couponCode === 'DISCOUNT10') {
       setDiscount(10);
@@ -92,36 +82,54 @@ const ShowCartData = () => {
     }
   };
 
-  // Calculate subtotal
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.discountPrice * item.quantity,
     0
   );
 
-  // Calculate total after discount
-  const total = subtotal - (subtotal * discount) / 100;
+  // Delivery charge calculation
+  const deliveryCharge = subtotal < 999 ? 50 : 0;
 
-  // Handle form submission for order
+  // Extra 10% discount if subtotal is 1999 or more
+  const extraDiscount = subtotal >= 1999 ? 10 : 0;
+  const effectiveDiscount = discount + extraDiscount;
+  const discountAmount = (subtotal * effectiveDiscount) / 100;
+
+  const total = subtotal - discountAmount + deliveryCharge;
+
   const handleOrderSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    return;
-    // Prepare order data
     const orderData = {
-      user: userDetails,
-      items: cartItems,
-      total,
+      user: userDetails || {},
+      items: cartItems || [],
+      total: total || 0,
     };
 
     try {
-      // Send order request to the backend
-      await axios.post('/api/orders', orderData);
-      alert('Order placed successfully!');
-      // Clear cart and user details
-      localStorage.removeItem('cart');
-      setCartItems([]);
-      setUserDetails({ name: '', email: '', mobile: '', address: '' });
-      setShowCheckoutForm(false); // Hide form after submission
+      const response = await fetch('/api/order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (response.ok) {
+        alert('Order placed successfully!');
+        localStorage.removeItem('cart');
+        setCartItems([]);
+        setUserDetails({
+          name: '',
+          email: '',
+          mobile: '',
+          pincode: '',
+          address: '',
+        });
+        setShowCheckoutForm(false);
+      } else {
+        alert('Failed to place order. Please try again.');
+      }
     } catch (error) {
       console.error('Error placing order:', error);
       alert('Failed to place order. Please try again.');
@@ -139,13 +147,11 @@ const ShowCartData = () => {
           Shopping Cart
         </h1>
 
-        {/* Cart Items with Grid Layout */}
         <div className="mb-8 rounded-lg bg-neutral-900 p-4">
           {cartItems.length === 0 ? (
             <p className="text-white">Your cart is empty.</p>
           ) : (
             <div className="grid grid-cols-4 items-center gap-4">
-              {/* Header Row */}
               <div className="col-span-1 font-bold text-white">Product</div>
               <div className="col-span-1 text-right font-bold text-white">
                 Quantity
@@ -157,13 +163,11 @@ const ShowCartData = () => {
                 Remove
               </div>
 
-              {/* Cart Items */}
               {cartItems.map((item) => (
                 <div
                   key={item.id}
                   className="subgrid col-span-4 grid grid-cols-4 border-b border-gray-400 py-4"
                 >
-                  {/* Product Image and Name */}
                   <div className="col-span-1 flex w-fit flex-col items-center gap-1 md:flex-row md:space-x-4">
                     <img
                       src={item.images[0]}
@@ -177,7 +181,6 @@ const ShowCartData = () => {
                     </div>
                   </div>
 
-                  {/* Quantity Control */}
                   <div className="col-span-1 flex h-fit items-center justify-end gap-2 md:gap-4">
                     <button
                       className="flex size-6 items-center justify-center rounded-lg bg-neon-blue px-2 py-1 text-white md:size-auto md:px-4 md:py-2"
@@ -194,12 +197,10 @@ const ShowCartData = () => {
                     </button>
                   </div>
 
-                  {/* Price for the quantity */}
                   <div className="col-span-1 text-right text-lg text-p-green">
                     ₹{(item.discountPrice * item.quantity).toFixed(2)}
                   </div>
 
-                  {/* Remove Button */}
                   <div className="col-span-1 text-right">
                     <button
                       className="ml-auto flex items-center gap-2 rounded-lg bg-red-600 px-2 py-2 text-white transition duration-300 hover:bg-neon-green md:px-4 md:py-2"
@@ -215,7 +216,6 @@ const ShowCartData = () => {
           )}
         </div>
 
-        {/* Coupon Code Section */}
         <div className="mb-8 rounded-lg bg-neutral-900 p-4">
           <h2 className="mb-4 text-2xl font-semibold text-white">
             Apply Coupon
@@ -238,7 +238,6 @@ const ShowCartData = () => {
           )}
         </div>
 
-        {/* Cart Summary */}
         <div className="rounded-lg bg-dark-gray p-4">
           <h2 className="mb-4 text-2xl font-semibold text-gray-100">
             Cart Summary
@@ -247,86 +246,92 @@ const ShowCartData = () => {
             <p>Subtotal:</p>
             <p>₹{subtotal.toFixed(2)}</p>
           </div>
-          <div className="mb-4 flex justify-between text-neon-green">
-            <p>Discount ({discount}%):</p>
-            <p>-₹{((subtotal * discount) / 100).toFixed(2)}</p>
-          </div>
-          <div className="mb-8 flex justify-between text-2xl font-bold text-neon-yellow">
+          {extraDiscount > 0 && (
+            <div className="mb-4 flex justify-between text-neon-green">
+              <p>Additional Discount (10%):</p>
+              <p>-₹{((subtotal * extraDiscount) / 100).toFixed(2)}</p>
+            </div>
+          )}
+          {/* <div className="mb-4 flex justify-between text-neon-green">
+            <p>Coupon Discount ({discount}%):</p>
+            <p>-₹{discountAmount.toFixed(2)}</p>
+          </div> */}
+          {deliveryCharge > 0 && (
+            <div className="mb-4 flex justify-between text-white">
+              <p>Delivery Charge:</p>
+              <p>₹{deliveryCharge.toFixed(2)}</p>
+            </div>
+          )}
+          <div className="mb-4 flex justify-between text-white">
             <p>Total:</p>
             <p>₹{total.toFixed(2)}</p>
           </div>
-
           <button
-            className="w-full rounded-lg bg-p-green px-8 py-3 font-semibold text-white transition duration-300 hover:bg-p-green/90"
+            className="rounded-lg bg-p-green px-4 py-2 text-white transition duration-300 hover:bg-p-green/90"
             onClick={() => setShowCheckoutForm(true)}
           >
             Proceed to Checkout
           </button>
         </div>
 
-        {/* Checkout Form */}
         {showCheckoutForm && (
           <form
-            onSubmit={handleOrderSubmit}
             className="mt-8 rounded-lg bg-neutral-900 p-4"
+            onSubmit={handleOrderSubmit}
           >
             <h2 className="mb-4 text-2xl font-semibold text-white">Checkout</h2>
-
-            <div className="mb-4">
-              <input
-                type="text"
-                className="w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white focus:outline-none"
-                placeholder="Name"
-                value={userDetails.name}
-                onChange={(e) =>
-                  setUserDetails({ ...userDetails, name: e.target.value })
-                }
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <input
-                type="email"
-                className="w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white focus:outline-none"
-                placeholder="Email"
-                value={userDetails.email}
-                onChange={(e) =>
-                  setUserDetails({ ...userDetails, email: e.target.value })
-                }
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <input
-                type="tel"
-                className="w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white focus:outline-none"
-                placeholder="Mobile Number"
-                value={userDetails.mobile}
-                onChange={(e) =>
-                  setUserDetails({ ...userDetails, mobile: e.target.value })
-                }
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <input
-                type="text"
-                className="w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white focus:outline-none"
-                placeholder="Address"
-                value={userDetails.address}
-                onChange={(e) =>
-                  setUserDetails({ ...userDetails, address: e.target.value })
-                }
-                required
-              />
-            </div>
-
+            <input
+              type="text"
+              placeholder="Name"
+              className="mb-4 w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white focus:outline-none"
+              value={userDetails.name}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, name: e.target.value })
+              }
+              required
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              className="mb-4 w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white focus:outline-none"
+              value={userDetails.email}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, email: e.target.value })
+              }
+              required
+            />
+            <input
+              type="tel"
+              placeholder="Mobile"
+              className="mb-4 w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white focus:outline-none"
+              value={userDetails.mobile}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, mobile: e.target.value })
+              }
+              required
+            />
+            <input
+              type="text"
+              placeholder="Pincode"
+              className="mb-4 w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white focus:outline-none"
+              value={userDetails.pincode}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, pincode: e.target.value })
+              }
+              required
+            />
+            <textarea
+              placeholder="Address"
+              className="mb-4 w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white focus:outline-none"
+              value={userDetails.address}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, address: e.target.value })
+              }
+              required
+            />
             <button
               type="submit"
-              className="w-full rounded-lg bg-p-green px-8 py-3 font-semibold text-white transition duration-300 hover:bg-p-green/90"
+              className="rounded-lg bg-p-green px-4 py-2 text-white transition duration-300 hover:bg-p-green/90"
             >
               Place Order
             </button>

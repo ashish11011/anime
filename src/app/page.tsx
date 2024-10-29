@@ -3,7 +3,7 @@ import Footer from '@/components/footer';
 import Carousel from './carousel';
 import CategorySection from './allCategories';
 import SeriesCategorySection from './seriesCategory';
-import NarutoCollection from './narutoCollection';
+import NarutoCollection from './discountabove1999';
 import HotDeals from './hotDeals';
 import InstagramGallary from './instagramGallary';
 import connect from '@/dbConfig/dbConfig';
@@ -12,6 +12,8 @@ import ProductCategory from '@/Models/categoryModel';
 import SeriesCategory from '@/Models/seriesCategory';
 import Product from '@/Models/productModel';
 import BottomInstagram from '@/components/bottomInstagram';
+import DiscountAbove1999 from './discountabove1999';
+import DiscountAbove999 from './discountabove999';
 
 export const revalidate = 0;
 
@@ -21,7 +23,9 @@ export default async function App() {
   const instagramGallaryData = await IsntagramProduct.find({});
   const categoryData = await ProductCategory.find({});
   const seriesCategoryData = await SeriesCategory.find({});
-  const productsData = await Product.find({});
+  const productsData = await Product.find({
+    isHotDeal: true,
+  });
 
   return (
     <div className="relative flex min-h-screen w-full flex-col bg-neutral-950">
@@ -29,10 +33,11 @@ export default async function App() {
       <NavBar />
       <Carousel />
       <CategorySection categoryData={JSON.stringify(categoryData)} />
-      <NarutoCollection />
+      <DiscountAbove1999 />
       <SeriesCategorySection
         seriesCategoryData={JSON.stringify(seriesCategoryData)}
       />
+      <DiscountAbove999 />
       <HotDeals productsData={JSON.stringify(productsData)} />
       {/* Instagram gallary */}
       <InstagramGallary

@@ -1,6 +1,6 @@
 'use client';
 
-import { Blocks, EllipsisVertical, Pencil, Trash2 } from 'lucide-react';
+import { Blocks, EllipsisVertical, Flame, Pencil, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -22,6 +22,21 @@ const ListAllProducts = ({ productData }: any) => {
     if (data.ok) {
       // window.location.reload();
       console.log('Toggled out of stock');
+      router.refresh();
+    }
+  }
+  async function handleHotDealProduct(id: any) {
+    const data = await fetch('/api/hotDeal', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    });
+
+    if (data.ok) {
+      // window.location.reload();
+      console.log('Toggled hot deal');
       router.refresh();
     }
   }
@@ -56,7 +71,14 @@ const ListAllProducts = ({ productData }: any) => {
         >
           Add new
         </Link>
+        <Link
+          href="/admin/orders"
+          className="w-fit cursor-pointer select-none rounded bg-yellow-300 px-3 py-2 font-medium text-yellow-800"
+        >
+          Orders
+        </Link>
       </div>
+      <p className="text-3xl font-semibold">Products</p>
       {showProducts && (
         <div className="hide-scrollbar mx-auto flex w-full flex-col overflow-x-scroll">
           {products.map((product: any, index: number) => {
@@ -96,6 +118,11 @@ const ListAllProducts = ({ productData }: any) => {
                   <Blocks
                     onClick={() => handleOutOfStock(product.id)}
                     className="cursor-pointer text-gray-600 duration-200 hover:scale-110 hover:text-gray-800"
+                    size={20}
+                  />
+                  <Flame
+                    onClick={() => handleHotDealProduct(product.id)}
+                    className={`cursor-pointer text-gray-600 duration-200 hover:scale-110 hover:text-gray-800 ${product.isHotDeal && 'fill-red-500 stroke-red-700'}`}
                     size={20}
                   />
                 </p>

@@ -2,6 +2,9 @@
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; // Import the useRouter hook
+import { CartProvider } from '@/const/cartContext';
+import { productPageProducts } from '@/const/products';
+import ProductCard from '@/components/productCard';
 
 // SingleCardPage Component
 const ShowProductDetail = ({ productData }: any) => {
@@ -113,18 +116,16 @@ const ShowProductDetail = ({ productData }: any) => {
           <div className="space-y-12 px-4 md:ml-8 md:w-1/2 md:px-0">
             {/* Product Details */}
             <div>
-              <h1 className="mb-2 text-5xl font-bold text-gray-200">{name}</h1>
+              <h1 className="mb-6 text-5xl font-bold text-gray-200">{name}</h1>
 
-              <div className="mb-4 flex items-center">
+              {/* <div className="mb-4 flex items-center">
                 {[...Array(rating)].map((_, index) => (
                   <span key={index} className="text-xl text-neon-yellow">
                     ★
                   </span>
                 ))}
                 <span className="ml-2 text-white">(5.0)</span>
-              </div>
-
-              <p className="mb-6 text-lg text-gray-300">{description}</p>
+              </div> */}
 
               <div className="mb-4 flex items-center space-x-4">
                 <span className="text-xl text-neon-blue line-through">
@@ -155,6 +156,8 @@ const ShowProductDetail = ({ productData }: any) => {
               </div>
             </div>
 
+            <p className="mb-4 text-lg text-gray-300">{description}</p>
+
             {/* Add Coupon Section */}
             <div className="rounded-lg py-6">
               <h2 className="mb-4 text-2xl font-medium text-gray-100">
@@ -183,7 +186,7 @@ const ShowProductDetail = ({ productData }: any) => {
             </div>
 
             {/* Similar Products Section */}
-            <div className="rounded-lg py-4">
+            {/* <div className="rounded-lg py-4">
               <h2 className="mb-4 text-3xl font-medium text-gray-100">
                 View More Products
               </h2>
@@ -207,7 +210,24 @@ const ShowProductDetail = ({ productData }: any) => {
                   );
                 })}
               </div>
-            </div>
+            </div> */}
+
+            <CartProvider>
+              <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+                {productPageProducts.map((character: any, index: number) => (
+                  <ProductCard
+                    key={character.id}
+                    _id={character._id}
+                    id={character.id}
+                    name={character.name}
+                    images={character.images}
+                    price={character.price}
+                    discountPrice={character.discountPrice}
+                    outOfStock={character.outOfStock}
+                  />
+                ))}
+              </div>
+            </CartProvider>
           </div>
         </div>
       </section>
