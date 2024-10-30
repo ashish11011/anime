@@ -69,6 +69,12 @@ export default function Footer() {
             >
               Contact Us
             </Link>
+            <Link
+              href={'/orders'}
+              className="cursor-pointer text-gray-400 hover:underline"
+            >
+              My orders
+            </Link>
           </div>
         </div>
       </div>

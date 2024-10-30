@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  console.log('Total S3 POST URLs request: ' + JSON.stringify(body.count));
 
   let URLs: any = [];
 
@@ -46,8 +45,6 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error uploading files:', error);
   }
-
-  //   console.log(URLs);
 
   return new Response(JSON.stringify(URLs), {
     status: 200,

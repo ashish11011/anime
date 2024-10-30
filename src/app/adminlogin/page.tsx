@@ -23,7 +23,6 @@ const AdminLogin = () => {
     } else {
       router.push('/');
     }
-    console.log('Hash:', hash);
   };
 
   return (

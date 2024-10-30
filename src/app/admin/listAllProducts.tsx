@@ -20,8 +20,6 @@ const ListAllProducts = ({ productData }: any) => {
     });
 
     if (data.ok) {
-      // window.location.reload();
-      console.log('Toggled out of stock');
       router.refresh();
     }
   }
@@ -35,8 +33,6 @@ const ListAllProducts = ({ productData }: any) => {
     });
 
     if (data.ok) {
-      // window.location.reload();
-      console.log('Toggled hot deal');
       router.refresh();
     }
   }

@@ -8,7 +8,6 @@ export async function POST(requiest: NextRequest) {
   await connect();
   const data = await Product.create(body);
   data.save();
-  console.log('Product added:', data);
 
   return new Response(
     JSON.stringify({

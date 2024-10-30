@@ -73,9 +73,9 @@ const ShowCartData = () => {
   };
 
   const applyCoupon = () => {
-    if (couponCode === 'DISCOUNT10') {
+    if (couponCode === 'NT10') {
       setDiscount(10);
-    } else if (couponCode === 'ASHISH100') {
+    } else if (couponCode === 'AJH0') {
       setDiscount(100);
     } else {
       setDiscount(0);
@@ -116,7 +116,7 @@ const ShowCartData = () => {
       });
 
       if (response.ok) {
-        alert('Order placed successfully!');
+        alert('Order placed successfully, Our team will contact you soon.');
         localStorage.removeItem('cart');
         setCartItems([]);
         setUserDetails({

@@ -58,8 +58,6 @@ export async function POST(request: NextRequest) {
     serverDiscountedPrice.toFixed(0) === total.toFixed(0) ? 'no' : 'yes';
 
   try {
-    console.log('Creating order entry:', orderData);
-
     const order = await OrderModel.create({
       name: userData.name,
       email: userData.email,
@@ -73,8 +71,6 @@ export async function POST(request: NextRequest) {
       status: 'pending',
       phishingActivity: phishingActivity,
     });
-
-    console.log('Order added:', order);
   } catch (error) {
     console.error('Error placing order:', error);
     return new Response(JSON.stringify({ message: 'Error placing order' }), {

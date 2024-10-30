@@ -23,52 +23,57 @@ const orderDetailsSchema = new mongoose.Schema({
   },
 });
 
-const orderSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
+const orderSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
+    pincode: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
+    orderDetails: [orderDetailsSchema],
+    extraCharge: {
+      type: String,
+      required: true,
+      default: 0,
+    },
+    discountedPrice: {
+      type: String,
+      required: true,
+    },
+    totalAmount: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+      default: 'pending',
+    },
+    phishingActivity: {
+      type: String,
+      required: true,
+      default: 'no',
+    },
   },
-  email: {
-    type: String,
-    required: true,
-  },
-  address: {
-    type: String,
-    required: true,
-  },
-  pincode: {
-    type: String,
-    required: true,
-  },
-  phone: {
-    type: String,
-    required: true,
-  },
-  orderDetails: [orderDetailsSchema],
-  extraCharge: {
-    type: String,
-    required: true,
-    default: 0,
-  },
-  discountedPrice: {
-    type: String,
-    required: true,
-  },
-  totalAmount: {
-    type: String,
-    required: true,
-  },
-  status: {
-    type: String,
-    required: true,
-    default: 'pending',
-  },
-  phishingActivity: {
-    type: String,
-    required: true,
-    default: 'no',
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 const OrderModel =
   mongoose.models.Order || mongoose.model('Order', orderSchema);

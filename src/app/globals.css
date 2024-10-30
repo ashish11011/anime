@@ -3,5 +3,6 @@
 @tailwind utilities;
 
 .hide-scrollbar {
-  overflow: hidden; /* Hide scrollbar */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none;
 }

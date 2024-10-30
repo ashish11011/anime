@@ -17,16 +17,6 @@ export async function POST(request: NextRequest) {
   } = body;
   await connect();
 
-  console.log(
-    name,
-    price,
-    discountPrice,
-    description,
-    productHeadlines,
-    series,
-    category,
-    id
-  );
   const data = await Product.findOneAndUpdate(
     { id },
     {

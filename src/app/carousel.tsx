@@ -2,11 +2,14 @@
 import { CartProvider } from '@/const/cartContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 const slides = [
   {
     id: 1,
+    productId: 'ed03cefa-a53e-4845-b818-26b5cd81ab5e',
+    discountedPrice: 1999,
     content: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/hero-goku.png',
     heading: 'Dragon Ball Z Shirtless  Goku',
     description:
@@ -18,6 +21,8 @@ const slides = [
   },
   {
     id: 2,
+    productId: '429f157a-4096-4b3f-b92f-3c93b46d4651',
+    discountedPrice: 1799,
     content: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/hero-itachi.png',
     heading: 'Itachi uchiha with crow',
     description:
@@ -29,6 +34,8 @@ const slides = [
   },
   {
     id: 3,
+    productId: 'b392ba8b-9617-4089-8622-2b1e2419f097',
+    discountedPrice: 999,
     content: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/hero-zoro.png',
     heading: 'One Piece Roronoa Zoro Tree',
     description:
@@ -40,6 +47,8 @@ const slides = [
   },
   {
     id: 4,
+    productId: '7a85d4b6-3dae-4379-968a-47d7f50b1fab',
+    discountedPrice: 669,
     content: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/hero-boa.png',
     heading: 'Boa Hancock One Piece Sitting Pirate',
     description: `This collection includes some of the most popular characters! Great quality and craftsmanship, a must have collector's item | Fans and collectors will love.`,
@@ -55,6 +64,7 @@ export default function Carousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState<any>(0); // Track slide direction for animation
   const intervalRef = useRef<any>(null); // Ref to hold the interval for auto-slide
+  const router = useRouter();
 
   const nextSlide = () => {
     setDirection(1);
@@ -95,6 +105,17 @@ export default function Carousel() {
     }),
   };
 
+  const handleBuyNow = ({ id, name, discountPrice, image }: any) => {
+    localStorage.setItem(
+      'cart',
+      JSON.stringify([
+        { id, name, price: discountPrice, quantity: 1, image: image },
+      ])
+    );
+
+    router.push('/cart');
+  };
+
   return (
     <div className="relative h-[90vh] w-full overflow-hidden bg-neutral-950">
       <AnimatePresence custom={direction} initial={false}>
@@ -125,7 +146,17 @@ export default function Carousel() {
               </p>
 
               <div className="flex w-full justify-center gap-4">
-                <button className="h-fit w-full rounded bg-p-green px-2 py-3 text-sm text-white transition duration-300 hover:bg-p-green/70 md:w-fit md:px-6 md:text-base">
+                <button
+                  onClick={() =>
+                    handleBuyNow({
+                      id: slides[currentSlide].productId,
+                      name: slides[currentSlide].heading,
+                      discountedPrice: slides[currentSlide].discountedPrice,
+                      image: slides[currentSlide].content,
+                    })
+                  }
+                  className="h-fit w-full rounded bg-p-green px-2 py-3 text-sm text-white transition duration-300 hover:bg-p-green/70 md:w-fit md:px-6 md:text-base"
+                >
                   {slides[currentSlide].buyNowText}
                 </button>
                 <Link

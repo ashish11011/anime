@@ -51,7 +51,6 @@ const ProductForm = () => {
 
   function handelChange(e: any) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log(formData);
   }
   const handleFileInput = (e: any) => {
     setImages([...images, ...e.target.files]);
@@ -83,7 +82,6 @@ const ProductForm = () => {
 
     if (response.ok) {
       const data = await response.json();
-      console.log('Product added:', data);
 
       for (let i = 0; i < images.length; i++) {
         const responst = await fetch(data[i], {
@@ -93,13 +91,6 @@ const ProductForm = () => {
             'Content-Type': 'image/jpeg',
           },
         });
-
-        if (!responst.ok) {
-          console.error('Error uploading image:', responst.statusText);
-        } else {
-          console.log('Image uploaded:', responst.statusText);
-        }
-
         const imageS3Link = getImageName(data[i]);
         imageLinks.push(imageS3Link);
       }
@@ -124,7 +115,6 @@ const ProductForm = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Product added:', data);
         router.push('/admin');
       } else {
         console.error('Error submitting form:', response.statusText);

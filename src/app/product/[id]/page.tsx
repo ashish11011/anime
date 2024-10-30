@@ -12,6 +12,10 @@ const SingleCardPage = async (context: any) => {
 
   await connect();
   const [productData] = await Product.find({ id: router.id });
+  const similarProducts = await Product.find({
+    category: productData.category,
+    _id: { $ne: productData._id },
+  }).limit(3);
 
   return (
     <div className="flex flex-col bg-neutral-950">
@@ -19,7 +23,10 @@ const SingleCardPage = async (context: any) => {
       <NavBar />
       {productData && (
         <CartProvider>
-          <ShowProductDetail productData={JSON.stringify(productData)} />
+          <ShowProductDetail
+            similarProductsStringify={JSON.stringify(similarProducts)}
+            productData={JSON.stringify(productData)}
+          />
         </CartProvider>
       )}
       <Footer />

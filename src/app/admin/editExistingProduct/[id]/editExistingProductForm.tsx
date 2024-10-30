@@ -52,7 +52,6 @@ const EditExistingProduct = ({ productDetailsStringify }: any) => {
 
   function handelChange(e: any) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log(formData);
   }
 
   async function handleFormSubmit(e: any) {
@@ -69,7 +68,6 @@ const EditExistingProduct = ({ productDetailsStringify }: any) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Product added:', data);
         router.push('/admin');
       } else {
         console.error('Error submitting form:', response.statusText);

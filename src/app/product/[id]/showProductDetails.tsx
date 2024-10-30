@@ -7,7 +7,7 @@ import { productPageProducts } from '@/const/products';
 import ProductCard from '@/components/productCard';
 
 // SingleCardPage Component
-const ShowProductDetail = ({ productData }: any) => {
+const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
   const {
     name,
     images,
@@ -19,6 +19,8 @@ const ShowProductDetail = ({ productData }: any) => {
     productHeadlines,
     id,
   } = JSON.parse(productData);
+
+  const similarProducts = JSON.parse(similarProductsStringify);
 
   // State to track the currently selected image
   const [selectedImage, setSelectedImage] = useState<any>(images[0]);
@@ -159,7 +161,7 @@ const ShowProductDetail = ({ productData }: any) => {
             <p className="mb-4 text-lg text-gray-300">{description}</p>
 
             {/* Add Coupon Section */}
-            <div className="rounded-lg py-6">
+            {/* <div className="rounded-lg py-6">
               <h2 className="mb-4 text-2xl font-medium text-gray-100">
                 Add Coupon
               </h2>
@@ -171,7 +173,7 @@ const ShowProductDetail = ({ productData }: any) => {
               <button className="mt-4 rounded-lg bg-p-green px-4 py-2 font-medium text-white transition duration-300 hover:bg-p-green/90">
                 Apply Coupon
               </button>
-            </div>
+            </div> */}
 
             {/* Product Highlights */}
             <div className="rounded-lg py-4">
@@ -214,7 +216,7 @@ const ShowProductDetail = ({ productData }: any) => {
 
             <CartProvider>
               <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
-                {productPageProducts.map((character: any, index: number) => (
+                {similarProducts.map((character: any, index: number) => (
                   <ProductCard
                     key={character.id}
                     _id={character._id}

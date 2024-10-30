@@ -20,7 +20,7 @@ export const revalidate = 0;
 export default async function App() {
   connect();
 
-  const instagramGallaryData = await IsntagramProduct.find({});
+  // const instagramGallaryData = await IsntagramProduct.find({});
   const categoryData = await ProductCategory.find({});
   const seriesCategoryData = await SeriesCategory.find({});
   const productsData = await Product.find({
@@ -40,9 +40,9 @@ export default async function App() {
       <DiscountAbove999 />
       <HotDeals productsData={JSON.stringify(productsData)} />
       {/* Instagram gallary */}
-      <InstagramGallary
+      {/* <InstagramGallary
         instagramGallaryData={JSON.stringify(instagramGallaryData)}
-      />
+      /> */}
       {/* Subscribe */}
       {/* Footer */}
       <Footer />
