@@ -118,7 +118,9 @@ const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
           <div className="space-y-12 px-4 md:ml-8 md:w-1/2 md:px-0">
             {/* Product Details */}
             <div>
-              <h1 className="mb-6 text-5xl font-bold text-gray-200">{name}</h1>
+              <h1 className="mb-6 text-3xl font-bold text-gray-200 md:text-5xl">
+                {name}
+              </h1>
 
               {/* <div className="mb-4 flex items-center">
                 {[...Array(rating)].map((_, index) => (
