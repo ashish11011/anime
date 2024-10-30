@@ -1,6 +1,6 @@
 'use client';
 import { categoryData } from '@/const/products';
-import { Menu, ShoppingBag, X } from 'lucide-react';
+import { Menu, Search, ShoppingBag, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -19,7 +19,7 @@ const NavBar = () => {
         </Link>
 
         <div className="hidden md:block">
-          <ul className="flex overflow-hidden border-neutral-700 font-medium text-gray-200">
+          <ul className="flex items-center overflow-hidden border-neutral-700 font-medium text-gray-200">
             {categoryData.map((item) => {
               return (
                 <Link
@@ -33,8 +33,14 @@ const NavBar = () => {
 
             {/* Cart Icon */}
             <Link
+              href={'/searchproduct'}
+              className="cursor-pointer px-2 py-1.5 text-sm duration-300 hover:bg-neutral-800 md:px-3 md:text-base"
+            >
+              <Search />
+            </Link>
+            <Link
               href={'/cart'}
-              className="cursor-pointer px-4 py-1.5 text-sm duration-300 hover:bg-neutral-800 md:px-5 md:text-base"
+              className="cursor-pointer px-2 py-1.5 text-sm duration-300 hover:bg-neutral-800 md:px-3 md:text-base"
             >
               <ShoppingBag />
             </Link>
@@ -44,8 +50,14 @@ const NavBar = () => {
         <div className="flex items-center gap-2 md:hidden">
           {/* Cart Icon */}
           <Link
+            href={'/searchproduct'}
+            className="cursor-pointer px-2 py-1.5 text-sm duration-300 md:px-5 md:text-base"
+          >
+            <Search color="#ccc" />
+          </Link>
+          <Link
             href={'/cart'}
-            className="cursor-pointer px-4 py-1.5 text-sm duration-300 md:px-5 md:text-base"
+            className="cursor-pointer px-2 py-1.5 text-sm duration-300 md:px-5 md:text-base"
           >
             <ShoppingBag color="#ccc" />
           </Link>
