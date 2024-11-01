@@ -88,10 +88,10 @@ const ShowCartData = () => {
   );
 
   // Delivery charge calculation
-  const deliveryCharge = subtotal < 999 ? 50 : 0;
+  const deliveryCharge = subtotal <= 999 ? 50 : 0;
 
   // Extra 10% discount if subtotal is 1999 or more
-  const extraDiscount = subtotal >= 1999 ? 10 : 0;
+  const extraDiscount = subtotal > 1999 ? 10 : 0;
   const effectiveDiscount = discount + extraDiscount;
   const discountAmount = (subtotal * effectiveDiscount) / 100;
 
@@ -99,6 +99,11 @@ const ShowCartData = () => {
 
   const handleOrderSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (cartItems.length === 0) {
+      alert('Cart is empty. Please add some items to proceed with the order.');
+      return;
+    }
 
     const orderData = {
       user: userDetails || {},
@@ -203,7 +208,7 @@ const ShowCartData = () => {
 
                   <div className="col-span-1 text-right">
                     <button
-                      className="ml-auto flex items-center gap-2 rounded-lg bg-red-600 px-2 py-2 text-white transition duration-300 hover:bg-neon-green md:px-4 md:py-2"
+                      className="ml-auto flex items-center gap-2 rounded-lg bg-red-600 px-2 py-2 text-white transition duration-300 hover:bg-red-700 md:px-4 md:py-2"
                       onClick={() => removeItem(item.id)}
                     >
                       <Trash2 size={18} />

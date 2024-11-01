@@ -106,29 +106,24 @@ const ListAllTheOrders = ({ orderDataString }: any) => {
 function ListSingleProduct({ order, index }: any) {
   const [showItems, setShowItems] = useState(false);
   return (
-    <div className="flex flex-col bg-neutral-800">
+    <div className="flex flex-col">
       <div
         onClick={() => setShowItems((prev: any) => !prev)}
-        className="grid cursor-pointer grid-cols-12 gap-2 border border-neutral-700 px-2 py-2 text-gray-100"
+        className="grid cursor-pointer grid-cols-12 gap-2 border border-neutral-700 px-2 py-2 text-white"
       >
         <div className="col-span-1 break-all">{index + 1}</div>
-        <div className="col-span-3 break-all">{order.name}</div>
+        <div className="col-span-2 break-all">{order.name}</div>
         <div className="col-span-3 break-all">{order.email}</div>
-        <div className="col-span-3 break-all">{order.address}</div>
+        <div className="col-span-4 break-all">{order.address}</div>
+        <div className="col-span-1 break-all">{order.pincode}</div>
         <div className="col-span-1 break-all">{order.phone}</div>
-        <div className="col-span-1 break-all">
-          {Number(order.discountedPrice).toFixed(2)}
-        </div>
       </div>
 
       {showItems && (
-        <div className="flex flex-col border border-neutral-700">
+        <div className="flex flex-col border border-neutral-600 bg-neutral-800 text-white">
           {order.orderDetails.map((item: any, index: number) => {
             return (
-              <div
-                key={item._id}
-                className="grid grid-cols-6 gap-2 bg-neutral-700 px-2 py-2 text-gray-100"
-              >
+              <div key={item._id} className="grid grid-cols-6 gap-2 px-2 py-2">
                 <div className="col-span-1 flex max-w-24 items-center justify-between gap-1">
                   <p>{index + 1}</p>
                   <div className="size-8 overflow-hidden">
@@ -146,14 +141,67 @@ function ListSingleProduct({ order, index }: any) {
                 >
                   {item.name}
                 </Link>
-                <div className="col-span-1 break-all">{item.price}</div>
-                <div className="col-span-1 break-all">{item.quantity}</div>
+                <div className="col-span-1 break-all text-right">
+                  {item.price}
+                </div>
+                <div className="col-span-1 break-all text-right">
+                  {item.quantity}
+                </div>
               </div>
             );
           })}
-          <div className="flex gap-6 bg-neutral-700 px-2 py-2 pt-2 text-gray-100">
-            <p>Total Price is: </p>
-            <p>{Number(order.discountedPrice).toFixed(2)}</p>
+
+          <div className="mt-4 flex flex-col">
+            <div className="grid grid-cols-6 gap-2 border-t border-dashed border-neutral-700 px-2 py-1">
+              <div className="col-span-1 flex justify-between gap-1">
+                <p>Total Price</p>
+              </div>
+              <div className="col-span-3 break-all hover:underline"></div>
+              <div className="col-span-1 break-all text-right">
+                {'+ '}
+                {Number(order.discountedPrice).toFixed(2)}
+              </div>
+              <div className="col-span-1 break-all"></div>
+            </div>
+            {Number(order.discountedPrice) - Number(order.totalAmount) !==
+              0 && (
+              <div className="grid grid-cols-6 gap-2 border-t border-dashed border-neutral-700 px-2 py-1">
+                <div className="col-span-1 flex justify-between gap-1">
+                  <p>Discount</p>
+                </div>
+                <div className="col-span-3 break-all hover:underline"></div>
+                <div className="col-span-1 break-all text-right">
+                  {(
+                    Number(order.discountedPrice) - Number(order.totalAmount)
+                  ).toFixed(2)}
+                </div>
+                <div className="col-span-1 break-all"></div>
+              </div>
+            )}
+            <div className="grid grid-cols-6 gap-2 border-t border-dashed border-neutral-700 px-2 py-1">
+              <div className="col-span-1 flex justify-between gap-1">
+                <p>Delivery Charge</p>
+              </div>
+              <div className="col-span-3 break-all hover:underline"></div>
+              <div className="col-span-1 break-all text-right">
+                {'+ '}
+                {Number(order.extraCharge).toFixed(2)}
+              </div>
+              <div className="col-span-1 break-all"></div>
+            </div>
+            <div className="grid grid-cols-6 gap-2 border-t border-dashed border-neutral-700 bg-neutral-700 px-2 py-1">
+              <div className="col-span-1 flex justify-between gap-1">
+                <p>Net Total</p>
+              </div>
+              <div className="col-span-3 break-all hover:underline"></div>
+              <div className="col-span-1 break-all text-right">
+                {''}
+                {(
+                  Number(order.discountedPrice) + Number(order.extraCharge)
+                ).toFixed(2)}
+              </div>
+              <div className="col-span-1 break-all"></div>
+            </div>
           </div>
         </div>
       )}

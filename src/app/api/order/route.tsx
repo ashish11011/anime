@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
   const { user, items, total } = body;
 
   let serverTotal = 0;
-  let serverDiscountedPrice = 0;
   let orderData = [];
   let extraCharge = 0;
 
@@ -44,14 +43,14 @@ export async function POST(request: NextRequest) {
     phone: user.mobile,
   };
 
-  if (serverTotal > 999) {
-    serverDiscountedPrice = serverTotal - 50;
-    if (serverTotal > 1999) {
-      serverDiscountedPrice = serverTotal * 0.9;
-    }
+  let serverDiscountedPrice = serverTotal;
+
+  if (serverTotal > 1999) {
+    serverDiscountedPrice = serverTotal * 0.9;
   } else {
-    extraCharge = 50;
-    serverDiscountedPrice = serverTotal;
+    if (serverTotal <= 999) {
+      extraCharge = 50;
+    }
   }
 
   const phishingActivity =
