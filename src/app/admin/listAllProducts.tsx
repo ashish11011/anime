@@ -62,7 +62,6 @@ const ListAllProducts = ({ productData }: any) => {
         </div>
         <Link
           href="/admin/addProduct"
-          onClick={() => setShowProducts(!showProducts)}
           className="w-fit cursor-pointer select-none rounded bg-green-300 px-3 py-2 font-medium text-green-800"
         >
           Add new
