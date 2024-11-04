@@ -88,7 +88,7 @@ const ShowCartData = () => {
   );
 
   // Delivery charge calculation
-  const deliveryCharge = subtotal <= 999 ? 50 : 0;
+  const deliveryCharge = subtotal <= 999 ? 80 : 0;
 
   // Extra 10% discount if subtotal is 1999 or more
   const extraDiscount = subtotal > 1999 ? 10 : 0;
