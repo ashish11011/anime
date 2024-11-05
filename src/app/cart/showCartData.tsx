@@ -1,10 +1,12 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Trash2 } from 'lucide-react';
+import { Minus, Plus, Trash2 } from 'lucide-react';
 import axios from 'axios';
+import Link from 'next/link';
 
 const ShowCartData = () => {
   const [cartItems, setCartItems] = useState<any[]>([]);
+  const [isOrderPlaced, setIsOrderPlaced] = useState(false);
   const [couponCode, setCouponCode] = useState('');
   const [discount, setDiscount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -73,13 +75,13 @@ const ShowCartData = () => {
   };
 
   const applyCoupon = () => {
-    if (couponCode === 'NT10') {
-      setDiscount(10);
-    } else if (couponCode === 'AJH0') {
-      setDiscount(100);
-    } else {
-      setDiscount(0);
-    }
+    // if (couponCode === 'NT10') {
+    //   setDiscount(10);
+    // } else if (couponCode === 'AJH0') {
+    //   setDiscount(100);
+    // } else {
+    //   setDiscount(0);
+    // }
   };
 
   const subtotal = cartItems.reduce(
@@ -88,7 +90,7 @@ const ShowCartData = () => {
   );
 
   // Delivery charge calculation
-  const deliveryCharge = subtotal <= 999 ? 80 : 0;
+  const deliveryCharge = subtotal <= 999 ? 60 : 0;
 
   // Extra 10% discount if subtotal is 1999 or more
   const extraDiscount = subtotal > 1999 ? 10 : 0;
@@ -121,7 +123,7 @@ const ShowCartData = () => {
       });
 
       if (response.ok) {
-        alert('Order placed successfully, Our team will contact you soon.');
+        scrollTo({ top: 0, behavior: 'smooth' });
         localStorage.removeItem('cart');
         setCartItems([]);
         setUserDetails({
@@ -132,6 +134,7 @@ const ShowCartData = () => {
           address: '',
         });
         setShowCheckoutForm(false);
+        setIsOrderPlaced(true);
       } else {
         alert('Failed to place order. Please try again.');
       }
@@ -142,7 +145,14 @@ const ShowCartData = () => {
   };
 
   if (loading) {
-    return <div className="text-white">Loading...</div>;
+    return (
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 p-4">
+        <div className="animate-pulse rounded-lg bg-neutral-900 py-20 text-white md:py-24"></div>
+        ;
+        <div className="animate-pulse rounded-lg bg-neutral-900 py-20 text-white md:py-24"></div>
+        ;
+      </div>
+    );
   }
 
   return (
@@ -151,6 +161,17 @@ const ShowCartData = () => {
         <h1 className="mb-8 text-4xl font-semibold text-gray-100">
           Shopping Cart
         </h1>
+        {isOrderPlaced && (
+          <div className="flex flex-col gap-1">
+            <p className="text-green-400"> Your Order is Placed.</p>
+            <Link
+              className="mb-2 text-blue-500 underline duration-200 hover:text-blue-600"
+              href="/orders"
+            >
+              Visit Order page
+            </Link>
+          </div>
+        )}
 
         <div className="mb-8 rounded-lg bg-neutral-900 p-4">
           {cartItems.length === 0 ? (
@@ -188,17 +209,17 @@ const ShowCartData = () => {
 
                   <div className="col-span-1 flex h-fit items-center justify-end gap-2 md:gap-4">
                     <button
-                      className="flex size-6 items-center justify-center rounded-lg bg-neon-blue px-2 py-1 text-white md:size-auto md:px-4 md:py-2"
+                      className="flex items-center justify-center rounded-lg bg-neon-blue px-1.5 py-1.5 text-white md:px-3 md:py-2.5"
                       onClick={() => decreaseQuantity(item.id)}
                     >
-                      -
+                      <Minus size={18} />
                     </button>
                     <span className="text-white">{item.quantity}</span>
                     <button
-                      className="flex size-6 items-center justify-center rounded-lg bg-neon-blue px-2 py-1 text-white md:size-auto md:px-4 md:py-2"
+                      className="flex items-center justify-center rounded-lg bg-neon-blue px-1.5 py-1.5 text-white md:px-3 md:py-2.5"
                       onClick={() => increaseQuantity(item.id)}
                     >
-                      +
+                      <Plus size={18} />
                     </button>
                   </div>
 

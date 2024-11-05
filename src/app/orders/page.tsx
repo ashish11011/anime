@@ -89,8 +89,8 @@ const ListAllTheOrders = ({ orderDataString }: any) => {
           <div className="col-span-3 break-all">Name</div>
           <div className="col-span-3 break-all">Email</div>
           <div className="col-span-3 break-all">Address</div>
-          <div className="col-span-1 break-all">Phone</div>
           <div className="col-span-1 break-all">Amount</div>
+          <div className="col-span-1 break-all">Status</div>
         </div>
 
         {orderData.map((item: any, index: number) => {
@@ -115,8 +115,12 @@ function ListSingleProduct({ order, index }: any) {
         <div className="col-span-2 break-all">{order.name}</div>
         <div className="col-span-3 break-all">{order.email}</div>
         <div className="col-span-4 break-all">{order.address}</div>
-        <div className="col-span-1 break-all">{order.pincode}</div>
-        <div className="col-span-1 break-all">{order.phone}</div>
+        <div className="col-span-1 break-all">
+          {(Number(order.discountedPrice) + Number(order.extraCharge)).toFixed(
+            2
+          )}
+        </div>
+        <div className="col-span-1 break-all capitalize">{order.status}</div>
       </div>
 
       {showItems && (

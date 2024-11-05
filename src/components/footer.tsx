@@ -21,10 +21,14 @@ export default function Footer() {
             Get Early Stock Notifications!
           </p>
           <p className="text-base text-gray-400">
-            Join our WhatsApp group to get early stock updates.{' '}
-            <a href="#" className="text-blue-600 underline">
+            Join our Instagram page to get early stock updates.{' '}
+            <Link
+              target="_blank"
+              href="https://www.instagram.com/cozzy___corner/"
+              className="text-blue-600 underline"
+            >
               Click Here
-            </a>{' '}
+            </Link>{' '}
             to join
           </p>
         </div>

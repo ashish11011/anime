@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
   const response = NextResponse.json({ message: 'Hash received' });
   response.cookies.set('hash', hash, {
     httpOnly: true,
-    maxAge: 60 * 60 * 4,
+    // maxAge: 60 * 60 * 4,
     path: '/',
   });
 

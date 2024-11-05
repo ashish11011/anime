@@ -1,7 +1,4 @@
 'use client';
-// import { CartDataProvider, useCartData } from '@/const/cartContext';
-
-import { Trash2 } from 'lucide-react';
 import React, { useState } from 'react';
 import ShowCartData from './showCartData';
 import NavBar from '@/components/navBar';
