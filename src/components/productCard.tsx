@@ -32,23 +32,26 @@ export default function ProductCard({
   }
 
   return (
-    <div
-      className={`group transform rounded-lg border border-gray-600 bg-neutral-950 p-3 shadow-lg transition-transform duration-300`}
+    <Link
+      href={`/product/${id}`}
+      className={`group transform rounded-lg border border-gray-600 bg-neutral-950 p-2 shadow-lg transition-transform duration-300 hover:cursor-pointer md:p-3`}
     >
       <img
         src={images[0]}
         alt={name}
-        className="block h-52 w-full rounded-lg bg-white object-contain duration-300 group-hover:hidden"
+        className="block h-44 w-full rounded-lg bg-white object-contain duration-300 group-hover:hidden md:h-52"
       />
       <img
         src={images[1]}
         alt={name}
-        className="hidden h-52 w-full rounded-lg bg-white object-contain duration-300 group-hover:block"
+        className="hidden h-44 w-full rounded-lg bg-white object-contain duration-300 group-hover:block md:h-52"
       />
 
       <div className="flex flex-col gap-0 py-4">
         {/* Name */}
-        <h3 className="line-clamp-1 text-xl font-bold text-gray-100">{name}</h3>
+        <h3 className="mb-2 line-clamp-2 text-lg font-bold text-gray-100 md:line-clamp-1 md:text-xl">
+          {name}
+        </h3>
 
         {/* Price and Discount */}
         <div>
@@ -57,30 +60,7 @@ export default function ProductCard({
             ₹{discountPrice}
           </span>
         </div>
-
-        <Link
-          href={`/product/${id}`}
-          className="mt-4 w-full rounded-lg border py-2 text-center font-medium text-white transition duration-300 hover:bg-white hover:text-gray-800"
-        >
-          View product
-        </Link>
-
-        {/* Shop Button */}
-        <div
-          onClick={() => handleCartToggle(id)}
-          className={`mt-4 w-full cursor-pointer rounded-lg border py-2 text-center font-medium transition duration-300 ${
-            isAdded
-              ? 'bg-white text-gray-800'
-              : 'text-white hover:bg-white hover:text-gray-800'
-          } ${outOfStock ? 'cursor-not-allowed opacity-70' : ''} `}
-        >
-          {outOfStock
-            ? 'Out of Stock'
-            : isAdded
-              ? 'Remove from cart'
-              : 'Add to cart'}
-        </div>
       </div>
-    </div>
+    </Link>
   );
 }

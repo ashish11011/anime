@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 const ShowCartData = () => {
   const [cartItems, setCartItems] = useState<any[]>([]);
+  const [isGiftWrap, setIsGiftWrap] = useState(false);
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
   const [couponCode, setCouponCode] = useState('');
   const [discount, setDiscount] = useState(0);
@@ -16,7 +17,9 @@ const ShowCartData = () => {
     email: '',
     mobile: '',
     pincode: '',
-    address: '',
+    addressLine1: '',
+    addressLine2: '',
+    landmark: '', // Optional field for landmark
   });
 
   useEffect(() => {
@@ -97,20 +100,26 @@ const ShowCartData = () => {
   const effectiveDiscount = discount + extraDiscount;
   const discountAmount = (subtotal * effectiveDiscount) / 100;
 
-  const total = subtotal - discountAmount + deliveryCharge;
+  const total =
+    subtotal - discountAmount + deliveryCharge + (isGiftWrap ? 40 : 0);
 
-  const handleOrderSubmit = async (e: React.FormEvent) => {
+  const handleOrderSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (cartItems.length === 0) {
-      alert('Cart is empty. Please add some items to proceed with the order.');
+    if (total < 499) {
+      alert('Minimum order amount is ₹499.');
       return;
     }
 
     const orderData = {
-      user: userDetails || {},
+      user: {
+        ...userDetails,
+        address:
+          `${userDetails.addressLine1}, ${userDetails.addressLine2}, ${userDetails.landmark}`.trim(),
+      },
       items: cartItems || [],
-      total: total || 0,
+      total,
+      isGiftWrap,
     };
 
     try {
@@ -131,7 +140,9 @@ const ShowCartData = () => {
           email: '',
           mobile: '',
           pincode: '',
-          address: '',
+          addressLine1: '',
+          addressLine2: '',
+          landmark: '', // Optional field for landmark
         });
         setShowCheckoutForm(false);
         setIsOrderPlaced(true);
@@ -238,6 +249,23 @@ const ShowCartData = () => {
                   </div>
                 </div>
               ))}
+              <div className="col-span-4">
+                <div className="mb-4 flex items-center space-x-3 rounded-lg p-4">
+                  <input
+                    type="checkbox"
+                    id="giftWrap"
+                    className="mr-2 h-5 w-5 rounded border-gray-300 text-green-500 focus:ring-0"
+                    checked={isGiftWrap}
+                    onChange={() => setIsGiftWrap(!isGiftWrap)}
+                  />
+                  <label
+                    htmlFor="giftWrap"
+                    className="text-sm font-medium text-white"
+                  >
+                    Add Gift Wrap <span className="text-green-400">(₹40)</span>
+                  </label>
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -286,6 +314,12 @@ const ShowCartData = () => {
             <div className="mb-4 flex justify-between text-white">
               <p>Delivery Charge:</p>
               <p>₹{deliveryCharge.toFixed(2)}</p>
+            </div>
+          )}
+          {isGiftWrap && (
+            <div className="mb-4 flex justify-between text-white">
+              <p>Gift Wraping Charge:</p>
+              <p>₹40</p>
             </div>
           )}
           <div className="mb-4 flex justify-between text-white">
@@ -346,15 +380,36 @@ const ShowCartData = () => {
               }
               required
             />
-            <textarea
-              placeholder="Address"
-              className="mb-4 w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white focus:outline-none"
-              value={userDetails.address}
+            <input
+              type="text"
+              placeholder="Address Line 1"
+              className="mb-4 w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white"
+              value={userDetails.addressLine1}
               onChange={(e) =>
-                setUserDetails({ ...userDetails, address: e.target.value })
+                setUserDetails({ ...userDetails, addressLine1: e.target.value })
               }
               required
             />
+            <input
+              type="text"
+              placeholder="Address Line 2"
+              className="mb-4 w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white"
+              value={userDetails.addressLine2}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, addressLine2: e.target.value })
+              }
+              required
+            />
+            <input
+              type="text"
+              placeholder="Landmark (Optional)"
+              className="mb-4 w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white"
+              value={userDetails.landmark}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, landmark: e.target.value })
+              }
+            />
+
             <button
               type="submit"
               className="rounded-lg bg-p-green px-4 py-2 text-white transition duration-300 hover:bg-p-green/90"

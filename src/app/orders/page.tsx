@@ -183,10 +183,14 @@ function ListSingleProduct({ order, index }: any) {
               </div>
             )}
             <div className="grid grid-cols-6 gap-2 border-t border-dashed border-neutral-700 px-2 py-1">
-              <div className="col-span-1 flex justify-between gap-1">
-                <p>Delivery Charge</p>
+              <div className="col-span-2 flex justify-between gap-1">
+                {order.isGiftWrap ? (
+                  <p>Extra Charges (delivery + gift Wrap)</p>
+                ) : (
+                  <p>Delivery charge</p>
+                )}
               </div>
-              <div className="col-span-3 break-all hover:underline"></div>
+              <div className="col-span-2 break-all hover:underline"></div>
               <div className="col-span-1 break-all text-right">
                 {'+ '}
                 {Number(order.extraCharge).toFixed(2)}

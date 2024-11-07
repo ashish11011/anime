@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
   await connect();
 
   const body = await request.json();
-  const { user, items, total } = body;
+  const { user, items, total, isGiftWrap } = body;
 
   let serverTotal = 0;
   let orderData = [];
@@ -53,11 +53,16 @@ export async function POST(request: NextRequest) {
     }
   }
 
+  //checking Is Gift Wrap
+  if (isGiftWrap) {
+    extraCharge += 40;
+  }
+
   const phishingActivity =
     serverDiscountedPrice.toFixed(0) === total.toFixed(0) ? 'no' : 'yes';
 
   try {
-    const order = await OrderModel.create({
+    await OrderModel.create({
       name: userData.name,
       email: userData.email,
       address: userData.address,
@@ -69,6 +74,7 @@ export async function POST(request: NextRequest) {
       totalAmount: serverTotal.toFixed(0).toString(),
       status: 'pending',
       phishingActivity: phishingActivity,
+      isGiftWrap: isGiftWrap,
     });
   } catch (error) {
     console.error('Error placing order:', error);
