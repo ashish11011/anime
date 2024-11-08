@@ -14,6 +14,7 @@ const SingleCardPage = async (context: any) => {
   const [productData] = await Product.find({ id: router.id });
   const similarProducts = await Product.find({
     series: productData.series,
+    category: productData.category,
     _id: { $ne: productData._id },
   }).limit(3);
 
