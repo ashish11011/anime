@@ -27,7 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {' '}
+        <meta
+          name="google-site-verification"
+          content="ZAieS2i8hZk0H2BXoEZDNvcjIq2mQ87ByIIDKMLT4yo"
+        />
         <link
           href="https://fonts.googleapis.com/css2?family=Bangers&family=Orbitron:wght@400;700&family=Press+Start+2P&family=Russo+One&display=swap"
           rel="stylesheet"
