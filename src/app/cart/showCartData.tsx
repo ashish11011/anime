@@ -270,7 +270,7 @@ const ShowCartData = () => {
           )}
         </div>
 
-        <div className="mb-8 rounded-lg bg-neutral-900 p-4">
+        {/* <div className="mb-8 rounded-lg bg-neutral-900 p-4">
           <h2 className="mb-4 text-2xl font-semibold text-white">
             Apply Coupon
           </h2>
@@ -290,7 +290,7 @@ const ShowCartData = () => {
           {discount > 0 && (
             <p className="mt-4 text-neon-green">Coupon Applied: {discount}%</p>
           )}
-        </div>
+        </div> */}
 
         <div className="rounded-lg bg-dark-gray p-4">
           <h2 className="mb-4 text-2xl font-semibold text-gray-100">
@@ -340,9 +340,10 @@ const ShowCartData = () => {
             onSubmit={handleOrderSubmit}
           >
             <h2 className="mb-4 text-2xl font-semibold text-white">Checkout</h2>
+            <p className="mb-1 text-white">Name</p>
             <input
               type="text"
-              placeholder="Name"
+              placeholder="John Doe"
               className="mb-4 w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white focus:outline-none"
               value={userDetails.name}
               onChange={(e) =>
@@ -350,9 +351,11 @@ const ShowCartData = () => {
               }
               required
             />
+            <p className="mb-1 text-white">Email</p>
+
             <input
               type="email"
-              placeholder="Email"
+              placeholder="mail.email.com"
               className="mb-4 w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white focus:outline-none"
               value={userDetails.email}
               onChange={(e) =>
@@ -360,9 +363,11 @@ const ShowCartData = () => {
               }
               required
             />
+            <p className="mb-1 text-white">Mobile Number</p>
+
             <input
               type="tel"
-              placeholder="Mobile"
+              placeholder="+91 1234567890"
               className="mb-4 w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white focus:outline-none"
               value={userDetails.mobile}
               onChange={(e) =>
@@ -370,9 +375,11 @@ const ShowCartData = () => {
               }
               required
             />
+            <p className="mb-1 text-white">Pin Code</p>
+
             <input
               type="text"
-              placeholder="Pincode"
+              placeholder="123456"
               className="mb-4 w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white focus:outline-none"
               value={userDetails.pincode}
               onChange={(e) =>
@@ -380,6 +387,8 @@ const ShowCartData = () => {
               }
               required
             />
+            <p className="mb-1 text-white">Address Line 1</p>
+
             <input
               type="text"
               placeholder="Address Line 1"
@@ -390,6 +399,7 @@ const ShowCartData = () => {
               }
               required
             />
+            <p className="mb-1 text-white">Address Line 2</p>
             <input
               type="text"
               placeholder="Address Line 2"
@@ -400,6 +410,7 @@ const ShowCartData = () => {
               }
               required
             />
+            <p className="mb-1 text-white">Landmark (Optional)</p>
             <input
               type="text"
               placeholder="Landmark (Optional)"

@@ -29,11 +29,12 @@ const ListAllTheOrders = ({ orderDataString }: any) => {
       </div>
       <div className="mb-4 grid cursor-pointer grid-cols-12 gap-2 border bg-gray-100 px-2 py-2">
         <div className="col-span-1 break-all">Index</div>
-        <div className="col-span-3 break-all">Name</div>
+        <div className="col-span-2 break-all">Name</div>
         <div className="col-span-3 break-all">Email</div>
         <div className="col-span-3 break-all">Address</div>
         <div className="col-span-1 break-all">Pincode</div>
         <div className="col-span-1 break-all">Phone</div>
+        <div className="col-span-1 break-all">Whatsapp</div>
       </div>
 
       {orderData.map((item: any, index: number) => {
@@ -76,6 +77,15 @@ function ListSingleProduct({ order, index }: any) {
   }
   const ORDER_OPTIONS = ['pending', 'accepted', 'dispatched', 'delivered'];
 
+  function ValidateNumber(num: string) {
+    const trimedNumber = num.replace(/\s+/g, '');
+    if (trimedNumber.slice(0, 3) === '+91') {
+      return trimedNumber.slice(3);
+    } else {
+      return trimedNumber;
+    }
+  }
+
   return (
     <div className="flex flex-col">
       <div
@@ -85,9 +95,19 @@ function ListSingleProduct({ order, index }: any) {
         <div className="col-span-1 break-all">{index + 1}</div>
         <div className="col-span-2 break-all">{order.name}</div>
         <div className="col-span-3 break-all">{order.email}</div>
-        <div className="col-span-4 break-all">{order.address}</div>
+        <div className="col-span-3 break-all">{order.address}</div>
         <div className="col-span-1 break-all">{order.pincode}</div>
         <div className="col-span-1 break-all">{order.phone}</div>
+        <Link
+          target="_blank"
+          href={`https://wa.me/${ValidateNumber(order.phone)}?text=Hi%20${order.name}%0AThank%20you%20for%20placing%20an%20order%20with%20us%20at%20http://cozzycorner.in%20We%20just%20wanted%20to%20confirm%20your%20order%20and%20check%20if%20there%E2%80%99s%20anything%20else%20you%E2%80%99d%20like%20to%20add%20before%20we%20proceed.%20If%20you%20need%20help%20or%20have%20any%20questions,%20feel%20free%20to%20reach%20out.%20Thank%20you!`}
+        >
+          <img
+            className="size-7 cursor-pointer rounded-xl bg-green-700 p-1 duration-200 hover:scale-105"
+            src="https://s3.ap-south-1.amazonaws.com/cozzy.corner/whatsapp-icon.png"
+            alt=""
+          />
+        </Link>
       </div>
 
       {showItems && (
