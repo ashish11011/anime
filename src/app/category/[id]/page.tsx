@@ -6,10 +6,19 @@ import { CartProvider } from '@/const/cartContext';
 import connect from '@/dbConfig/dbConfig';
 import Product from '@/Models/productModel';
 
+import { Metadata } from 'next';
+
+export async function generateMetadata(context: any): Promise<Metadata> {
+  const params = context.params;
+  const decodedCategory = decodeURIComponent(params.id);
+
+  return {
+    title: decodedCategory,
+  };
+}
+
 export default async function Page(context: any) {
   const params = context.params;
-
-  // Decode the URL-encoded parameter to get the original value
   const decodedCategory = decodeURIComponent(params.id);
 
   await connect();

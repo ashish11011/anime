@@ -5,13 +5,27 @@ import connect from '@/dbConfig/dbConfig';
 import Product from '@/Models/productModel';
 import { CartProvider } from '@/const/cartContext';
 import BottomInstagram from '@/components/bottomInstagram';
+import { Metadata } from 'next';
+
+async function fetchProductData(id: string) {
+  await connect();
+  const [productData] = await Product.find({ id });
+  return productData;
+}
+
+// generateMetadata function
+export async function generateMetadata(context: any): Promise<Metadata> {
+  const productData = await fetchProductData(context.params.id);
+  return {
+    title: productData.name,
+    description: productData.description,
+  };
+}
 
 // SingleCardPage Component
 const SingleCardPage = async (context: any) => {
-  const router = context.params;
+  const productData = await fetchProductData(context.params.id);
 
-  await connect();
-  const [productData] = await Product.find({ id: router.id });
   const similarProducts = await Product.find({
     series: productData.series,
     category: productData.category,
