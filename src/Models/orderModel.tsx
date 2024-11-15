@@ -73,6 +73,14 @@ const orderSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isCOD: {
+      type: Boolean,
+      default: false,
+    },
+    transactionId: {
+      type: String,
+      default: '',
+    },
   },
   {
     timestamps: true,

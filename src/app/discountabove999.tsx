@@ -15,7 +15,7 @@ export default function DiscountAbove999() {
             Take Advantage of Early Access!
           </h2>
           <p className="mb-6 text-center text-lg text-gray-200">
-            Shop items worth ₹999 or more and enjoy free delivery! Don’t miss
+            Shop items worth ₹1000 or more and enjoy free delivery! Don’t miss
             out on this exclusive early access to free shipping on your favorite
             products.
           </p>

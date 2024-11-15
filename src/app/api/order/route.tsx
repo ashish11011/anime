@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
   await connect();
 
   const body = await request.json();
-  const { user, items, total, isGiftWrap } = body;
+  const { user, items, isCOD, total, isGiftWrap } = body;
 
   let serverTotal = 0;
   let orderData = [];
@@ -41,6 +41,7 @@ export async function POST(request: NextRequest) {
     address: user.address,
     pincode: user.pincode,
     phone: user.mobile,
+    transactionId: user.transactionId,
   };
 
   let serverDiscountedPrice = serverTotal;
@@ -57,6 +58,9 @@ export async function POST(request: NextRequest) {
   if (isGiftWrap) {
     extraCharge += 40;
   }
+  if (isCOD) {
+    extraCharge += 50;
+  }
 
   const phishingActivity =
     serverDiscountedPrice.toFixed(0) === total.toFixed(0) ? 'no' : 'yes';
@@ -67,6 +71,7 @@ export async function POST(request: NextRequest) {
       email: userData.email,
       address: userData.address,
       pincode: userData.pincode,
+      transactionId: userData.transactionId,
       phone: userData.phone,
       orderDetails: orderData,
       extraCharge: extraCharge.toFixed(0).toString(),
@@ -75,6 +80,7 @@ export async function POST(request: NextRequest) {
       status: 'pending',
       phishingActivity: phishingActivity,
       isGiftWrap: isGiftWrap,
+      isCOD: isCOD,
     });
   } catch (error) {
     console.error('Error placing order:', error);

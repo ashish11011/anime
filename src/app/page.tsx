@@ -12,7 +12,7 @@ import BottomInstagram from '@/components/bottomInstagram';
 import DiscountAbove1999 from './discountabove1999';
 import DiscountAbove999 from './discountabove999';
 
-export const revalidate = 0;
+export const revalidate = 60 * 60;
 
 export default async function App() {
   connect();

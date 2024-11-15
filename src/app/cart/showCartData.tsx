@@ -1,11 +1,13 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Minus, Plus, Trash2 } from 'lucide-react';
+import { Copy, Minus, Plus, Trash2 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
 
 const ShowCartData = () => {
   const [cartItems, setCartItems] = useState<any[]>([]);
+  const [isCOD, setIsCOD] = useState(false);
+  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
   const [isGiftWrap, setIsGiftWrap] = useState(false);
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
   const [couponCode, setCouponCode] = useState('');
@@ -19,7 +21,8 @@ const ShowCartData = () => {
     pincode: '',
     addressLine1: '',
     addressLine2: '',
-    landmark: '', // Optional field for landmark
+    landmark: '',
+    transactionId: '',
   });
 
   useEffect(() => {
@@ -119,6 +122,7 @@ const ShowCartData = () => {
       },
       items: cartItems || [],
       total,
+      isCOD,
       isGiftWrap,
     };
 
@@ -142,7 +146,8 @@ const ShowCartData = () => {
           pincode: '',
           addressLine1: '',
           addressLine2: '',
-          landmark: '', // Optional field for landmark
+          landmark: '',
+          transactionId: '',
         });
         setShowCheckoutForm(false);
         setIsOrderPlaced(true);
@@ -328,7 +333,7 @@ const ShowCartData = () => {
           </div>
           <button
             className="rounded-lg bg-p-green px-4 py-2 text-white transition duration-300 hover:bg-p-green/90"
-            onClick={() => setShowCheckoutForm(true)}
+            onClick={() => cartItems.length > 0 && setShowCheckoutForm(true)}
           >
             Proceed to Checkout
           </button>
@@ -420,8 +425,15 @@ const ShowCartData = () => {
                 setUserDetails({ ...userDetails, landmark: e.target.value })
               }
             />
-
+            <PaymentMethod
+              userDetails={userDetails}
+              setUserDetails={setUserDetails}
+              isCOD={isCOD}
+              total={total}
+              setIsCOD={setIsCOD}
+            />
             <button
+              onClick={() => setShowPaymentOptions(true)}
               type="submit"
               className="rounded-lg bg-p-green px-4 py-2 text-white transition duration-300 hover:bg-p-green/90"
             >
@@ -435,3 +447,91 @@ const ShowCartData = () => {
 };
 
 export default ShowCartData;
+function PaymentMethod({
+  userDetails,
+  total,
+  setUserDetails,
+  isCOD,
+  setIsCOD,
+}: any) {
+  return (
+    <div className="mb-4 text-white">
+      <h2 className="mb-2 text-lg font-semibold">Select Payment Method</h2>
+      <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-3">
+        <label className="flex cursor-pointer select-none items-center space-x-2 border border-neutral-700 p-2">
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="COD"
+            checked={isCOD}
+            onChange={() => setIsCOD(true)}
+            className="h-4 w-4 text-green-500 focus:ring-0"
+          />
+          <span>Cash on Delivery (COD)</span>
+        </label>
+        <label className="flex cursor-pointer select-none items-center space-x-2 border border-neutral-700 p-2">
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="Online"
+            checked={!isCOD}
+            onChange={() => setIsCOD(false)}
+            className="h-4 w-4 text-green-500 focus:ring-0"
+          />
+          <span>Online Payment</span>
+        </label>
+      </div>
+      {!isCOD && (
+        <div className="flex flex-col items-start gap-4">
+          <p>Please make the payment here</p>
+          <img
+            className="h-96 w-auto rounded-md object-contain"
+            src="https://s3.ap-south-1.amazonaws.com/cozzy.corner/UPI-qrcode.jpg"
+            alt=""
+          />
+          <PaymentUPI />
+          <p className="-mb-2">Enter transaction Id: </p>
+          <input
+            onChange={(e) =>
+              setUserDetails({ ...userDetails, transactionId: e.target.value })
+            }
+            value={userDetails.transactionId}
+            type="text"
+            className="rounded border border-neutral-700 bg-transparent p-2 focus:outline-none"
+            placeholder="456812786512"
+          />
+        </div>
+      )}
+
+      {isCOD && (
+        <div className="">
+          <p className="text-green-500">
+            Cash on delivery includes an additional ₹50 fee.
+          </p>
+          <p>New Cost is: ₹{total + 50}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function PaymentUPI() {
+  const [copied, setCopied] = useState(false);
+  return (
+    <div className="flex flex-col">
+      <div className="flex items-center gap-2">
+        <p className="text-gray-200">UPI id: </p>
+        <p>6350167047@ptaxis</p>
+        <Copy
+          className="cursor-pointer"
+          onClick={() => {
+            navigator.clipboard.writeText('6350167047@ptaxis');
+            setCopied(true);
+          }}
+          size={20}
+        />
+      </div>
+      <p className="text-green-500">{copied && 'copied'}</p>
+    </div>
+  );
+}

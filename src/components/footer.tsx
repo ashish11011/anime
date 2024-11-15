@@ -1,5 +1,10 @@
+'use client';
+
 import { categoryData } from '@/const/products';
-import { Facebook, Instagram } from 'lucide-react';
+import { Facebook, Github, Globe, Instagram } from 'lucide-react';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 export default function Footer() {
@@ -100,7 +105,7 @@ export default function Footer() {
           />
         </Link>
       </div>
-      <div className="px-6 text-center text-xs text-gray-400">
+      {/* <div className="px-6 text-center text-xs text-gray-400">
         © 2024, DIECASTO.com Powered by Shopify {' · '}
         <Link
           className="text-gray-200 hover:underline"
@@ -112,6 +117,90 @@ export default function Footer() {
         <Link className="text-gray-200 hover:underline" href={'/contact-us'}>
           Contact information
         </Link>
+      </div> */}
+      <AshishFooter />
+    </div>
+  );
+}
+
+function AshishFooter() {
+  const [isHovered, setIsHovered] = useState(false);
+  const router = useRouter();
+  function handleNameClick() {
+    router.push('https://portfolio-iota-olive-12.vercel.app/');
+  }
+  return (
+    <div className="mx-auto w-full border-t border-neutral-600 py-2">
+      <div className="relative text-center text-sm text-gray-300">
+        Developed By -{' '}
+        <span
+          onClick={handleNameClick}
+          className="cursor-pointer rounded p-1 duration-300 hover:bg-neutral-700"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          Ashish Bishnoi
+          {isHovered && (
+            <motion.div
+              whileInView={{ opacity: 1, y: 0, x: '-50%' }}
+              initial={{ opacity: 0, y: 6, x: '-50%' }}
+              transition={{ duration: 0.3 }}
+              className="absolute bottom-6 left-1/2 -translate-x-1/2 transform p-1"
+            >
+              <div className="flex w-80 flex-col justify-start gap-3 rounded border border-neutral-700 bg-neutral-800 p-3 text-gray-200 shadow-lg">
+                <div className="flex gap-3">
+                  <Link
+                    target="_blank"
+                    href={'https://portfolio-iota-olive-12.vercel.app/'}
+                  >
+                    <motion.img
+                      whileHover={{ scale: 1.05 }}
+                      className="size-12 rounded-full border border-neutral-400"
+                      src="https://bishnoi11011.s3.ap-south-1.amazonaws.com/portfolio/me.jpg"
+                      alt="Ashish Bishnoi Pic"
+                    />
+                  </Link>
+                  <Link
+                    target="_blank"
+                    href="https://portfolio-iota-olive-12.vercel.app/"
+                    className="flex flex-col rounded px-1 duration-200 hover:bg-neutral-700"
+                  >
+                    <p className="text-left text-lg font-bold">
+                      Ashish Bishnoi
+                    </p>
+                    <p className="text text-left font-thin text-gray-400">
+                      Software Developer
+                    </p>
+                  </Link>
+                  <div className="ml-auto mr-2 flex flex-col items-center justify-center gap-1">
+                    <Link
+                      target="_blank"
+                      href="https://portfolio-iota-olive-12.vercel.app/"
+                    >
+                      <Globe
+                        className="cursor-pointer text-gray-200 duration-200 hover:scale-125 hover:text-white"
+                        size={16}
+                      />
+                    </Link>
+                    <Link
+                      target="_blank"
+                      href={'https://github.com/ashish11011'}
+                    >
+                      <Github
+                        className="cursor-pointer text-gray-200 duration-200 hover:scale-125 hover:text-white"
+                        size={16}
+                      />
+                    </Link>
+                  </div>
+                </div>
+                <div className="text-left text-gray-300">
+                  Full Stack Developer open for freelance projects in dynamic
+                  web applications.
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </span>
       </div>
     </div>
   );

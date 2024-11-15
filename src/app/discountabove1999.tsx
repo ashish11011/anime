@@ -15,7 +15,7 @@ export default function DiscountAbove1999() {
             Unlock 10% Off!
           </h2>
           <p className="mb-6 text-center text-lg text-gray-200">
-            Spend ₹1999 or more and enjoy a 10% discount on your purchase! Take
+            Spend ₹2000 or more and enjoy a 10% discount on your purchase! Take
             advantage of this special offer and save on your favorite items.
           </p>
         </div>
