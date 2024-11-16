@@ -28,6 +28,7 @@ const EditExistingProduct = ({ productDetailsStringify }: any) => {
     'demon-slayer',
     'dragon-ball',
     'marvel',
+    'jujutsu',
     'others',
   ];
 
@@ -36,6 +37,8 @@ const EditExistingProduct = ({ productDetailsStringify }: any) => {
     'miniature',
     'bobble-head',
     'q-posket',
+    'keychain',
+    'katana',
     'sets',
   ];
 

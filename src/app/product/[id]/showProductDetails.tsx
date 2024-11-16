@@ -3,7 +3,6 @@ import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; // Import the useRouter hook
 import { CartProvider } from '@/const/cartContext';
-import { productPageProducts } from '@/const/products';
 import ProductCard from '@/components/productCard';
 
 // SingleCardPage Component

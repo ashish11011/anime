@@ -27,6 +27,7 @@ const ProductForm = () => {
     'demon-slayer',
     'dragon-ball',
     'marvel',
+    'jujutsu',
     'others',
   ];
 
@@ -35,6 +36,8 @@ const ProductForm = () => {
     'miniature',
     'bobble-head',
     'q-posket',
+    'keychain',
+    'katana',
     'sets',
   ];
 
