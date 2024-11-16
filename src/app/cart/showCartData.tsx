@@ -297,47 +297,49 @@ const ShowCartData = () => {
           )}
         </div> */}
 
-        <div className="rounded-lg bg-dark-gray p-4">
-          <h2 className="mb-4 text-2xl font-semibold text-gray-100">
-            Cart Summary
-          </h2>
-          <div className="mb-4 flex justify-between text-white">
-            <p>Subtotal:</p>
-            <p>₹{subtotal.toFixed(2)}</p>
-          </div>
-          {extraDiscount > 0 && (
-            <div className="mb-4 flex justify-between text-neon-green">
-              <p>Additional Discount (10%):</p>
-              <p>-₹{((subtotal * extraDiscount) / 100).toFixed(2)}</p>
+        {cartItems.length > 0 && (
+          <div className="rounded-lg bg-dark-gray p-4">
+            <h2 className="mb-4 text-2xl font-semibold text-gray-100">
+              Cart Summary
+            </h2>
+            <div className="mb-4 flex justify-between text-white">
+              <p>Subtotal:</p>
+              <p>₹{subtotal.toFixed(2)}</p>
             </div>
-          )}
-          {/* <div className="mb-4 flex justify-between text-neon-green">
+            {extraDiscount > 0 && (
+              <div className="mb-4 flex justify-between text-neon-green">
+                <p>Additional Discount (10%):</p>
+                <p>-₹{((subtotal * extraDiscount) / 100).toFixed(2)}</p>
+              </div>
+            )}
+            {/* <div className="mb-4 flex justify-between text-neon-green">
             <p>Coupon Discount ({discount}%):</p>
             <p>-₹{discountAmount.toFixed(2)}</p>
           </div> */}
-          {deliveryCharge > 0 && (
+            {deliveryCharge > 0 && (
+              <div className="mb-4 flex justify-between text-white">
+                <p>Delivery Charge:</p>
+                <p>₹{deliveryCharge.toFixed(2)}</p>
+              </div>
+            )}
+            {isGiftWrap && (
+              <div className="mb-4 flex justify-between text-white">
+                <p>Gift Wraping Charge:</p>
+                <p>₹40</p>
+              </div>
+            )}
             <div className="mb-4 flex justify-between text-white">
-              <p>Delivery Charge:</p>
-              <p>₹{deliveryCharge.toFixed(2)}</p>
+              <p>Total:</p>
+              <p>₹{total.toFixed(2)}</p>
             </div>
-          )}
-          {isGiftWrap && (
-            <div className="mb-4 flex justify-between text-white">
-              <p>Gift Wraping Charge:</p>
-              <p>₹40</p>
-            </div>
-          )}
-          <div className="mb-4 flex justify-between text-white">
-            <p>Total:</p>
-            <p>₹{total.toFixed(2)}</p>
+            <button
+              className="rounded-lg bg-p-green px-4 py-2 text-white transition duration-300 hover:bg-p-green/90"
+              onClick={() => setShowCheckoutForm(true)}
+            >
+              Proceed to Checkout
+            </button>
           </div>
-          <button
-            className="rounded-lg bg-p-green px-4 py-2 text-white transition duration-300 hover:bg-p-green/90"
-            onClick={() => cartItems.length > 0 && setShowCheckoutForm(true)}
-          >
-            Proceed to Checkout
-          </button>
-        </div>
+        )}
 
         {showCheckoutForm && (
           <form
