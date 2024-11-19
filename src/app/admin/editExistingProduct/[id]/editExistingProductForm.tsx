@@ -26,9 +26,9 @@ const EditExistingProduct = ({ productDetailsStringify }: any) => {
     'naruto',
     'one-piece',
     'demon-slayer',
-    'dragon-ball',
+    'dragon-ball-z',
     'marvel',
-    'jujutsu',
+    'jujutsu-kaisen',
     'others',
   ];
 

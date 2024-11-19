@@ -25,9 +25,9 @@ const ProductForm = () => {
     'naruto',
     'one-piece',
     'demon-slayer',
-    'dragon-ball',
+    'dragon-ball-z',
     'marvel',
-    'jujutsu',
+    'jujutsu-kaisen',
     'others',
   ];
 
