@@ -41,7 +41,6 @@ export async function POST(request: NextRequest) {
     address: user.address,
     pincode: user.pincode,
     phone: user.mobile,
-    transactionId: user.transactionId,
   };
 
   let serverDiscountedPrice = serverTotal;
@@ -71,7 +70,6 @@ export async function POST(request: NextRequest) {
       email: userData.email,
       address: userData.address,
       pincode: userData.pincode,
-      transactionId: userData.transactionId,
       phone: userData.phone,
       orderDetails: orderData,
       extraCharge: extraCharge.toFixed(0).toString(),

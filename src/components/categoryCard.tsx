@@ -5,7 +5,7 @@ export default function CategoryCard({ category }: any) {
   return (
     <Link
       href={category.slug}
-      className="group flex w-full cursor-pointer flex-col gap-3 overflow-hidden rounded-lg border border-gray-500 p-3"
+      className="group flex w-full max-w-56 shrink-0 cursor-pointer flex-col gap-3 overflow-hidden rounded-lg border border-gray-500 p-3 md:max-w-none"
     >
       <div className="h-full w-full overflow-hidden rounded-lg">
         <img

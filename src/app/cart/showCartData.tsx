@@ -483,7 +483,7 @@ function PaymentMethod({
           <span>Online Payment</span>
         </label>
       </div>
-      {!isCOD && (
+      {/* {!isCOD && (
         <div className="flex flex-col items-start gap-4">
           <p>Please make the payment here</p>
           <img
@@ -503,7 +503,7 @@ function PaymentMethod({
             placeholder="456812786512"
           />
         </div>
-      )}
+      )} */}
 
       {isCOD && (
         <div className="">
