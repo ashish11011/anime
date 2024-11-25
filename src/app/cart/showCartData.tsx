@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { Copy, Minus, Plus, Trash2 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
+import { useRecoilState } from 'recoil';
+import { cartState } from '@/const/cartState';
 
 const ShowCartData = () => {
   const [cartItems, setCartItems] = useState<any[]>([]);
@@ -10,7 +12,6 @@ const ShowCartData = () => {
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
   const [isGiftWrap, setIsGiftWrap] = useState(false);
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
-  const [couponCode, setCouponCode] = useState('');
   const [discount, setDiscount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
@@ -25,10 +26,11 @@ const ShowCartData = () => {
     transactionId: '',
   });
 
+  const [cart, setCart] = useRecoilState(cartState);
+
   useEffect(() => {
     const fetchCartProducts = async () => {
-      const storedCart = localStorage.getItem('cart');
-      const parsedCart = storedCart ? JSON.parse(storedCart) : [];
+      const parsedCart = cart ? JSON.parse(cart) : [];
       const productIds = parsedCart.map((item: any) => item.id);
 
       if (productIds.length > 0) {
@@ -55,7 +57,7 @@ const ShowCartData = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cartItems));
+    setCart(JSON.stringify(cartItems));
   }, [cartItems]);
 
   const increaseQuantity = (id: string) => {
@@ -78,16 +80,6 @@ const ShowCartData = () => {
 
   const removeItem = (id: string) => {
     setCartItems(cartItems.filter((item) => item.id !== id));
-  };
-
-  const applyCoupon = () => {
-    // if (couponCode === 'NT10') {
-    //   setDiscount(10);
-    // } else if (couponCode === 'AJH0') {
-    //   setDiscount(100);
-    // } else {
-    //   setDiscount(0);
-    // }
   };
 
   const subtotal = cartItems.reduce(
@@ -137,7 +129,7 @@ const ShowCartData = () => {
 
       if (response.ok) {
         scrollTo({ top: 0, behavior: 'smooth' });
-        localStorage.removeItem('cart');
+        setCart('');
         setCartItems([]);
         setUserDetails({
           name: '',
@@ -275,28 +267,6 @@ const ShowCartData = () => {
           )}
         </div>
 
-        {/* <div className="mb-8 rounded-lg bg-neutral-900 p-4">
-          <h2 className="mb-4 text-2xl font-semibold text-white">
-            Apply Coupon
-          </h2>
-          <input
-            type="text"
-            className="mb-4 w-full rounded-lg border border-gray-400 bg-transparent px-4 py-2 text-white focus:outline-none"
-            placeholder="Enter coupon code"
-            value={couponCode}
-            onChange={(e) => setCouponCode(e.target.value)}
-          />
-          <button
-            className="rounded-lg bg-p-green px-4 py-2 text-white transition duration-300 hover:bg-p-green/90"
-            onClick={applyCoupon}
-          >
-            Apply Coupon
-          </button>
-          {discount > 0 && (
-            <p className="mt-4 text-neon-green">Coupon Applied: {discount}%</p>
-          )}
-        </div> */}
-
         {cartItems.length > 0 && (
           <div className="rounded-lg bg-dark-gray p-4">
             <h2 className="mb-4 text-2xl font-semibold text-gray-100">
@@ -312,10 +282,7 @@ const ShowCartData = () => {
                 <p>-₹{((subtotal * extraDiscount) / 100).toFixed(2)}</p>
               </div>
             )}
-            {/* <div className="mb-4 flex justify-between text-neon-green">
-            <p>Coupon Discount ({discount}%):</p>
-            <p>-₹{discountAmount.toFixed(2)}</p>
-          </div> */}
+
             {deliveryCharge > 0 && (
               <div className="mb-4 flex justify-between text-white">
                 <p>Delivery Charge:</p>

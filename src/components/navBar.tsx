@@ -1,4 +1,5 @@
 'use client';
+import { cartState } from '@/const/cartState';
 import {
   ChevronDown,
   ChevronUp,
@@ -9,6 +10,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 
 const NavBar = () => {
   const [mobNavOpen, setMobNavOpen] = useState(false);
@@ -79,12 +81,7 @@ const NavBar = () => {
               </Link>
             </li>
             <li className="flex cursor-pointer items-center justify-center px-2 py-1.5 text-sm duration-300 hover:bg-neutral-800 md:px-3 md:text-base">
-              <Link
-                href={'/cart'}
-                // className="cursor-pointer px-2 py-1.5 text-sm duration-300 hover:bg-neutral-800 md:px-3 md:text-base"
-              >
-                <ShoppingBag />
-              </Link>
+              <CartButton />
             </li>
           </ul>
         </div>
@@ -97,12 +94,7 @@ const NavBar = () => {
           >
             <Search color="#ccc" />
           </Link>
-          <Link
-            href={'/cart'}
-            className="cursor-pointer px-2 py-1.5 text-sm duration-300 md:px-5 md:text-base"
-          >
-            <ShoppingBag color="#ccc" />
-          </Link>
+          <CartButton />
           {mobNavOpen ? (
             <X onClick={() => setMobNavOpen(false)} color="#ccc" />
           ) : (
@@ -202,5 +194,26 @@ function NavSubMenu({ item }: any) {
         </ul>
       )}
     </li>
+  );
+}
+
+function CartButton() {
+  const [cart] = useRecoilState(cartState);
+  var cartQuentity = cart
+    ? JSON.parse(cart).reduce(
+        (total: number, item: any) => total + item.quantity,
+        0
+      )
+    : 0;
+  return (
+    <Link
+      href={'/cart'}
+      className="relative cursor-pointer px-2 py-1.5 text-sm duration-300 hover:bg-neutral-800 md:px-3 md:text-base"
+    >
+      <ShoppingBag />
+      <span className="absolute -top-2 right-0 z-10 text-white">
+        {cartQuentity}
+      </span>
+    </Link>
   );
 }
