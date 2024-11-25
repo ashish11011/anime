@@ -1,16 +1,14 @@
 'use client';
-import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation'; // Import the useRouter hook
+import { useRouter } from 'next/navigation';
 import { CartProvider } from '@/const/cartContext';
 import ProductCard from '@/components/productCard';
-
-// SingleCardPage Component
+import { useRecoilState } from 'recoil';
+import { cartState } from '@/const/cartState';
 const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
   const {
     name,
     images,
-    rating,
     price,
     discountPrice,
     outOfStock,
@@ -20,65 +18,39 @@ const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
   } = JSON.parse(productData);
 
   const similarProducts = JSON.parse(similarProductsStringify);
-
-  // State to track the currently selected image
   const [selectedImage, setSelectedImage] = useState<any>(images[0]);
-  const [isAnimating, setIsAnimating] = useState(false); // State for animation
-  const [inCart, setInCart] = useState(false); // State to check if product is in cart
-  const router = useRouter(); // Initialize useRouter
-
-  // Function to check if the product is already in the cart on component mount
+  const [inCart, setInCart] = useState(false);
+  const router = useRouter();
+  const [cart, setCart] = useRecoilState(cartState);
   useEffect(() => {
-    const existingCart = localStorage.getItem('cart');
-    const parsedCart = existingCart ? JSON.parse(existingCart) : [];
-    const productInCart = parsedCart.find((item: any) => item.id === id);
-    setInCart(!!productInCart); // Set inCart state based on presence in cart
+    if (typeof window !== 'undefined') {
+      const parsedCart = cart ? JSON.parse(cart) : [];
+      const productInCart = parsedCart.find((item: any) => item.id === id);
+      setInCart(productInCart);
+    }
   }, [id]);
-
-  // Function to toggle the product in the cart
   const toggleCart = () => {
     if (outOfStock) return;
-    const existingCart = localStorage.getItem('cart');
-    const parsedCart = existingCart ? JSON.parse(existingCart) : [];
+    var parsedCart = cart ? JSON.parse(cart) : [];
 
-    const productIndex = parsedCart.findIndex((item: any) => item.id === id);
+    const alreadyInCart = parsedCart.some((item: any) => item.id === id);
 
-    if (productIndex >= 0) {
-      // If product exists, remove it
-      parsedCart.splice(productIndex, 1);
-      setInCart(false); // Update inCart state
+    if (alreadyInCart) {
+      parsedCart = parsedCart.filter((item: any) => item.id !== id);
+      setInCart(false);
     } else {
-      // If product does not exist, add it with a quantity of 1
       parsedCart.push({
         id,
-        name,
-        price: discountPrice,
         quantity: 1,
-        image: selectedImage,
       });
-      setInCart(true); // Update inCart state
+      setInCart(true);
     }
-
-    // Save updated cart to localStorage
-    localStorage.setItem('cart', JSON.stringify(parsedCart));
-
-    // Trigger the animation
-    setIsAnimating(true);
-    setTimeout(() => setIsAnimating(false), 1000); // Reset animation state after 1 second
+    setCart(JSON.stringify(parsedCart));
   };
 
-  // Function to handle "Buy Now" button click
   const handleBuyNow = () => {
     if (outOfStock) return;
-    // Clear existing cart
-    localStorage.setItem(
-      'cart',
-      JSON.stringify([
-        { id, name, price: discountPrice, quantity: 1, image: selectedImage },
-      ])
-    );
-
-    // Navigate to the cart page
+    setCart(JSON.stringify([{ id, quantity: 1 }]));
     router.push('/cart');
   };
 
@@ -121,15 +93,6 @@ const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
                 {name}
               </h1>
 
-              {/* <div className="mb-4 flex items-center">
-                {[...Array(rating)].map((_, index) => (
-                  <span key={index} className="text-xl text-neon-yellow">
-                    ★
-                  </span>
-                ))}
-                <span className="ml-2 text-white">(5.0)</span>
-              </div> */}
-
               <div className="mb-4 flex items-center space-x-4">
                 <span className="text-xl text-neon-blue line-through">
                   ₹{price}
@@ -148,7 +111,7 @@ const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
                 </button>
                 <button
                   onClick={toggleCart}
-                  className={`rounded border border-p-blue px-8 py-2 text-white transition duration-300 hover:bg-p-blue/90 ${isAnimating ? 'animate-pulse' : ''} ${outOfStock ? 'cursor-not-allowed opacity-50' : ''}`}
+                  className={`rounded border border-p-blue px-8 py-2 text-white transition duration-300 hover:bg-p-blue/90 ${outOfStock ? 'cursor-not-allowed opacity-50' : ''}`}
                 >
                   {outOfStock
                     ? 'Out of stock'
@@ -161,21 +124,6 @@ const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
 
             <p className="mb-4 text-lg text-gray-300">{description}</p>
 
-            {/* Add Coupon Section */}
-            {/* <div className="rounded-lg py-6">
-              <h2 className="mb-4 text-2xl font-medium text-gray-100">
-                Add Coupon
-              </h2>
-              <input
-                type="text"
-                className="w-full rounded-lg border bg-transparent px-4 py-2 text-white focus:outline-none"
-                placeholder="Enter your coupon code"
-              />
-              <button className="mt-4 rounded-lg bg-p-green px-4 py-2 font-medium text-white transition duration-300 hover:bg-p-green/90">
-                Apply Coupon
-              </button>
-            </div> */}
-
             {/* Product Highlights */}
             <div className="rounded-lg py-4">
               <h2 className="mb-4 text-2xl font-semibold text-gray-100">
@@ -187,34 +135,6 @@ const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
                 ))}
               </ul>
             </div>
-
-            {/* Similar Products Section */}
-            {/* <div className="rounded-lg py-4">
-              <h2 className="mb-4 text-3xl font-medium text-gray-100">
-                View More Products
-              </h2>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                {Array.from({ length: 3 }).map((_, index) => {
-                  return (
-                    <div
-                      className="rounded-lg bg-dark-gray p-2 md:border"
-                      key={index}
-                    >
-                      <img
-                        src="https://via.placeholder.com/150?text=Naruto+Character+1"
-                        alt="Similar Product 1"
-                        className="h-60 w-full rounded-lg object-cover md:h-40"
-                      />
-                      <h3 className="mt-2 text-lg text-white">Sasuke Uchiha</h3>
-                      <button className="my-2 w-fit rounded bg-p-green px-6 py-2 text-white md:w-full">
-                        Add to Cart
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-            </div> */}
-
             <CartProvider>
               <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
                 {similarProducts.map((character: any, index: number) => (

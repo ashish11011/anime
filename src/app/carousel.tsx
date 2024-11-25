@@ -1,9 +1,11 @@
 'use client';
 import { CartProvider } from '@/const/cartContext';
+import { cartState } from '@/const/cartState';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import { useRecoilState } from 'recoil';
 
 const slides = [
   {
@@ -65,6 +67,7 @@ export default function Carousel() {
   const [direction, setDirection] = useState<any>(0); // Track slide direction for animation
   const intervalRef = useRef<any>(null); // Ref to hold the interval for auto-slide
   const router = useRouter();
+  const [cart, setCart] = useRecoilState(cartState);
 
   const nextSlide = () => {
     setDirection(1);
@@ -106,13 +109,7 @@ export default function Carousel() {
   };
 
   const handleBuyNow = ({ id, name, discountPrice, image }: any) => {
-    localStorage.setItem(
-      'cart',
-      JSON.stringify([
-        { id, name, price: discountPrice, quantity: 1, image: image },
-      ])
-    );
-
+    setCart(JSON.stringify([{ id, quantity: 1 }]));
     router.push('/cart');
   };
 
