@@ -210,7 +210,7 @@ function CartButton() {
       href={'/cart'}
       className="relative cursor-pointer px-2 py-1.5 text-sm duration-300 hover:bg-neutral-800 md:px-3 md:text-base"
     >
-      <ShoppingBag />
+      <ShoppingBag color="#ccc" />
       <span className="absolute -top-2 right-0 z-10 text-white">
         {cartQuentity}
       </span>
