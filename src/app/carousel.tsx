@@ -114,7 +114,7 @@ export default function Carousel() {
   };
 
   return (
-    <div className="relative h-[90vh] w-full overflow-hidden bg-neutral-950">
+    <div className="relative h-[75vh] w-full overflow-hidden bg-black">
       <AnimatePresence custom={direction} initial={false}>
         <motion.div
           key={slides[currentSlide].id}
@@ -133,12 +133,12 @@ export default function Carousel() {
           className="absolute inset-0 px-4 md:px-6"
         >
           <div className="flex h-full w-full flex-col-reverse gap-2 md:flex-row md:gap-16">
-            <div className="flex h-full w-full flex-col items-center justify-start gap-3 space-y-6 px-4 py-2 text-white md:justify-center md:gap-6 md:px-8 md:py-8">
-              <h1 className="text-center text-3xl font-semibold text-gray-100 md:text-5xl">
+            <div className="flex h-full w-full flex-col items-center justify-start gap-3 space-y-3 px-4 py-2 text-white md:justify-center md:gap-6 md:px-8 md:py-8">
+              <h1 className="line-clamp-1 text-center text-3xl font-semibold text-gray-100 md:line-clamp-none md:text-5xl">
                 {slides[currentSlide].heading}
               </h1>
 
-              <p className="text-center font-exo text-gray-300 md:text-lg">
+              <p className="line-clamp-2 text-center font-exo text-gray-300 md:text-lg">
                 {slides[currentSlide].description}
               </p>
 

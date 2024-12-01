@@ -34,7 +34,7 @@ export default function ProductCard({
   return (
     <Link
       href={`/product/${id}`}
-      className={`group transform rounded-lg border border-gray-600 bg-neutral-950 p-2 shadow-lg transition-transform duration-300 hover:cursor-pointer md:p-3`}
+      className={`group max-w-56 shrink-0 transform rounded-lg border border-gray-600 bg-neutral-950 p-2 shadow-lg transition-transform duration-300 hover:cursor-pointer md:max-w-none md:p-3`}
     >
       <img
         src={images[0]}

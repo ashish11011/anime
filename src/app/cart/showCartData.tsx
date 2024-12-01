@@ -91,7 +91,8 @@ const ShowCartData = () => {
   const deliveryCharge = subtotal <= 999 ? 60 : 0;
 
   // Extra 10% discount if subtotal is 1999 or more
-  const extraDiscount = subtotal > 1999 ? 10 : 0;
+  // const extraDiscount = subtotal > 1999 ? 10 : 0;
+  const extraDiscount = 0;
   const effectiveDiscount = discount + extraDiscount;
   const discountAmount = (subtotal * effectiveDiscount) / 100;
 

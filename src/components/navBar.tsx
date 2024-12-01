@@ -46,7 +46,13 @@ const NavBar = () => {
   ];
 
   return (
-    <div className="sticky top-0 z-50 w-full bg-neutral-950">
+    <div className="sticky top-0 z-50 flex w-full flex-col bg-black">
+      <div className="flex items-center justify-center gap-2 border-b border-neutral-800 bg-neutral-950 p-2">
+        {/* <div className="size-2 animate-pulse rounded-full bg-blue-500"></div> */}
+        <div className="text-center text-sm text-gray-300 md:text-base">
+          Get free delivery on orders above ₹999
+        </div>
+      </div>
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-8 px-4 py-6 md:px-8 md:py-6">
         <Link href={'/'} className="h-10 max-h-8 w-fit min-w-14 md:max-h-none">
           <img
@@ -104,7 +110,7 @@ const NavBar = () => {
 
         {/* Mobile Menu */}
         {mobNavOpen && (
-          <div className="absolute left-0 top-20 flex h-screen w-full items-start bg-black text-white">
+          <div className="absolute left-0 top-28 flex h-screen w-full items-start bg-black text-white">
             <div className="z-40 flex w-full flex-col px-2 pt-6">
               {navData.map((item, index) => {
                 if (!item.subMenu)
@@ -141,12 +147,12 @@ const NavBar = () => {
                       )}
                     </div>
                     {item.subMenu && openSubMenu === item.name && (
-                      <div className="bg-neutral-900 pl-4">
+                      <div className="bg-neutral-950 pl-4">
                         {item.subMenu.map((subItem, subIndex) => (
                           <Link
                             key={subIndex}
                             href={subItem.slug}
-                            className="block py-2 text-lg hover:bg-neutral-800"
+                            className="block py-2 text-lg hover:bg-neutral-950"
                             onClick={() => setMobNavOpen(false)}
                           >
                             {subItem.name}

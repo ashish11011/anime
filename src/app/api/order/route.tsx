@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
   let serverDiscountedPrice = serverTotal;
 
   if (serverTotal > 1999) {
-    serverDiscountedPrice = serverTotal * 0.9;
+    // serverDiscountedPrice = serverTotal * 0.9;
   } else {
     if (serverTotal <= 999) {
       extraCharge = 60;
