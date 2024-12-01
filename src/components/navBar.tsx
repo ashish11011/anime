@@ -54,9 +54,12 @@ const NavBar = () => {
         </div>
       </div>
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-8 px-4 py-6 md:px-8 md:py-6">
-        <Link href={'/'} className="h-10 max-h-8 w-fit min-w-14 md:max-h-none">
+        <Link
+          href={'/'}
+          className="flex h-10 w-36 min-w-14 items-start justify-start"
+        >
           <img
-            className="h-full w-full object-contain"
+            className="h-full object-contain"
             src="https://s3.ap-south-1.amazonaws.com/cozzy.corner/logo.png"
             alt="Cozzy Corner Logo"
           />

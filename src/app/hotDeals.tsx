@@ -6,7 +6,7 @@ const HotDeals = ({ productsData }: any) => {
   return (
     <div>
       <div className="bg-black text-white">
-        <div className="container mx-auto flex flex-col gap-6 py-12 md:py-16">
+        <div className="container mx-auto flex flex-col gap-3 py-4 md:gap-6 md:py-8">
           <h1 className="text-center text-3xl font-semibold text-gray-200 md:text-5xl">
             Hot Deals of the Month
           </h1>

@@ -1,7 +1,7 @@
 'use client';
 
 import { categoryData } from '@/const/products';
-import { Facebook, Github, Globe, Instagram } from 'lucide-react';
+import { Facebook, Github, Globe, Instagram, Youtube } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <div className="mt-24 flex w-full flex-col gap-12 border-t border-gray-500 py-6">
+    <div className="mt-24 flex w-full flex-col gap-8 border-t border-gray-500 py-6">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 md:flex-row md:py-6">
         <div className="flex w-full flex-col gap-2 md:gap-6">
           <p className="text-2xl font-medium text-white md:text-3xl">
@@ -37,53 +37,55 @@ export default function Footer() {
             to join
           </p>
         </div>
-        <div className="flex w-full flex-col gap-3 md:gap-6">
-          <p className="text-2xl font-medium text-white md:text-3xl">
-            Categories
-          </p>
-          <div className="flex flex-col gap-3">
-            {categoryData.map((item) => {
-              return (
-                <Link
-                  href={item.slug}
-                  className="cursor-pointer text-gray-400 hover:underline"
-                >
-                  {item.name}
-                </Link>
-              );
-            })}
+        <div className="flex w-full justify-between gap-4">
+          <div className="flex w-full flex-col gap-3 md:gap-6">
+            <p className="text-2xl font-medium text-white md:text-3xl">
+              Categories
+            </p>
+            <div className="flex flex-col gap-1.5 md:gap-3">
+              {categoryData.map((item) => {
+                return (
+                  <Link
+                    href={item.slug}
+                    className="cursor-pointer text-gray-400 hover:underline"
+                  >
+                    {item.name}
+                  </Link>
+                );
+              })}
+            </div>
           </div>
-        </div>
-        <div className="flex w-full flex-col gap-3 md:gap-6">
-          <p className="text-2xl font-medium text-white md:text-3xl">
-            Quick Links
-          </p>
+          <div className="flex w-full flex-col gap-3 md:gap-6">
+            <p className="text-2xl font-medium text-white md:text-3xl">
+              Quick Links
+            </p>
 
-          <div className="flex flex-col gap-3">
-            <Link
-              href="#"
-              className="cursor-pointer text-gray-400 hover:underline"
-            >
-              Home
-            </Link>
-            <Link
-              href={'/about-us'}
-              className="cursor-pointer text-gray-400 hover:underline"
-            >
-              About Us
-            </Link>
-            <Link
-              href={'/contact-us'}
-              className="cursor-pointer text-gray-400 hover:underline"
-            >
-              Contact Us
-            </Link>
-            <Link
-              href={'/orders'}
-              className="cursor-pointer text-gray-400 hover:underline"
-            >
-              My orders
-            </Link>
+            <div className="flex flex-col gap-1.5 md:gap-3">
+              <Link
+                href="#"
+                className="cursor-pointer text-gray-400 hover:underline"
+              >
+                Home
+              </Link>
+              <Link
+                href={'/about-us'}
+                className="cursor-pointer text-gray-400 hover:underline"
+              >
+                About Us
+              </Link>
+              <Link
+                href={'/contact-us'}
+                className="cursor-pointer text-gray-400 hover:underline"
+              >
+                Contact Us
+              </Link>
+              <Link
+                href={'/orders'}
+                className="cursor-pointer text-gray-400 hover:underline"
+              >
+                My orders
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -103,6 +105,11 @@ export default function Footer() {
             className="h-6 w-6 cursor-pointer hover:scale-105"
             alt=""
           />
+        </Link>
+        <Link
+          href={'https://youtube.com/@cozzy___corner82?si=uoTtdLMErC0HzVn2'}
+        >
+          <Youtube className="h-6 w-6 cursor-pointer text-gray-200 duration-200 hover:scale-105" />
         </Link>
       </div>
       {/* <div className="px-6 text-center text-xs text-gray-400">

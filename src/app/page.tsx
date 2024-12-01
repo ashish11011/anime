@@ -36,12 +36,6 @@ export default async function App() {
         seriesCategoryData={JSON.stringify(seriesCategoryData)}
       />
       <HotDeals productsData={JSON.stringify(productsData)} />
-      {/* Instagram gallary */}
-      {/* <InstagramGallary
-        instagramGallaryData={JSON.stringify(instagramGallaryData)}
-      /> */}
-      {/* Subscribe */}
-      {/* Footer */}
       <Footer />
     </div>
   );
