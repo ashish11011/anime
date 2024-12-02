@@ -55,7 +55,7 @@ const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
   };
 
   return (
-    <div className="bg-neutral-950 py-16">
+    <div className="bg-black py-16">
       <section className="mx-auto max-w-7xl">
         <div className="container mx-auto flex flex-col items-start gap-8 md:flex-row">
           {/* Sticky Image Section */}
@@ -136,7 +136,7 @@ const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
               </ul>
             </div>
             <CartProvider>
-              <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+              <div className="mx-auto grid w-full max-w-7xl grid-cols-2 gap-2 gap-y-4 py-8 sm:grid-cols-2 md:grid-cols-3">
                 {similarProducts.map((character: any, index: number) => (
                   <ProductCard
                     key={character.id}

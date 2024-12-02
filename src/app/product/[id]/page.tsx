@@ -33,7 +33,7 @@ const SingleCardPage = async (context: any) => {
   }).limit(3);
 
   return (
-    <div className="flex flex-col bg-neutral-950">
+    <div className="flex flex-col bg-black">
       <BottomInstagram />
       <NavBar />
       {productData && (

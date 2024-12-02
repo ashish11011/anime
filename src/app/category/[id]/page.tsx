@@ -26,7 +26,7 @@ export default async function Page(context: any) {
   const categoryItems = await Product.find({ category: decodedCategory });
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-neutral-950">
+    <div className="flex min-h-screen w-full flex-col bg-black">
       <BottomInstagram />
       <NavBar />
 

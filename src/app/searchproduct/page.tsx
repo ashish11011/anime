@@ -4,7 +4,7 @@ import ShowProductData from './showProductData';
 
 const SearchProduct = () => {
   return (
-    <div className="min-h-screen w-full bg-neutral-950">
+    <div className="min-h-screen w-full bg-black">
       <NavBar />
       <ShowProductData />
       <Footer />

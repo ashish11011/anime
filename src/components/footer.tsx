@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <div className="mt-24 flex w-full flex-col gap-8 border-t border-gray-500 py-6">
+    <div className="mt-6 flex w-full flex-col gap-8 border-t border-gray-500 py-6 md:mt-12">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 md:flex-row md:py-6">
         <div className="flex w-full flex-col gap-2 md:gap-6">
           <p className="text-2xl font-medium text-white md:text-3xl">

@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 
 const Orders = () => {
   return (
-    <div className="min-h-screen w-full bg-neutral-950">
+    <div className="min-h-screen w-full bg-black">
       <NavBar />
       <ShowOrderData />
       <Footer />
@@ -53,7 +53,7 @@ const ShowOrderData = () => {
         <input
           type="text"
           value={email}
-          className="w-full rounded border border-neutral-700 bg-neutral-800 p-3 text-white focus:outline-none focus:ring-1 focus:ring-neutral-500"
+          className="w-full rounded border border-neutral-700 bg-neutral-900 p-3 text-white focus:outline-none focus:ring-1 focus:ring-neutral-500"
           placeholder="Enter your email"
           onChange={(e) => setEmail(e.target.value)}
         />

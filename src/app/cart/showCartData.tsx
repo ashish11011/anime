@@ -165,7 +165,7 @@ const ShowCartData = () => {
   }
 
   return (
-    <div className="min-h-screen bg-primary py-16">
+    <div className="min-h-screen bg-black py-16">
       <section className="mx-auto max-w-7xl p-4">
         <h1 className="mb-8 text-4xl font-semibold text-gray-100">
           Shopping Cart
