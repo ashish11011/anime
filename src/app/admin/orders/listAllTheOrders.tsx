@@ -219,6 +219,20 @@ function ListSingleProduct({ order, index }: any) {
               </div>
               <div className="col-span-1 break-all"></div>
             </div>
+            {/* Only if there is any amount is paid online */}
+            {order?.paymentAmount && (
+              <div className="grid grid-cols-6 gap-2 border-t border-dashed border-gray-100 bg-white px-2 py-1">
+                <div className="col-span-2 flex justify-between gap-1">
+                  <p>Paid Online</p>
+                </div>
+                <div className="col-span-2 break-all hover:underline"></div>
+                <div className="col-span-1 break-all text-right">
+                  {Number(order?.paymentAmount).toFixed(2)}
+                </div>
+                <div className="col-span-1 break-all"></div>
+              </div>
+            )}
+
             <div className="grid grid-cols-6 gap-2 border-t border-dashed border-gray-100 bg-green-100 px-2 py-1">
               <div className="col-span-1 flex justify-between gap-1">
                 <p>Net Total</p>
