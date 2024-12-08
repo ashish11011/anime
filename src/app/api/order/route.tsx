@@ -79,6 +79,9 @@ export async function POST(request: NextRequest) {
       phishingActivity: phishingActivity,
       isGiftWrap: isGiftWrap,
       isCOD: isCOD,
+      paymentOrderID: body.paymentOrderID,
+      paymentAmount: body.paymentAmount,
+      paymentStatus: body.paymentStatus,
     });
   } catch (error) {
     console.error('Error placing order:', error);

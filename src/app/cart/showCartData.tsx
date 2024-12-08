@@ -1,18 +1,24 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { Copy, Minus, Plus, Trash2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Minus, Plus, Trash2 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
 import { cartState } from '@/const/cartState';
 
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
+
 const ShowCartData = () => {
+  const [amountPayableOnline, setAmountPayableOnline] = useState(50);
   const [cartItems, setCartItems] = useState<any[]>([]);
-  const [isCOD, setIsCOD] = useState(false);
-  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
+  const [isCOD, setIsCOD] = useState(true); // True because the amountPayableOnline is 50 by default
   const [isGiftWrap, setIsGiftWrap] = useState(false);
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
-  const [discount, setDiscount] = useState(0);
+  // const [discount, setDiscount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [userDetails, setUserDetails] = useState({
@@ -25,6 +31,21 @@ const ShowCartData = () => {
     landmark: '',
     transactionId: '',
   });
+
+  // code for loading razorpay script
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  useEffect(() => {
+    loadRazorpayScript();
+  }, []);
 
   const [cart, setCart] = useRecoilState(cartState);
 
@@ -93,20 +114,97 @@ const ShowCartData = () => {
   // Extra 10% discount if subtotal is 1999 or more
   // const extraDiscount = subtotal > 1999 ? 10 : 0;
   const extraDiscount = 0;
-  const effectiveDiscount = discount + extraDiscount;
+  // const effectiveDiscount = discount + extraDiscount;
+  const effectiveDiscount = extraDiscount;
   const discountAmount = (subtotal * effectiveDiscount) / 100;
 
   const total =
     subtotal - discountAmount + deliveryCharge + (isGiftWrap ? 40 : 0);
 
-  const handleOrderSubmit = async (e: any) => {
+  interface PaymentDetails {
+    ammount: number;
+    orderId: string;
+    status: string;
+  }
+
+  async function handlePlaceOrder(e: any) {
     e.preventDefault();
 
     if (total < 499) {
       alert('Minimum order amount is ₹499.');
       return;
     }
+    // Loading raqorpay script before rendring
+    const scriptLoaded = await loadRazorpayScript();
+    const onlinePaymentAmmount = amountPayableOnline;
+    let paymentDetail: PaymentDetails = {
+      ammount: onlinePaymentAmmount,
+      orderId: '',
+      status: '',
+    };
+    try {
+      // Create an order by calling your backend
+      const response = await fetch('/api/create-order-razorpay', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ onlinePaymentAmmount }),
+      });
+      const data = await response.json();
+      paymentDetail.orderId = data.orderId;
+      const options = {
+        key: process.env.NEXT_PUBLIC_KEY_ID,
+        amount: onlinePaymentAmmount * 100,
+        currency: 'INR',
+        name: 'Cozzy Corner',
+        description: 'Test Transaction',
+        order_id: data.orderId,
+        handler: async function (response: any) {
+          try {
+            const verifyResponse = await fetch('/api/verify-payment', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpayOrderId: response.razorpay_order_id,
+                razorpaySignature: response.razorpay_signature,
+              }),
+            });
 
+            const verifyData = await verifyResponse.json();
+            if (verifyData.status === 'success') {
+              paymentDetail.status = 'success';
+              // Placing the order after successful payment
+              handleOrderSubmit(paymentDetail);
+            } else {
+              paymentDetail.status = 'failure';
+            }
+          } catch (error) {
+            console.error('Verification Error:', error);
+            paymentDetail.status = 'verificationError';
+          }
+        },
+        modal: {
+          ondismiss: function () {
+            console.log('Payment cancelled');
+            paymentDetail.status = 'cancelled';
+          },
+        },
+      };
+
+      const rzpay = new window.Razorpay(options);
+      rzpay.open();
+    } catch (error) {
+      console.error('Payment Error:', error);
+      paymentDetail.status = 'paymentError';
+    }
+    console.log('payment detail is: ' + JSON.stringify(paymentDetail));
+  }
+
+  async function handleOrderSubmit(paymentDetail: PaymentDetails) {
     const orderData = {
       user: {
         ...userDetails,
@@ -117,6 +215,9 @@ const ShowCartData = () => {
       total,
       isCOD,
       isGiftWrap,
+      paymentStatus: paymentDetail.status,
+      paymentAmount: paymentDetail.ammount,
+      paymentOrderID: paymentDetail.orderId,
     };
 
     try {
@@ -142,6 +243,8 @@ const ShowCartData = () => {
           landmark: '',
           transactionId: '',
         });
+        setAmountPayableOnline(50);
+        setIsCOD(false);
         setShowCheckoutForm(false);
         setIsOrderPlaced(true);
       } else {
@@ -151,11 +254,12 @@ const ShowCartData = () => {
       console.error('Error placing order:', error);
       alert('Failed to place order. Please try again.');
     }
-  };
+  }
 
   if (loading) {
     return (
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 p-4">
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
         <div className="animate-pulse rounded-lg bg-neutral-900 py-20 text-white md:py-24"></div>
         ;
         <div className="animate-pulse rounded-lg bg-neutral-900 py-20 text-white md:py-24"></div>
@@ -166,6 +270,7 @@ const ShowCartData = () => {
 
   return (
     <div className="min-h-screen bg-black py-16">
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
       <section className="mx-auto max-w-7xl p-4">
         <h1 className="mb-8 text-4xl font-semibold text-gray-100">
           Shopping Cart
@@ -312,7 +417,7 @@ const ShowCartData = () => {
         {showCheckoutForm && (
           <form
             className="mt-8 rounded-lg bg-neutral-900 p-4"
-            onSubmit={handleOrderSubmit}
+            onSubmit={handlePlaceOrder}
           >
             <h2 className="mb-4 text-2xl font-semibold text-white">Checkout</h2>
             <p className="mb-1 text-white">Name</p>
@@ -396,14 +501,12 @@ const ShowCartData = () => {
               }
             />
             <PaymentMethod
-              userDetails={userDetails}
-              setUserDetails={setUserDetails}
               isCOD={isCOD}
               total={total}
               setIsCOD={setIsCOD}
+              setAmountPayableOnline={setAmountPayableOnline}
             />
             <button
-              onClick={() => setShowPaymentOptions(true)}
               type="submit"
               className="rounded-lg bg-p-green px-4 py-2 text-white transition duration-300 hover:bg-p-green/90"
             >
@@ -418,9 +521,8 @@ const ShowCartData = () => {
 
 export default ShowCartData;
 function PaymentMethod({
-  userDetails,
+  setAmountPayableOnline,
   total,
-  setUserDetails,
   isCOD,
   setIsCOD,
 }: any) {
@@ -434,7 +536,10 @@ function PaymentMethod({
             name="paymentMethod"
             value="COD"
             checked={isCOD}
-            onChange={() => setIsCOD(true)}
+            onChange={() => {
+              setIsCOD(true);
+              setAmountPayableOnline(50);
+            }}
             className="h-4 w-4 text-green-500 focus:ring-0"
           />
           <span>Cash on Delivery (COD)</span>
@@ -445,63 +550,22 @@ function PaymentMethod({
             name="paymentMethod"
             value="Online"
             checked={!isCOD}
-            onChange={() => setIsCOD(false)}
+            onChange={() => {
+              setIsCOD(false);
+              setAmountPayableOnline(total);
+            }}
             className="h-4 w-4 text-green-500 focus:ring-0"
           />
           <span>Online Payment</span>
         </label>
       </div>
-      {/* {!isCOD && (
-        <div className="flex flex-col items-start gap-4">
-          <p>Please make the payment here</p>
-          <img
-            className="h-96 w-auto rounded-md object-contain"
-            src="https://s3.ap-south-1.amazonaws.com/cozzy.corner/UPI-qrcode.jpg"
-            alt=""
-          />
-          <PaymentUPI />
-          <p className="-mb-2">Enter transaction Id: </p>
-          <input
-            onChange={(e) =>
-              setUserDetails({ ...userDetails, transactionId: e.target.value })
-            }
-            value={userDetails.transactionId}
-            type="text"
-            className="rounded border border-neutral-700 bg-transparent p-2 focus:outline-none"
-            placeholder="456812786512"
-          />
-        </div>
-      )} */}
 
       {isCOD && (
         <div className="">
-          <p className="text-green-500">
-            Cash on delivery includes an additional ₹50 fee.
-          </p>
-          <p>New Cost is: ₹{total + 50}</p>
+          <p className="text-green-500">Pay Rs.50 (COD charge) online.</p>
+          <p>Amount to be payable on delivery is - {total}</p>
         </div>
       )}
-    </div>
-  );
-}
-
-function PaymentUPI() {
-  const [copied, setCopied] = useState(false);
-  return (
-    <div className="flex flex-col">
-      <div className="flex items-center gap-2">
-        <p className="text-gray-200">UPI id: </p>
-        <p>6350167047@ptaxis</p>
-        <Copy
-          className="cursor-pointer"
-          onClick={() => {
-            navigator.clipboard.writeText('6350167047@ptaxis');
-            setCopied(true);
-          }}
-          size={20}
-        />
-      </div>
-      <p className="text-green-500">{copied && 'copied'}</p>
     </div>
   );
 }
