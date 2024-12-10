@@ -3,6 +3,7 @@
 import Footer from '@/components/footer';
 import NavBar from '@/components/navBar';
 import { Loader2Icon, Search } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
@@ -130,13 +131,13 @@ function ListSingleProduct({ order, index }: any) {
               <div key={item._id} className="grid grid-cols-6 gap-2 px-2 py-2">
                 <div className="col-span-1 flex max-w-24 items-center justify-between gap-1">
                   <p>{index + 1}</p>
-                  <div className="size-8 overflow-hidden">
-                    <img
-                      src={item.image}
-                      className="h-full w-full object-contain"
-                      alt=""
-                    />
-                  </div>
+                  <Image
+                    src={item.image}
+                    height={48}
+                    width={48}
+                    alt=""
+                    className="rounded-sm"
+                  />
                 </div>
                 <Link
                   href={'/product/' + item.productId}

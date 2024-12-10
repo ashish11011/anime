@@ -1,6 +1,7 @@
 'use client';
 
 import { Blocks, EllipsisVertical, Flame, Pencil, Trash2 } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -83,8 +84,9 @@ const ListAllProducts = ({ productData }: any) => {
               >
                 <div className="col-span-1 flex items-center justify-between gap-1">
                   <p>{index + 1}</p>
-                  <div className="size-12 overflow-hidden">
-                    <img
+                  <div className="relative size-12 overflow-hidden">
+                    <Image
+                      fill={true}
                       src={product.images[0]}
                       className="h-full w-full object-contain"
                       alt=""

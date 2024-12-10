@@ -1,6 +1,7 @@
 'use client';
 
 import { Trash2 } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -102,8 +103,10 @@ function ListSingleProduct({ order, index }: any) {
           target="_blank"
           href={`https://wa.me/${ValidateNumber(order.phone)}?text=Hi%20${order.name}%0AThank%20you%20for%20placing%20an%20order%20with%20us%20at%20http://cozzycorner.in%20We%20just%20wanted%20to%20confirm%20your%20order%20and%20check%20if%20there%E2%80%99s%20anything%20else%20you%E2%80%99d%20like%20to%20add%20before%20we%20proceed.%20If%20you%20need%20help%20or%20have%20any%20questions,%20feel%20free%20to%20reach%20out.%20Thank%20you!`}
         >
-          <img
-            className="size-7 cursor-pointer rounded-xl bg-green-700 p-1 duration-200 hover:scale-105"
+          <Image
+            width={28}
+            height={28}
+            className="cursor-pointer rounded-xl bg-green-700 p-1 duration-200 hover:scale-105"
             src="https://s3.ap-south-1.amazonaws.com/cozzy.corner/whatsapp-icon.png"
             alt=""
           />
@@ -144,9 +147,10 @@ function ListSingleProduct({ order, index }: any) {
               >
                 <div className="col-span-1 flex max-w-24 items-center justify-between gap-1">
                   <p>{index + 1}</p>
-                  <div className="size-8 overflow-hidden">
-                    <img
+                  <div className="relative size-8 overflow-hidden">
+                    <Image
                       src={item.image}
+                      fill={true}
                       className="h-full w-full object-contain"
                       alt=""
                     />

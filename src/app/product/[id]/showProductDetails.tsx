@@ -5,6 +5,7 @@ import { CartProvider } from '@/const/cartContext';
 import ProductCard from '@/components/productCard';
 import { useRecoilState } from 'recoil';
 import { cartState } from '@/const/cartState';
+import Image from 'next/image';
 const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
   const {
     name,
@@ -63,9 +64,11 @@ const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
             <div className="flex flex-row items-center gap-2 md:flex-col">
               {/* Thumbnails Section */}
               {images?.map((image: string, index: number) => (
-                <img
+                <Image
                   key={index}
                   src={image}
+                  width={164}
+                  height={164}
                   alt={`Thumbnail ${index + 1}`}
                   className={`h-16 w-16 cursor-pointer rounded-lg object-cover ${
                     selectedImage === image ? 'border-4 border-p-green' : ''
@@ -76,9 +79,10 @@ const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
             </div>
 
             {/* Main Image Display */}
-            <div className="h-80 w-80 md:h-96 md:w-96">
-              <img
+            <div className="relative h-80 w-80 md:h-96 md:w-96">
+              <Image
                 src={selectedImage}
+                fill={true}
                 alt="Selected Product"
                 className="h-full w-full rounded-lg object-cover shadow-lg"
               />

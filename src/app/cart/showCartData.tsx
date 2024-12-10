@@ -5,6 +5,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
 import { cartState } from '@/const/cartState';
+import Image from 'next/image';
 
 declare global {
   interface Window {
@@ -308,12 +309,15 @@ const ShowCartData = () => {
                   key={item.id}
                   className="subgrid col-span-4 grid grid-cols-4 border-b border-gray-400 py-4"
                 >
-                  <div className="col-span-1 flex w-fit flex-col items-center gap-1 md:flex-row md:space-x-4">
-                    <img
-                      src={item.images[0]}
-                      alt={item.name}
-                      className="mr-auto size-12 rounded-lg border object-cover md:h-24 md:w-24"
-                    />
+                  <div className="col-span-1 flex w-full flex-col gap-3 md:flex-row md:items-center md:space-x-4">
+                    <div className="relative size-16 shrink-0 overflow-hidden rounded-lg md:size-20">
+                      <Image
+                        src={item.images[0]}
+                        alt={item.name}
+                        fill={true}
+                        className="rounded object-cover"
+                      />
+                    </div>
                     <div>
                       <h3 className="line-clamp-2 text-sm text-white md:text-lg">
                         {item.name}
