@@ -7,6 +7,7 @@ import connect from '@/dbConfig/dbConfig';
 import Product from '@/Models/productModel';
 
 import { Metadata } from 'next';
+import AnimeCardList from '../../../components/animeCardList';
 
 export async function generateMetadata(context: any): Promise<Metadata> {
   const params = context.params;
@@ -34,30 +35,9 @@ export default async function Page(context: any) {
         <div className="flex max-w-xl flex-col gap-4 px-8 text-5xl font-medium text-white">
           <p className="font-bold capitalize">{decodedCategory}</p>{' '}
         </div>
-        <AnimeCardList productsData={categoryItems} />
+        <AnimeCardList productsDataStringify={JSON.stringify(categoryItems)} />
       </div>
       <Footer />
     </div>
   );
 }
-
-const AnimeCardList = ({ productsData }: any) => {
-  return (
-    <CartProvider>
-      <div className="mx-auto grid w-full max-w-7xl grid-cols-2 gap-2 gap-y-4 px-4 py-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {productsData.map((character: any, index: number) => (
-          <ProductCard
-            key={character.id}
-            id={character.id}
-            name={character.name}
-            images={character.images}
-            rating={character.rating}
-            outOfStock={character.outOfStock}
-            price={character.price}
-            discountPrice={character.discountPrice}
-          />
-        ))}
-      </div>
-    </CartProvider>
-  );
-};

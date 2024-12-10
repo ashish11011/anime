@@ -7,6 +7,16 @@ import { useRecoilState } from 'recoil';
 import { cartState } from '@/const/cartState';
 import Image from 'next/image';
 const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [inCart, setInCart] = useState(false);
+  const [cart, setCart] = useRecoilState(cartState);
+  const router = useRouter();
+  const parsedProductData = productData ? JSON.parse(productData) : {};
+  const similarProducts = similarProductsStringify
+    ? JSON.parse(similarProductsStringify)
+    : [];
+
   const {
     name,
     images,
@@ -16,34 +26,33 @@ const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
     description,
     productHeadlines,
     id,
-  } = JSON.parse(productData);
+  } = parsedProductData;
 
-  const similarProducts = JSON.parse(similarProductsStringify);
-  const [selectedImage, setSelectedImage] = useState<any>(images[0]);
-  const [inCart, setInCart] = useState(false);
-  const router = useRouter();
-  const [cart, setCart] = useRecoilState(cartState);
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (images && images.length > 0) {
+      setSelectedImage(images[0]);
+    }
+    setIsLoading(false);
+  }, [images]);
+  useEffect(() => {
+    if (typeof window !== 'undefined' && cart) {
       const parsedCart = cart ? JSON.parse(cart) : [];
-      const productInCart = parsedCart.find((item: any) => item.id === id);
+      const productInCart = parsedCart.some((item: any) => item.id === id);
       setInCart(productInCart);
     }
-  }, [id]);
+  }, [id, cart]);
+
   const toggleCart = () => {
     if (outOfStock) return;
-    var parsedCart = cart ? JSON.parse(cart) : [];
 
+    let parsedCart = cart ? JSON.parse(cart) : [];
     const alreadyInCart = parsedCart.some((item: any) => item.id === id);
 
     if (alreadyInCart) {
       parsedCart = parsedCart.filter((item: any) => item.id !== id);
       setInCart(false);
     } else {
-      parsedCart.push({
-        id,
-        quantity: 1,
-      });
+      parsedCart.push({ id, quantity: 1 });
       setInCart(true);
     }
     setCart(JSON.stringify(parsedCart));
@@ -51,9 +60,18 @@ const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
 
   const handleBuyNow = () => {
     if (outOfStock) return;
+
     setCart(JSON.stringify([{ id, quantity: 1 }]));
     router.push('/cart');
   };
+
+  if (isLoading) {
+    return (
+      <div className="mx-auto h-96 w-full max-w-7xl px-4">
+        <div className="h-full w-full animate-pulse rounded bg-neutral-900"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-black py-16">
@@ -80,12 +98,14 @@ const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
 
             {/* Main Image Display */}
             <div className="relative h-80 w-80 md:h-96 md:w-96">
-              <Image
-                src={selectedImage}
-                fill={true}
-                alt="Selected Product"
-                className="h-full w-full rounded-lg object-cover shadow-lg"
-              />
+              {selectedImage && (
+                <Image
+                  src={selectedImage}
+                  fill={true}
+                  alt="Selected Product"
+                  className="h-full w-full rounded-lg object-cover shadow-lg"
+                />
+              )}
             </div>
           </div>
 
