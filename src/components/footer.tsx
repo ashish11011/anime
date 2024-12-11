@@ -46,6 +46,7 @@ export default function Footer() {
               {categoryData.map((item) => {
                 return (
                   <Link
+                    key={item.slug}
                     href={item.slug}
                     className="cursor-pointer text-gray-400 hover:underline"
                   >

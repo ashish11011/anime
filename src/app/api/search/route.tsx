@@ -20,7 +20,6 @@ export async function POST(request: NextRequest) {
       { category: { $regex: searchName, $options: 'i' } },
       { series: { $regex: searchName, $options: 'i' } },
     ],
-    series: { $ne: 'others' },
   });
 
   if (orderDataString.length === 0) {

@@ -37,7 +37,7 @@ const ShowProductData = () => {
           setShowProducts([]);
           setTimeout(() => {
             setErrorMessage('');
-          }, 5000);
+          }, 800);
         }
         setIsLoading(false);
       }

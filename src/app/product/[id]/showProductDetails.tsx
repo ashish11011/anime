@@ -33,7 +33,7 @@ const ShowProductDetail = ({ productData, similarProductsStringify }: any) => {
       setSelectedImage(images[0]);
     }
     setIsLoading(false);
-  }, [images]);
+  }, []);
   useEffect(() => {
     if (typeof window !== 'undefined' && cart) {
       const parsedCart = cart ? JSON.parse(cart) : [];

@@ -30,6 +30,6 @@ export const categoryData = [
   {
     name: 'Katana',
     description: 'High-quality figures',
-    slug: '/category/sets',
+    slug: '/category/katana',
   },
 ];
