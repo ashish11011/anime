@@ -110,7 +110,7 @@ const ShowCartData = () => {
   );
 
   // Delivery charge calculation
-  const deliveryCharge = subtotal <= 999 ? 60 : 0;
+  const deliveryCharge = subtotal <= 1199 ? 60 : 0;
 
   // Extra 10% discount if subtotal is 1999 or more
   // const extraDiscount = subtotal > 1999 ? 10 : 0;
@@ -131,8 +131,8 @@ const ShowCartData = () => {
   async function handlePlaceOrder(e: any) {
     e.preventDefault();
 
-    if (total < 499) {
-      alert('Minimum order amount is ₹499.');
+    if (total < 299) {
+      alert('Minimum order amount is ₹299.');
       return;
     }
     // Loading raqorpay script before rendring

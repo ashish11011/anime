@@ -42,7 +42,7 @@ const NavBar = () => {
         { name: 'Others', slug: '/series/others' },
       ],
     },
-    { name: 'Orders', slug: '/orders' },
+    { name: 'Your orders', slug: '/orders' },
   ];
 
   return (
@@ -50,7 +50,7 @@ const NavBar = () => {
       <div className="flex items-center justify-center gap-2 border-b border-neutral-800 bg-neutral-950 p-2">
         {/* <div className="size-2 animate-pulse rounded-full bg-blue-500"></div> */}
         <div className="text-center text-sm text-gray-300 md:text-base">
-          Get free delivery on orders above ₹999
+          Get free delivery on orders above ₹1199
         </div>
       </div>
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-8 px-4 py-6 md:px-8 md:py-6">
