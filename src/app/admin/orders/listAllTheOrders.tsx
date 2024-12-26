@@ -193,6 +193,18 @@ function ListSingleProduct({ order, index }: any) {
               </div>
               <div className="col-span-1 break-all"></div>
             </div>
+            {order?.couponApplied && (
+              <div className="grid grid-cols-6 gap-2 border-t border-dashed border-gray-100 bg-white px-2 py-1">
+                <div className="col-span-1 flex justify-between gap-1">
+                  <p>Coupon Code</p>
+                </div>
+                <div className="col-span-3 break-all hover:underline"></div>
+                <div className="col-span-1 break-all text-right">
+                  {order?.couponCode}
+                </div>
+                <div className="col-span-1 break-all"></div>
+              </div>
+            )}
             {Number(order.discountedPrice) - Number(order.totalAmount) !==
               0 && (
               <div className="grid grid-cols-6 gap-2 border-t border-dashed border-gray-100 bg-white px-2 py-1">

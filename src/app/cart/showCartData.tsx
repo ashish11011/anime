@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRecoilState } from 'recoil';
 import { cartState } from '@/const/cartState';
 import Image from 'next/image';
+import { set } from 'mongoose';
 
 declare global {
   interface Window {
@@ -14,6 +15,11 @@ declare global {
 }
 
 const ShowCartData = () => {
+  // State about coupon
+  const [couponInput, setCouponInput] = useState('');
+  const [couponMsg, setCouponMsg] = useState('');
+  const [couponApplied, setCouponApplied] = useState(false);
+
   const [amountPayableOnline, setAmountPayableOnline] = useState(50);
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [isCOD, setIsCOD] = useState(true); // True because the amountPayableOnline is 50 by default
@@ -216,6 +222,8 @@ const ShowCartData = () => {
       total,
       isCOD,
       isGiftWrap,
+      couponApplied,
+      couponInput,
       paymentStatus: paymentDetail.status,
       paymentAmount: paymentDetail.ammount,
       paymentOrderID: paymentDetail.orderId,
@@ -254,6 +262,19 @@ const ShowCartData = () => {
     } catch (error) {
       console.error('Error placing order:', error);
       alert('Failed to place order. Please try again.');
+    }
+  }
+
+  function handleCouponApply(value: any) {
+    if (value === 'COZY10') {
+      if (total < 2000) {
+        setCouponMsg('Minimum order amount for coupon is ₹2000');
+        return;
+      }
+      setCouponMsg('10% Discount Applied');
+      setCouponApplied(true);
+    } else {
+      setCouponMsg('Invalid Coupon');
     }
   }
 
@@ -378,6 +399,30 @@ const ShowCartData = () => {
         </div>
 
         {cartItems.length > 0 && (
+          <div className="my-6 flex flex-col rounded-lg bg-dark-gray p-4">
+            <h2 className="mb-4 text-2xl font-semibold text-gray-100">
+              Apply coupon
+            </h2>
+
+            <input
+              type="text"
+              value={couponInput}
+              onChange={(e) => setCouponInput(e.target.value)}
+              placeholder="Enter coupon code"
+              className="mb-1 w-fit rounded-lg border border-neutral-600 bg-neutral-900 px-4 py-2 text-white ring-neutral-500 focus:outline-none focus:ring-1"
+            />
+            <p className="mb-2 text-gray-300">{couponMsg}</p>
+
+            <button
+              className="w-fit rounded-lg bg-p-green px-4 py-2 text-white transition duration-300 hover:bg-p-green/90"
+              onClick={() => handleCouponApply(couponInput)}
+            >
+              Apply Coupon
+            </button>
+          </div>
+        )}
+
+        {cartItems.length > 0 && (
           <div className="rounded-lg bg-dark-gray p-4">
             <h2 className="mb-4 text-2xl font-semibold text-gray-100">
               Cart Summary
@@ -405,9 +450,20 @@ const ShowCartData = () => {
                 <p>₹40</p>
               </div>
             )}
+            {couponApplied && (
+              <div className="mb-4 flex justify-between text-white">
+                <p>Coupon Discount:</p>
+                <p>₹{(total / 10).toFixed(2)}</p>
+              </div>
+            )}
             <div className="mb-4 flex justify-between text-white">
               <p>Total:</p>
-              <p>₹{total.toFixed(2)}</p>
+              <p>
+                ₹
+                {couponApplied
+                  ? (total - total / 10).toFixed(2)
+                  : total.toFixed(2)}
+              </p>
             </div>
             <button
               className="rounded-lg bg-p-green px-4 py-2 text-white transition duration-300 hover:bg-p-green/90"
@@ -507,6 +563,7 @@ const ShowCartData = () => {
             <PaymentMethod
               isCOD={isCOD}
               total={total}
+              couponApplied={couponApplied}
               setIsCOD={setIsCOD}
               setAmountPayableOnline={setAmountPayableOnline}
             />
@@ -529,6 +586,7 @@ function PaymentMethod({
   total,
   isCOD,
   setIsCOD,
+  couponApplied,
 }: any) {
   return (
     <div className="mb-4 text-white">
@@ -556,7 +614,9 @@ function PaymentMethod({
             checked={!isCOD}
             onChange={() => {
               setIsCOD(false);
-              setAmountPayableOnline(total);
+              setAmountPayableOnline(
+                couponApplied ? (total - total / 10).toFixed(2) : total
+              );
             }}
             className="h-4 w-4 text-green-500 focus:ring-0"
           />
@@ -567,7 +627,10 @@ function PaymentMethod({
       {isCOD && (
         <div className="">
           <p className="text-green-500">Pay Rs.50 (COD charge) online.</p>
-          <p>Amount to be payable on delivery is - {total}</p>
+          <p>
+            Amount to be payable on delivery is -{' '}
+            {couponApplied ? (total - total / 10).toFixed(2) : total}
+          </p>
         </div>
       )}
     </div>

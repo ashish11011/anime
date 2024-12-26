@@ -81,6 +81,12 @@ const orderSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    couponCode: {
+      type: String,
+    },
+    couponApplied: {
+      type: Boolean,
+    },
     paymentOrderID: String,
     paymentAmount: Number,
     paymentStatus: String,

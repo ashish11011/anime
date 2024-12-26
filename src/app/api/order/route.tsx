@@ -7,7 +7,8 @@ export async function POST(request: NextRequest) {
   await connect();
 
   const body = await request.json();
-  const { user, items, isCOD, total, isGiftWrap } = body;
+  const { user, items, isCOD, total, isGiftWrap, couponApplied, couponInput } =
+    body;
 
   let serverTotal = 0;
   let orderData = [];
@@ -45,8 +46,10 @@ export async function POST(request: NextRequest) {
 
   let serverDiscountedPrice = serverTotal;
 
-  if (serverTotal > 1999) {
-    // serverDiscountedPrice = serverTotal * 0.9;
+  if (serverTotal > 2000) {
+    if (couponApplied && couponInput === 'COZY10') {
+      serverDiscountedPrice = serverTotal - serverTotal / 10;
+    }
   } else {
     if (serverTotal <= 1199) {
       extraCharge = 60;
@@ -72,6 +75,8 @@ export async function POST(request: NextRequest) {
       pincode: userData.pincode,
       phone: userData.phone,
       orderDetails: orderData,
+      couponApplied: couponApplied,
+      couponCode: couponInput,
       extraCharge: extraCharge.toFixed(0).toString(),
       discountedPrice: serverDiscountedPrice.toFixed(0).toString(),
       totalAmount: serverTotal.toFixed(0).toString(),
