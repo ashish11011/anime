@@ -266,7 +266,7 @@ const ShowCartData = () => {
   }
 
   function handleCouponApply(value: any) {
-    if (value === 'COZY10') {
+    if (value === 'AAY10') {
       if (total < 2000) {
         setCouponMsg('Minimum order amount for coupon is ₹2000');
         return;
