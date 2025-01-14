@@ -61,6 +61,8 @@ export async function POST(request: NextRequest) {
     extraCharge += 40;
   }
   if (isCOD) {
+    extraCharge += 60;
+  } else {
     extraCharge += 50;
   }
 

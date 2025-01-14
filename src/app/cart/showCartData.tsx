@@ -252,7 +252,7 @@ const ShowCartData = () => {
           landmark: '',
           transactionId: '',
         });
-        setAmountPayableOnline(50);
+        setAmountPayableOnline(60);
         setIsCOD(false);
         setShowCheckoutForm(false);
         setIsOrderPlaced(true);
@@ -600,7 +600,7 @@ function PaymentMethod({
             checked={isCOD}
             onChange={() => {
               setIsCOD(true);
-              setAmountPayableOnline(50);
+              setAmountPayableOnline(60);
             }}
             className="h-4 w-4 text-green-500 focus:ring-0"
           />
@@ -615,7 +615,9 @@ function PaymentMethod({
             onChange={() => {
               setIsCOD(false);
               setAmountPayableOnline(
-                couponApplied ? (total - total / 10).toFixed(2) : total
+                couponApplied
+                  ? (total - total / 10).toFixed(2) + 50
+                  : total + 50
               );
             }}
             className="h-4 w-4 text-green-500 focus:ring-0"
@@ -624,12 +626,20 @@ function PaymentMethod({
         </label>
       </div>
 
-      {isCOD && (
+      {isCOD ? (
         <div className="">
-          <p className="text-green-500">Pay Rs.50 (COD charge) online.</p>
+          <p className="text-green-500">Pay Rs.60 (COD charge) online.</p>
           <p>
             Amount to be payable on delivery is -{' '}
             {couponApplied ? (total - total / 10).toFixed(2) : total}
+          </p>
+        </div>
+      ) : (
+        <div className="">
+          <p className="text-green-500">
+            Pay Rs.{' '}
+            {couponApplied ? (total - total / 10).toFixed(2) + 50 : total + 50}
+            online {total < 1999 && '(+50 Delivery charge)'}
           </p>
         </div>
       )}

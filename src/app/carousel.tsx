@@ -22,19 +22,6 @@ const slides = [
     limitedDescription: "Don't miss your chance to own this exclusive figure!",
   },
   {
-    id: 2,
-    productId: '429f157a-4096-4b3f-b92f-3c93b46d4651',
-    discountedPrice: 1799,
-    content: 'https://s3.ap-south-1.amazonaws.com/cozzy.corner/hero-itachi.png',
-    heading: 'Itachi uchiha with crow',
-    description:
-      'This collection includes some of the most popular characters! Great quality and craftsmanship, a must have collector’s item | Fans and collectors will love.',
-    buyNowText: 'Buy Itachi Figure',
-    exploreText: '/product/429f157a-4096-4b3f-b92f-3c93b46d4651',
-    limitedEdition: 'Limited Edition Itachi Figure - Only 30 Left!',
-    limitedDescription: 'A must-have for any Naruto fan!',
-  },
-  {
     id: 3,
     productId: 'b392ba8b-9617-4089-8622-2b1e2419f097',
     discountedPrice: 999,
