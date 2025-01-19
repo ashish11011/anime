@@ -614,7 +614,9 @@ function PaymentMethod({
             onChange={() => {
               setIsCOD(false);
               setAmountPayableOnline(
-                couponApplied ? (total - total / 10).toFixed(2) : total
+                couponApplied
+                  ? (total - total / 10).toFixed(2) + 50
+                  : total + 50
               );
             }}
             className="h-4 w-4 text-green-500 focus:ring-0"
@@ -635,6 +637,14 @@ function PaymentMethod({
         <div className="">
           <p className="text-green-500">
             Pay Rs. {couponApplied ? (total - total / 10).toFixed(2) : total}
+            online {total < 1999 && '(+50 Delivery charge)'}
+          </p>
+        </div>
+      ) : (
+        <div className="">
+          <p className="text-green-500">
+            Pay Rs.{' '}
+            {couponApplied ? (total - total / 10).toFixed(2) + 50 : total + 50}
             online {total < 1999 && '(+50 Delivery charge)'}
           </p>
         </div>
