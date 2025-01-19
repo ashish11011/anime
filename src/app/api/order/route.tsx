@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
   let serverDiscountedPrice = serverTotal;
 
   if (serverTotal > 2000) {
-    if (couponApplied && couponInput === 'AAY10') {
+    if (couponApplied && couponInput === 'COZY10') {
       serverDiscountedPrice = serverTotal - serverTotal / 10;
     }
   } else {
@@ -61,6 +61,8 @@ export async function POST(request: NextRequest) {
     extraCharge += 40;
   }
   if (isCOD) {
+    extraCharge += 60;
+  } else {
     extraCharge += 50;
   }
 
