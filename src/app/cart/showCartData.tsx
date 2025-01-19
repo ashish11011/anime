@@ -207,7 +207,7 @@ const ShowCartData = () => {
       console.error('Payment Error:', error);
       paymentDetail.status = 'paymentError';
     }
-    console.log('payment detail is: ' + JSON.stringify(paymentDetail));
+    // console.log('payment detail is: ' + JSON.stringify(paymentDetail));
   }
 
   async function handleOrderSubmit(paymentDetail: PaymentDetails) {
@@ -614,9 +614,7 @@ function PaymentMethod({
             onChange={() => {
               setIsCOD(false);
               setAmountPayableOnline(
-                couponApplied
-                  ? (total - total / 10).toFixed(2) + 50
-                  : total + 50
+                couponApplied ? (total - total / 10).toFixed(2) : total
               );
             }}
             className="h-4 w-4 text-green-500 focus:ring-0"
@@ -640,14 +638,14 @@ function PaymentMethod({
             online {total < 1999 && '(+50 Delivery charge)'}
           </p>
         </div>
-      ) : (
-        <div className="">
-          <p className="text-green-500">
-            Pay Rs.{' '}
-            {couponApplied ? (total - total / 10).toFixed(2) + 50 : total + 50}
-            online {total < 1999 && '(+50 Delivery charge)'}
-          </p>
-        </div>
+        // ) : (
+        //   <div className="">
+        //     <p className="text-green-500">
+        //       Pay Rs.{' '}
+        //       {couponApplied ? (total - total / 10).toFixed(2) + 50 : total + 50}
+        //       online {total < 1999 && '(+50 Delivery charge)'}
+        //     </p>
+        //   </div>
       )}
     </div>
   );
