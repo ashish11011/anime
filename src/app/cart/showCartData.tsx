@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { useRecoilState } from 'recoil';
 import { cartState } from '@/const/cartState';
 import Image from 'next/image';
-import { set } from 'mongoose';
 
 declare global {
   interface Window {
@@ -20,7 +19,7 @@ const ShowCartData = () => {
   const [couponMsg, setCouponMsg] = useState('');
   const [couponApplied, setCouponApplied] = useState(false);
 
-  const [amountPayableOnline, setAmountPayableOnline] = useState(50);
+  const [amountPayableOnline, setAmountPayableOnline] = useState(60);
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [isCOD, setIsCOD] = useState(true); // True because the amountPayableOnline is 50 by default
   const [isGiftWrap, setIsGiftWrap] = useState(false);
@@ -266,7 +265,7 @@ const ShowCartData = () => {
   }
 
   function handleCouponApply(value: any) {
-    if (value === 'COZY10') {
+    if (value === 'AAY10') {
       if (total < 2000) {
         setCouponMsg('Minimum order amount for coupon is ₹2000');
         return;
@@ -615,9 +614,7 @@ function PaymentMethod({
             onChange={() => {
               setIsCOD(false);
               setAmountPayableOnline(
-                couponApplied
-                  ? (total - total / 10).toFixed(2) + 50
-                  : total + 50
+                couponApplied ? (total - total / 10).toFixed(2) : total
               );
             }}
             className="h-4 w-4 text-green-500 focus:ring-0"
@@ -631,14 +628,13 @@ function PaymentMethod({
           <p className="text-green-500">Pay Rs.60 (COD charge) online.</p>
           <p>
             Amount to be payable on delivery is -{' '}
-            {couponApplied ? (total - total / 10).toFixed(2) : total}
+            {couponApplied ? (total - 60 - total / 10).toFixed(2) : total - 60}
           </p>
         </div>
       ) : (
         <div className="">
           <p className="text-green-500">
-            Pay Rs.{' '}
-            {couponApplied ? (total - total / 10).toFixed(2) + 50 : total + 50}
+            Pay Rs. {couponApplied ? (total - total / 10).toFixed(2) : total}
             online {total < 1999 && '(+50 Delivery charge)'}
           </p>
         </div>
